@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DatabaseDriver {
     private final String sqliteFile;
-    private Connection connection;
+    protected Connection connection;
     public DatabaseDriver(String sqliteFileName) { this.sqliteFile = sqliteFileName; }
     public void connect() throws SQLException {
         if (connection != null && !connection.isClosed()) {
