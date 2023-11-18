@@ -31,6 +31,28 @@ public class LoginDataDriver extends DatabaseDriver{
         statement.close();
         return users;
     }
+    public void loginCredentialsIsValid(String username, String password) throws SQLException {
+        if (connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open.");
+        }
+        // Execute query
+        PreparedStatement statement = connection.prepareStatement(("SELECT * FROM Users WHERE Username = ?"));
+        statement.setString(1, username);
+        ResultSet resultset = statement.executeQuery();
+
+        // If none exists
+        if (isEmpty(resultset)) {
+            statement.close();
+            throw new UserNotFoundException("This username does not exist");
+        }
+
+        // Password is incorrect
+        String pass = resultset.getString(2);
+        if (!pass.equals(password)) {
+            throw new PasswordIncorrectException("The password is incorrect");
+        }
+
+    }
     public boolean doesUserExist(String username) throws SQLException {
         if (connection.isClosed()) {
             throw new IllegalStateException("Connection is not open");
