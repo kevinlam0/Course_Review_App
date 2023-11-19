@@ -1,6 +1,8 @@
 package edu.virginia.sde.hw6;
 
 import edu.virginia.sde.reviews.LoginDataDriver;
+import edu.virginia.sde.reviews.PasswordIncorrectException;
+import edu.virginia.sde.reviews.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
@@ -52,4 +54,33 @@ public class LoginDataDriverTest {
         ldd.connect();
         assertFalse(ldd.doesUserExist("Kevinlam"));
     }
+    @Test
+    void noChangeToTableWhenRollback() throws SQLException {
+        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        ldd.connect();
+        ldd.addUser("kevinlam", "password");
+        ldd.rollback();
+        assertFalse(ldd.doesUserExist("kevinlam"));
+    }
+    @Test
+    void loginCredentialsIsValid_noUserFound() throws SQLException {
+        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        ldd.connect();
+        assertThrows(UserNotFoundException.class,
+                () -> ldd.loginCredentialsIsValid("kevin", "password"));
+    }
+    @Test
+    void loginCredentialsIsValid_passwordIncorrect() throws SQLException {
+        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        ldd.connect();
+        assertThrows(PasswordIncorrectException.class,
+                () -> ldd.loginCredentialsIsValid("kevinlam0", "passwords"));
+    }
+    @Test
+    void loginCredentialsIsValid_valid() throws SQLException {
+        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        ldd.connect();
+        ldd.loginCredentialsIsValid("kevinlam0", "password");
+    }
+
 }
