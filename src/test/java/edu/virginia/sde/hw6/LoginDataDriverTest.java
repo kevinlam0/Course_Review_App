@@ -35,7 +35,7 @@ public class LoginDataDriverTest {
         LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
         ldd.connect();
         // ONLY WORKS ONCE
-//        ldd.addUser("kevinlam0", "password");
+//        ldd.addUser("Kevinlam0", "password");
 //        ldd.commit();
     }
     @Test
