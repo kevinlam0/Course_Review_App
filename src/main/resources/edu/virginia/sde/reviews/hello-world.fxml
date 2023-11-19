@@ -11,8 +11,8 @@
             <Label text="Press the button" />
             <Button mnemonicParsing="false" onAction="#handleButton" text="Button" />
             <Label fx:id="messageLabel" />
+            <ChoiceBox fx:id="deez" accessibleRole="CHECK_BOX" prefWidth="150.0" />
          </children>
       </VBox>
-      <ChoiceBox accessibleRole="BUTTON" prefWidth="150.0" />
    </children>
 </AnchorPane>
