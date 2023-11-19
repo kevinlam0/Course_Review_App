@@ -8,6 +8,5 @@ public class LoginController {
         // USERNAME DOES NOT EXIST
 
         // PASSWORD IS INCORRECT
-
     }
 }

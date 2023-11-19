@@ -13,5 +13,6 @@
             <Label fx:id="messageLabel" />
          </children>
       </VBox>
+      <ChoiceBox accessibleRole="BUTTON" prefWidth="150.0" />
    </children>
 </AnchorPane>
