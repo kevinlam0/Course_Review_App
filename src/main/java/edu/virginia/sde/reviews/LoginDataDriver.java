@@ -7,7 +7,7 @@ import java.sql.Statement;
 import java.util.*;
 
 public class LoginDataDriver extends DatabaseDriver{
-    private final String createUserTableSQL = """
+    private static final String createUserTableSQL = """
             CREATE TABLE IF NOT EXISTS Users
             (
                 Username TEXT primary key,
