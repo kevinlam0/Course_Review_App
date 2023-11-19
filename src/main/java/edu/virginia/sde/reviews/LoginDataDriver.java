@@ -3,6 +3,7 @@ package edu.virginia.sde.reviews;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 public class LoginDataDriver extends DatabaseDriver{
@@ -15,7 +16,9 @@ public class LoginDataDriver extends DatabaseDriver{
             """;
     public LoginDataDriver(String sqliteFileName) { super(sqliteFileName); }
     public void createTable() throws SQLException {
-        super.connection.prepareStatement(createUserTableSQL);
+        PreparedStatement statement = connection.prepareStatement(createUserTableSQL);
+        statement.execute();
+        statement.close();
     }
     public Set<String> getAllUsers() throws SQLException {
         if (super.connection.isClosed()) {
@@ -67,5 +70,21 @@ public class LoginDataDriver extends DatabaseDriver{
     private boolean isEmpty(ResultSet resultSet) throws SQLException {
         return !resultSet.isBeforeFirst() && resultSet.getRow() == 0;
     }
-
+    public void addUser(String username, String password) throws SQLException {
+        try {
+            if (connection.isClosed()) {
+                throw new IllegalStateException("Connection is not open");
+            }
+            PreparedStatement statement = connection.prepareStatement(
+                    "INSERT INTO Users(Username, Password) values (?, ?)");
+            statement.setString(1, username);
+            statement.setString(2, password);
+            statement.execute();
+            statement.close();
+        }
+        catch (SQLException e) {
+            super.rollback();
+            throw e;
+        }
+    }
 }
