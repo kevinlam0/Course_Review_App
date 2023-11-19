@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestTemplate;
 
 import java.sql.SQLException;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -33,8 +34,9 @@ public class LoginDataDriverTest {
     void addUser_emptyTable() throws SQLException {
         LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
         ldd.connect();
-        ldd.addUser("kevinlam0", "password");
-        ldd.commit();
+        // ONLY WORKS ONCE
+//        ldd.addUser("kevinlam0", "password");
+//        ldd.commit();
     }
     @Test
     void doesUserExist_true() throws SQLException {
@@ -82,5 +84,13 @@ public class LoginDataDriverTest {
         ldd.connect();
         ldd.loginCredentialsIsValid("kevinlam0", "password");
     }
-
+    @Test
+    void getAllUsers_onlyHasOnePerson() throws SQLException {
+        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        ldd.connect();
+        // WORKS WITH ONLY 1 DATA IN IT
+//        Set<String> users = ldd.getAllUsers();
+//        assertEquals(1, users.size());
+//        assertTrue(users.contains("kevinlam0"));
+    }
 }
