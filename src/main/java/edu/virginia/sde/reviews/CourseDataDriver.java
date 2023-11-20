@@ -6,14 +6,14 @@ import java.sql.SQLException;
 public class CourseDataDriver extends DatabaseDriver{
 
     public CourseDataDriver(String sqliteFileName) { super(sqliteFileName); }
-    public void createTable () throws SQLException {
+    public void createTable() throws SQLException {
         String query = """
                 CREATE TABLE IF NOT EXISTS Courses
                 (
                     ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Mnemonic TEXT(4) CHECK(column1 >= 0 AND column1 <= 100),
-                    Course_Number INTEGER(4) CHECK(column1 >= 0 AND column1 < 9999),
-                    Course_Title TEXT(50),
+                    Mnemonic TEXT(4) CHECK(LENGTH(Mnemonic) <= 4),
+                    Course_Number INTEGER(4) CHECK(Course_Number >= 0 AND Course_Number <= 9999),
+                    Course_Title TEXT(50) CHECK(LENGTH(Course_Title) <= 50),
                     UNIQUE (Mnemonic, Course_Number, Course_Title)
                 );
                 """;
