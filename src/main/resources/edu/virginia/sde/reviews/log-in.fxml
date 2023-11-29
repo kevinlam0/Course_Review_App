@@ -8,7 +8,25 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.virginia.sde.reviews.LogIn"
+            fx:controller="edu.virginia.sde.reviews.LogInController"
             prefHeight="400.0" prefWidth="600.0">
+    <VBox alignment="CENTER" spacing="10">
+        <Label text="Log In or Create an Account" />
 
+        <!-- Log In Section -->
+        <TextField fx:id="usernameField" promptText="Username" />
+        <PasswordField fx:id="passwordField" promptText="Password" />
+        <Button text="Log In" onAction="#handleLogin" />
+
+        <!-- Create Account Section -->
+        <TextField fx:id="newUsernameField" promptText="New Username" />
+        <PasswordField fx:id="newPasswordField" promptText="New Password (at least 8 characters)" />
+        <Button text="Create Account" onAction="#handleCreateAccount" />
+
+        <!-- Error Label -->
+        <Label fx:id="errorLabel" textFill="red" />
+
+        <!-- Close Button -->
+        <Button text="Close" onAction="#handleClose" />
+    </VBox>
 </AnchorPane>
