@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
 
+import javafx.fxml.FXML;
+
 public class LoginController {
     public void logInExistingAccount(String username, String password) {
         // THERE NEEDS TO BE A TABLE FOR THE ACCOUNTS
@@ -8,5 +10,16 @@ public class LoginController {
         // USERNAME DOES NOT EXIST
 
         // PASSWORD IS INCORRECT
+
+    }
+    @FXML
+    public void handleLogin(){
+
+    }
+    public void handleCreateAccount(){
+
+    }
+    public void handleClose(){
+
     }
 }
