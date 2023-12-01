@@ -29,23 +29,13 @@ public class CourseDataDriver extends DatabaseDriver{
         statement.close();
     }
     public void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
-        if (mnemonic.length() < 1 || mnemonic.length() > 4) {
-            throw new InvalidCourseException("The mnemonic cannot be blank nor longer than four characters");
-        }
-        if (courseNumber > 9999 || courseNumber < 0) {
-            throw new InvalidCourseException("The course number must be a positive 4-digit number");
-        }
-        if (courseTitle.length() > 50) {
-            throw new InvalidCourseException("The course title cannot have more than 50 characters (including spaces).");
-        }
-
         try {
             if (connection.isClosed()) {
                 throw new IllegalStateException("Connection is not open");
             }
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO Courses(Mnemonic, Course_Number, Course_Title, Rating) values (?, ?, ?, ?)");
-            statement.setString(1, mnemonic.toUpperCase());
+            statement.setString(1, mnemonic);
             statement.setInt(2, courseNumber);
             statement.setString(3, courseTitle);
             statement.setDouble(4, 0.00);
