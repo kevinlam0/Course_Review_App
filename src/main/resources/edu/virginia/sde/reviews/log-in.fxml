@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane  xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="edu.virginia.sde.reviews.LoginController"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox alignment="CENTER" spacing="20" prefHeight="300.0" prefWidth="500.0"  style="-fx-background-color: #232D4B; -fx-padding: 20;">
+        <Label text="Log In or Create an Account" style="-fx-background-color: #fafafa; -fx-padding: 10"  />
+
+        <!-- Log In Section -->
+        <TextField fx:id="usernameField" promptText="Username" />
+        <PasswordField fx:id="passwordField" promptText="Password" />
+        <Button text="Log In" onAction="#handleLogin" />
+
+        <!-- Create Account Section -->
+        <TextField fx:id="newUsernameField" promptText="New Username" />
+        <PasswordField fx:id="newPasswordField" promptText="New Password (at least 8 characters)" />
+        <Button text="Create Account" onAction="#handleCreateAccount" />
+
+        <!-- Error Label -->
+        <Label fx:id="errorLabel" textFill="red" />
+
+        <!-- Close Button -->
+        <Button text="Close" onAction="#handleClose" />
+
+    </VBox>
+</AnchorPane>
