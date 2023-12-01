@@ -14,6 +14,7 @@ public class CourseDataDriver extends DatabaseDriver{
                     Mnemonic TEXT(4) CHECK(LENGTH(Mnemonic) <= 4),
                     Course_Number INTEGER(4) CHECK(Course_Number >= 0 AND Course_Number <= 9999),
                     Course_Title TEXT(50) CHECK(LENGTH(Course_Title) <= 50),
+                    Rating DECIMAL(3,2),
                     UNIQUE (Mnemonic, Course_Number, Course_Title)
                 );
                 """;
@@ -27,10 +28,11 @@ public class CourseDataDriver extends DatabaseDriver{
                 throw new IllegalStateException("Connection is not open");
             }
             PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO Courses(Mnemonic, Course_Number, Course_Title) values (?, ?, ?)");
+                    "INSERT INTO Courses(Mnemonic, Course_Number, Course_Title, Rating) values (?, ?, ?, ?)");
             statement.setString(1, mnemonic);
             statement.setInt(2, courseNumber);
             statement.setString(3, courseTitle);
+            statement.setDouble(4, 0.00);
             statement.execute();
             statement.close();
         }
