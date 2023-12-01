@@ -1,9 +1,12 @@
 package edu.virginia.sde.hw6;
 
+import edu.virginia.sde.reviews.Course;
 import edu.virginia.sde.reviews.CourseDataDriver;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -54,6 +57,14 @@ public class CourseDataDriverTest {
         cdd.connect();
 //        cdd.addCourse("CSSS", 9999, "Software Development");
 //        cdd.commit();
+    }
+    @Test
+    void getAllCourses() throws SQLException {
+        CourseDataDriver cdd = new CourseDataDriver("LoginDataDriverTester.sqlite");
+        cdd.connect();
+        ArrayList<Course> courses = cdd.getAllCourses();
+        assertEquals(2, courses.size());
+        courses.stream().forEach(x -> System.out.println(x.toString()));
     }
 
 }
