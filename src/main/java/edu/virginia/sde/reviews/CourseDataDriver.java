@@ -1,4 +1,6 @@
 package edu.virginia.sde.reviews;
+import edu.virginia.sde.reviews.Exceptions.InvalidCourseException;
+
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -27,13 +29,23 @@ public class CourseDataDriver extends DatabaseDriver{
         statement.close();
     }
     public void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
+        if (mnemonic.length() < 1 || mnemonic.length() > 4) {
+            throw new InvalidCourseException("The mnemonic cannot be blank nor longer than four characters");
+        }
+        if (courseNumber > 9999 || courseNumber < 0) {
+            throw new InvalidCourseException("The course number must be a positive 4-digit number");
+        }
+        if (courseTitle.length() > 50) {
+            throw new InvalidCourseException("The course title cannot have more than 50 characters (including spaces).");
+        }
+
         try {
             if (connection.isClosed()) {
                 throw new IllegalStateException("Connection is not open");
             }
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO Courses(Mnemonic, Course_Number, Course_Title, Rating) values (?, ?, ?, ?)");
-            statement.setString(1, mnemonic);
+            statement.setString(1, mnemonic.toUpperCase());
             statement.setInt(2, courseNumber);
             statement.setString(3, courseTitle);
             statement.setDouble(4, 0.00);
@@ -103,14 +115,17 @@ public class CourseDataDriver extends DatabaseDriver{
         }
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM Courses WHERE 1");
+        // Needs to be case-insensitive
         if (mnemonic != null){
+            mnemonic = mnemonic.toUpperCase();
             sql.append(" AND mnemonic = '").append(mnemonic).append("'");
         }
         if (number != null){
             sql.append(" AND Course_Number = ").append(String.valueOf(number));
         }
+        // Needs to be case-insensitive
         if (title != null){
-            sql.append(" AND Course_Title LIKE '").append("*").append(title).append("*").append("'");
+            sql.append(" AND Course_Title LIKE '").append("%").append(title).append("%'").append("COLLATE NOCASE");
         }
         PreparedStatement statement = connection.prepareStatement(String.valueOf(sql));
 
@@ -118,8 +133,13 @@ public class CourseDataDriver extends DatabaseDriver{
 
         ArrayList<Course> courses = new ArrayList<>();
         while (resultSet.next()) {
-            Course course = new Course(resultSet.getInt(1), resultSet.getString(2),
-                    resultSet.getInt(3), resultSet.getString(4), resultSet.getDouble(5));
+            Course course = new Course(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getInt(3),
+                    resultSet.getString(4),
+                    resultSet.getDouble(5)
+            );
 
             courses.add(course);
         }
