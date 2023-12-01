@@ -66,5 +66,12 @@ public class CourseDataDriverTest {
         assertEquals(2, courses.size());
         courses.stream().forEach(x -> System.out.println(x.toString()));
     }
+    @Test
+    void searchCourses() throws SQLException {
+        CourseDataDriver cdd = new CourseDataDriver("LoginDataDriverTester.sqlite");
+        cdd.connect();
+        ArrayList<Course> courses = cdd.searchCourses("cS", null, "deveLopMent");
+        courses.stream().forEach(System.out::println);
 
+    }
 }
