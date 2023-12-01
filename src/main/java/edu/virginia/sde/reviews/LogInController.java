@@ -14,5 +14,4 @@ public class LogInController {
     public void handleClose(){
 
     }
-
 }
