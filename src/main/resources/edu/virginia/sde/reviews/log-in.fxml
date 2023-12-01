@@ -5,13 +5,13 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<!--help me -->
-<AnchorPane xmlns="http://javafx.com/javafx"
+
+<AnchorPane  xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="edu.virginia.sde.reviews.LoginController"
             prefHeight="400.0" prefWidth="600.0">
-    <VBox alignment="CENTER" spacing="10">
-        <Label text="Log In or Create an Account" />
+    <VBox alignment="CENTER" spacing="20" prefHeight="300.0" prefWidth="500.0"  style="-fx-background-color: #232D4B; -fx-padding: 20;">
+        <Label text="Log In or Create an Account" style="-fx-background-color: #fafafa; -fx-padding: 10"  />
 
         <!-- Log In Section -->
         <TextField fx:id="usernameField" promptText="Username" />
@@ -28,5 +28,6 @@
 
         <!-- Close Button -->
         <Button text="Close" onAction="#handleClose" />
+
     </VBox>
 </AnchorPane>
