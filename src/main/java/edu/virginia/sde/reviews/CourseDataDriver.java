@@ -46,23 +46,26 @@ public class CourseDataDriver extends DatabaseDriver{
         }
     }
 
-    public ArrayList<Course> allCourses() throws SQLException{
+    /* Used for querying for the main screen */
+    public ArrayList<Course> getAllCourses() throws SQLException{
         if (connection.isClosed()) {
             throw new IllegalStateException("Connection is not open");
         }
-        PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM Courses");
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Courses");
         ResultSet resultSet = statement.executeQuery();
 
         ArrayList<Course> courses = new ArrayList<>();
         while (resultSet.next()) {
-            Course course = new Course(resultSet.getInt(1), resultSet.getString(2),
-                    resultSet.getInt(3), resultSet.getString(4), resultSet.getDouble(5));
-
+            Course course = new Course(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getInt(3),
+                    resultSet.getString(4),
+                    resultSet.getDouble(5)
+            );
             courses.add(course);
         }
         statement.close();
-
         return courses;
     }
 

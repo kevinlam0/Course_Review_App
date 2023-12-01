@@ -2,17 +2,16 @@ package edu.virginia.sde.reviews;
 
 public class Course {
 
-    private int id;
-    private String mnemonic;
-
-    private int num;
-    private String title;
+    private final int id;
+    private final String mnemonic;
+    private final int number;
+    private final String title;
     private double average;
 
     public Course(int id, String mnemonic, int num, String title, double average){
         this.id = id;
         this.mnemonic = mnemonic;
-        this.num = num;
+        this.number = num;
         this.title = title;
         this.average = average;
     }
@@ -24,8 +23,8 @@ public class Course {
         return mnemonic;
     }
 
-    public int getNum() {
-        return num;
+    public int getNumber() {
+        return number;
     }
 
     public String getTitle() {
@@ -34,5 +33,8 @@ public class Course {
 
     public double getAverage() {
         return average;
+    }
+    public String toString() {
+        return id + " " + mnemonic + " " + number + " " + title + " " + average;
     }
 }
