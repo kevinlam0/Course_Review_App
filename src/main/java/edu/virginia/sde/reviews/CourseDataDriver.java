@@ -137,7 +137,28 @@ public class CourseDataDriver extends DatabaseDriver{
 
         return courses;
     }
+    public Optional<Course> getIDOfCourse(String mnemonic, int number, String title) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(
+                "SELECT ID FROM Courses " +
+                        "WHERE Mnemonic = ? AND Course_Number = ? AND Course_Title = ?");
+        statement.setString(1, mnemonic);
+        statement.setInt(2, number);
+        statement.setString(3, title);
+        ResultSet resultSet = statement.executeQuery();
+        if (isEmpty(resultSet)) {
+            statement.close();
+            return Optional.empty();
+        }
 
+        Course course = new Course(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getInt(3),
+                resultSet.getString(4),
+                resultSet.getDouble(5)
+        );
+        return Optional.of(course);
+    }
     private boolean isEmpty(ResultSet resultSet) throws SQLException {
         return !resultSet.isBeforeFirst() && resultSet.getRow() == 0;
     }
