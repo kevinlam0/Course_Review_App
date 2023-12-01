@@ -3,7 +3,7 @@ package edu.virginia.sde.reviews;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class LogInController {
+public class LoginController {
     @FXML
     public void handleLogin(){
 
