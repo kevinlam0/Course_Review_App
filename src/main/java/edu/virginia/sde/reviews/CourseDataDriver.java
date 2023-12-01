@@ -84,9 +84,13 @@ public class CourseDataDriver extends DatabaseDriver{
             return Optional.empty();
         }
 
-        Course course = new Course(resultSet.getInt(1), resultSet.getString(2),
-                resultSet.getInt(3), resultSet.getString(4), resultSet.getDouble(5));
-
+        Course course = new Course(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getInt(3),
+                resultSet.getString(4),
+                resultSet.getDouble(5)
+        );
 
         statement.close();
 
