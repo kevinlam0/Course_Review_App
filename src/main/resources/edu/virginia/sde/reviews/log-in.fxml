@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane  xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.virginia.sde.reviews.LoginController"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox alignment="CENTER" spacing="20" prefHeight="250.0" prefWidth="300.0"  style="-fx-background-color: #232D4B; -fx-padding: 20;"
-          AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100">
-        <Label text="Log In or Create an Account" style="-fx-background-color: #fafafa; -fx-padding: 10"  />
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.LoginController">
+    <VBox alignment="CENTER" prefHeight="250.0" prefWidth="300.0" spacing="20" style="-fx-background-color: #232D4B; -fx-padding: 20;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="50.0">
+        <Label style="-fx-background-color: #fafafa; -fx-padding: 10" text="Log In or Create an Account" />
 
         <!-- Log In Section -->
-        <TextField fx:id="usernameField" promptText="Username" />
+        <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="196.0" promptText="Username" />
         <PasswordField fx:id="passwordField" promptText="Password" />
-        <Button text="Log In" onAction="#handleLogin" />
+        <Button onAction="#handleLogin" text="Log In" />
 
         <!-- Create Account Section -->
         <TextField fx:id="newUsernameField" promptText="New Username" />
         <PasswordField fx:id="newPasswordField" promptText="New Password (at least 8 characters)" />
-        <Button text="Create Account" onAction="#handleCreateAccount" />
+        <Button onAction="#handleCreateAccount" text="Create Account" />
 
         <!-- Error Label -->
         <Label fx:id="errorLabel" textFill="red" />
 
         <!-- Close Button -->
-        <Button text="Close" onAction="#handleClose" />
+        <Button onAction="#handleClose" text="Close" />
 
     </VBox>
 

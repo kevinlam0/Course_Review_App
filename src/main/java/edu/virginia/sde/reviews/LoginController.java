@@ -16,8 +16,8 @@ public class LoginController {
     private Label errorLabel;
     private LoginLogic loginLogic;
 
-    public LoginController(){
-
+    public LoginController(LoginLogic loginLogic){
+        this.loginLogic = loginLogic;
     }
     public void handleLogin(){
         String username = usernameField.getText();
@@ -25,7 +25,7 @@ public class LoginController {
 
         try {
             if (loginLogic.isLoginSuccessful(username, password)) {
-                System.out.println("Login successful!");
+                System.out.println("Login successful");
             } else {
                 // Handle unsuccessful login
                 errorLabel.setText("Invalid username or password");
@@ -42,14 +42,14 @@ public class LoginController {
 
         try {
             loginLogic.createUser(newUsername, newPassword);
-            // Handle successful user creation
-            System.out.println("User created successfully!");
+            // handle successful user creation
+            System.out.println("User created successfully");
         } catch (UserAlreadyExistsException e) {
-            // Handle user already exists error
+            // handle user already exists error
             errorLabel.setText("User already exists");
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle database-related errors
+            // handle database-related errors
             errorLabel.setText("Database error");
         }
     }
