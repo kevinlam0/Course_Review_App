@@ -1,10 +1,12 @@
 package edu.virginia.sde.reviews;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
 
+import java.awt.event.ActionEvent;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -27,7 +29,7 @@ public class LoginController {
             if (loginLogic.isLoginSuccessful(username, password)) {
                 System.out.println("Login successful");
             } else {
-                // Handle unsuccessful login
+                // handle unsuccessful login
                 errorLabel.setText("Invalid username or password");
 
             }
@@ -55,5 +57,8 @@ public class LoginController {
     }
     public void handleClose(){
         Platform.exit();
+    }
+    public void switchToCourseSearch(ActionEvent event){
+        // implement after making course search fxml
     }
 }
