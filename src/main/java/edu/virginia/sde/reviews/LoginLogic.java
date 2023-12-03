@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
 
+import edu.virginia.sde.reviews.Exceptions.UserAlreadyExistsException;
+
 import java.sql.SQLException;
 
 public class LoginLogic {
