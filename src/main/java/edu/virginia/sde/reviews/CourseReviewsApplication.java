@@ -8,4 +8,5 @@ public class CourseReviewsApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         ;
     }
+
 }
