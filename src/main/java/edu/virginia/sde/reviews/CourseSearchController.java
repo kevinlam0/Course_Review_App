@@ -1,10 +1,13 @@
 package edu.virginia.sde.reviews;
 
+import edu.virginia.sde.reviews.Exceptions.InvalidCourseException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+
+import java.sql.SQLException;
 
 public class CourseSearchController {
     @FXML
@@ -39,9 +42,16 @@ public class CourseSearchController {
     private CourseLogic courseLogic;
 
     //private CourseReviewController courseReviewController
-    //implement after CourseReviewController is made
+    // (implement after CourseReviewController is made)
     public CourseSearchController(LoginLogic loginLogic, CourseLogic courseLogic){
-
+        // arguments should be LoginLogic loginLogic, CourseLogic courseLogic, CourseReviewController courseReviewController
+        this.loginLogic = loginLogic;
+        this.courseLogic = courseLogic;
+        //this.courseReviewController = courseReviewController;
+        this.courses = FXCollections.observableArrayList();
+    }
+    public void initialize(){
+        // initialize tables
     }
     private void handleSearch(){
         String subject = subjectSearchField.getText();
@@ -58,7 +68,20 @@ public class CourseSearchController {
         }
     }
     private void handleAdd(){
+        try {
+            String subject = subjectSearchField.getText();
+            int number = parseNumber(numberSearchField.getText());
+            String title = titleSearchField.getText();
 
+            courseLogic.addCourse(subject, number, title);
+
+            // Refresh the course list after adding
+            courses.clear();
+            courses.addAll(courseLogic.getAllCourses());
+        } catch (InvalidCourseException | SQLException e) {
+            e.printStackTrace();
+            // Handle invalid course or database-related errors
+        }
     }
     private void switchToMyReviews(){
 
@@ -71,7 +94,7 @@ public class CourseSearchController {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            // Handle invalid number format
+            // handle invalid number format
             return 0;
         }
     }
