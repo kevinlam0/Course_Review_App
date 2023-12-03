@@ -24,6 +24,13 @@ public class ReviewDataDriverTest {
         cdd.addReview(1, "Kevinlam0", 5, "comment");
         cdd.commit();
     }
+    @Test
+    void addReview_populated() throws SQLException {
+        ReviewDataDriver cdd = new ReviewDataDriver("LoginDataDriverTester.sqlite");
+        cdd.connect();
+        cdd.addReview(1, "kevinlam0", 3, "Cool");
+        cdd.commit();
+    }
 
 
 }
