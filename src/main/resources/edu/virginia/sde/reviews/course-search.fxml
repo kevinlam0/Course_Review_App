@@ -1,15 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="edu.virginia.sde.reviews.CourseSearchController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
+    <VBox alignment="CENTER" prefHeight="300.0" prefWidth="400.0" spacing="20" style="-fx-background-color: #fafafa; -fx-padding: 20;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="50.0">
+        <Label style="-fx-background-color: #232D4B; -fx-text-fill: white; -fx-padding: 10" text="Course Search" />
 
+        <!-- Search Section -->
+        <HBox spacing="10">
+            <Label text="Subject:"/>
+            <TextField fx:id="subjectField" promptText="Subject" />
+            <Label text="Number:"/>
+            <TextField fx:id="numberField" promptText="Number" />
+            <Label text="Title:"/>
+            <TextField fx:id="titleField" promptText="Title" />
+            <Button text="Search" onAction="#handleSearch" />
+        </HBox>
 
+        <!-- TableView Section -->
+        <TableView fx:id="courseTable" prefHeight="200" prefWidth="600">
+            <columns>
+                <TableColumn fx:id="subjectColumn" text="Subject"/>
+                <TableColumn fx:id="numberColumn" text="Number"/>
+                <TableColumn fx:id="titleColumn" text="Title"/>
+                <TableColumn fx:id="ratingColumn" text="Rating"/>
+            </columns>
+        </TableView>
+
+        <!-- Add Course Section -->
+        <HBox spacing="10">
+            <Label text="Subject:"/>
+            <TextField fx:id="addSubjectField" promptText="Subject" />
+            <Label text="Number:"/>
+            <TextField fx:id="addNumberField" promptText="Number" />
+            <Label text="Title:"/>
+            <TextField fx:id="addTitleField" promptText="Title" />
+            <Button text="Add Course" onAction="#handleAdd" />
+        </HBox>
+
+        <!-- Navigation Buttons Section -->
+        <Button text="My Reviews" onAction="#switchToMyReviews"/>
+        <Button text="Log out" onAction="#handleLogout"/>
+    </VBox>
 </AnchorPane>
+
