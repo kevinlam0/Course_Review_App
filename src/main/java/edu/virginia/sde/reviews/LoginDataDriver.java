@@ -9,25 +9,27 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class LoginDataDriver extends DatabaseDriver{
-    private static final String createUserTableSQL = """
-            CREATE TABLE IF NOT EXISTS Users
-            (
-                Username TEXT primary key,
-                Password TEXT
-            );
-            """;
-    public LoginDataDriver(String sqliteFileName) { super(sqliteFileName); }
+
+    public LoginDataDriver(String sqliteFileName) {super(sqliteFileName);}
     public void createTable() throws SQLException {
+        String createUserTableSQL = """
+                CREATE TABLE IF NOT EXISTS Users
+                (
+                    Username TEXT PRIMARY KEY,
+                    Password TEXT
+                );
+                """;
         PreparedStatement statement = connection.prepareStatement(createUserTableSQL);
         statement.execute();
         statement.close();
+        this.commit();
     }
-    public Set<String> getAllUsers() throws SQLException {
-        if (super.connection.isClosed()) {
+    public ArrayList<String> getAllUsers() throws SQLException {
+        if (connection.isClosed()) {
             throw new IllegalStateException("The connection is not open. You cannot get the users.");
         }
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users");
-        Set<String> users = new HashSet<>();
+        ArrayList<String> users = new ArrayList<>();
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             String user = resultSet.getString(1);

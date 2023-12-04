@@ -31,6 +31,7 @@ public class CourseDataDriver extends DatabaseDriver{
         PreparedStatement statement = connection.prepareStatement(query);
         statement.execute();
         statement.close();
+        this.commit();
     }
     public void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
         try {
@@ -44,6 +45,7 @@ public class CourseDataDriver extends DatabaseDriver{
             statement.setString(3, courseTitle);
             statement.setDouble(4, 0.00);
             statement.execute();
+            this.commit();
             statement.close();
         }
         catch (SQLException e) {
@@ -76,14 +78,13 @@ public class CourseDataDriver extends DatabaseDriver{
         return courses;
     }
 
+    /* POSSIBLE REVISION TO NOT RETURN OPTIONAL BUT INSTEAD THROW ERROR */
     public Optional<Course> selectCourseByID(int id) throws SQLException{
-
         if (connection.isClosed()) {
             throw new IllegalStateException("Connection is not open");
         }
-        PreparedStatement statement = connection.prepareStatement(
-                "SELECT * FROM Courses WHERE ID = ?");
-        statement.setInt(id, 1);
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Courses WHERE ID = ?");
+        statement.setInt(1, id);
         ResultSet resultSet = statement.executeQuery();
 
         if (isEmpty(resultSet)) {
@@ -105,11 +106,11 @@ public class CourseDataDriver extends DatabaseDriver{
     }
 
     public ArrayList<Course> searchCourses(String mnemonic, Integer number, String title) throws SQLException{
-        if (connection.isClosed()) {
-            throw new IllegalStateException("Connection is not open");
-        }
+        if (connection.isClosed()) {throw new IllegalStateException("Connection is not open");}
+
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT * FROM Courses WHERE 1");
+
         // Needs to be case-insensitive
         if (mnemonic != null){
             mnemonic = mnemonic.toUpperCase();
@@ -122,8 +123,8 @@ public class CourseDataDriver extends DatabaseDriver{
         if (title != null){
             sql.append(" AND Course_Title LIKE '").append("%").append(title).append("%'").append("COLLATE NOCASE");
         }
-        PreparedStatement statement = connection.prepareStatement(String.valueOf(sql));
 
+        PreparedStatement statement = connection.prepareStatement(String.valueOf(sql));
         ResultSet resultSet = statement.executeQuery();
 
         ArrayList<Course> courses = new ArrayList<>();
@@ -135,11 +136,9 @@ public class CourseDataDriver extends DatabaseDriver{
                     resultSet.getString(4),
                     resultSet.getDouble(5)
             );
-
             courses.add(course);
         }
         statement.close();
-
         return courses;
     }
     public Optional<Course> getIDOfCourse(String mnemonic, int number, String title) throws SQLException {
@@ -149,7 +148,9 @@ public class CourseDataDriver extends DatabaseDriver{
         statement.setString(1, mnemonic);
         statement.setInt(2, number);
         statement.setString(3, title);
+
         ResultSet resultSet = statement.executeQuery();
+
         if (isEmpty(resultSet)) {
             statement.close();
             return Optional.empty();
