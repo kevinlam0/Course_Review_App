@@ -9,8 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CourseDataDriver extends DatabaseDriver{
+    private final String sqliteFileName;
 
-    public CourseDataDriver(String sqliteFileName) { super(sqliteFileName); }
+    public CourseDataDriver(String sqliteFileName) {
+        super(sqliteFileName);
+        this.sqliteFileName = sqliteFileName;
+    }
+    public String getSqliteFileName() { return sqliteFileName;}
     public void createTable() throws SQLException {
         String query = """
                 CREATE TABLE IF NOT EXISTS Courses

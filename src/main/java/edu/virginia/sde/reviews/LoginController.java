@@ -5,11 +5,14 @@ import edu.virginia.sde.reviews.Exceptions.UserNotFoundException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginController {
@@ -24,6 +27,8 @@ public class LoginController {
     @FXML
     private Label errorLabel;
 
+    private Stage primaryStage;
+
 
 
 
@@ -34,6 +39,7 @@ public class LoginController {
         try {
             if (LoginLogic.isLoginSuccessful(username, password)) {
                 System.out.println("Login successful");
+                switchToCourseSearch();
             } else {
                 // handle unsuccessful login
                 errorLabel.setText("Invalid username or password");
@@ -75,8 +81,23 @@ public class LoginController {
     public void handleClose(){
         Platform.exit();
     }
-    public void switchToCourseSearch(ActionEvent event){
-        // implement after making course search fxml
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+    public void switchToCourseSearch(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(
+                    CourseReviewsApplication.class.getResource(
+                            "course-search.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            primaryStage.setTitle("Course Reviews");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }
+        catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 }

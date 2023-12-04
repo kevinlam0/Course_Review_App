@@ -20,6 +20,8 @@ public class CourseReviewsApplication extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         LoginLogic.setLoginDataDriver(new LoginDataDriver("LoginDataDriverTester.sqlite"));
+        var controller = (LoginController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
     }
 
 }
