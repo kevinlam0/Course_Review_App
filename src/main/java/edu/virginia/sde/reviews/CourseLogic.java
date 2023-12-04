@@ -36,6 +36,7 @@ public class CourseLogic {
         return courseDataDriver.selectCourseByID(id);
     }
     public static ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
+        // CHECK IF THIS IS OPTIONAL OR NAH
         return courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
     }
     public static double calculateReviewAverage(int courseID) throws SQLException {
