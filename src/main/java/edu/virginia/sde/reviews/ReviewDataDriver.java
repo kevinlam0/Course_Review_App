@@ -42,6 +42,7 @@ public class ReviewDataDriver extends DatabaseDriver{
             statement.setInt(4, rating);
             statement.execute();
             statement.close();
+            this.commit();
         }
         catch (SQLException e) {
             super.rollback();
