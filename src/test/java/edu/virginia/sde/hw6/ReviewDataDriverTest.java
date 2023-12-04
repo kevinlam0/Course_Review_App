@@ -48,5 +48,12 @@ public class ReviewDataDriverTest {
         assertThrows(RuntimeException.class, () -> cdd.findAllReviewsForCourse(2));
     }
 
+    @Test
+    void deleteReview_test() throws SQLException {
+        ReviewDataDriver cdd = new ReviewDataDriver("LoginDataDriverTester.sqlite");
+        cdd.connect();
+        cdd.deleteReview(1, "Kevinlam0");
+    }
+
 
 }
