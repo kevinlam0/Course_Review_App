@@ -1,9 +1,11 @@
 package edu.virginia.sde.reviews;
 
+import edu.virginia.sde.reviews.Exceptions.PasswordIncorrectException;
+import edu.virginia.sde.reviews.Exceptions.UserNotFoundException;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 
 public class LoginDataDriver extends DatabaseDriver{

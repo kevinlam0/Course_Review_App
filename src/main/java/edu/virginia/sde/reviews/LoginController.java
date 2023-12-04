@@ -1,4 +1,5 @@
 package edu.virginia.sde.reviews;
+import edu.virginia.sde.reviews.Exceptions.UserAlreadyExistsException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

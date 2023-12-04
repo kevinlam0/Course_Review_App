@@ -1,14 +1,12 @@
 package edu.virginia.sde.hw6;
 
 import edu.virginia.sde.reviews.LoginDataDriver;
-import edu.virginia.sde.reviews.PasswordIncorrectException;
-import edu.virginia.sde.reviews.UserNotFoundException;
+import edu.virginia.sde.reviews.Exceptions.PasswordIncorrectException;
+import edu.virginia.sde.reviews.Exceptions.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestTemplate;
 
 import java.sql.SQLException;
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 

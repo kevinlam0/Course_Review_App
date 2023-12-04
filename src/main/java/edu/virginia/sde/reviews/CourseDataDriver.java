@@ -1,4 +1,6 @@
 package edu.virginia.sde.reviews;
+import edu.virginia.sde.reviews.Exceptions.InvalidCourseException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 
@@ -45,26 +47,117 @@ public class CourseDataDriver extends DatabaseDriver{
         }
     }
 
-    public Optional<Object> allCourses(){
-        try {
-            if (connection.isClosed()) {
-                throw new IllegalStateException("Connection is not open");
-            }
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM Courses");
-            ResultSet resultSet = statement.executeQuery();
+
+    /* Used for querying for the main screen */
+    public ArrayList<Course> getAllCourses() throws SQLException{
+        if (connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open");
+        }
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Courses");
+        ResultSet resultSet = statement.executeQuery();
+
+        ArrayList<Course> courses = new ArrayList<>();
+        while (resultSet.next()) {
+            Course course = new Course(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getInt(3),
+                    resultSet.getString(4),
+                    resultSet.getDouble(5)
+            );
+            courses.add(course);
+        }
+        statement.close();
+        return courses;
+    }
+
+    public Optional<Course> selectCourseByID(int id) throws SQLException{
+
+        if (connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open");
+        }
+        PreparedStatement statement = connection.prepareStatement(
+                "SELECT * FROM Courses WHERE ID = ?");
+        statement.setInt(id, 1);
+        ResultSet resultSet = statement.executeQuery();
+
+        if (isEmpty(resultSet)) {
             statement.close();
-
-            if (isEmpty(resultSet)) {
-                statement.close();
-                return Optional.empty();
-
-            }
+            return Optional.empty();
         }
-        catch (SQLException e) {
 
+        Course course = new Course(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getInt(3),
+                resultSet.getString(4),
+                resultSet.getDouble(5)
+        );
+
+        statement.close();
+
+        return Optional.of(course);
+    }
+
+    public ArrayList<Course> searchCourses(String mnemonic, Integer number, String title) throws SQLException{
+        if (connection.isClosed()) {
+            throw new IllegalStateException("Connection is not open");
         }
-        return null;
+        StringBuilder sql = new StringBuilder();
+        sql.append("SELECT * FROM Courses WHERE 1");
+        // Needs to be case-insensitive
+        if (mnemonic != null){
+            mnemonic = mnemonic.toUpperCase();
+            sql.append(" AND mnemonic = '").append(mnemonic).append("'");
+        }
+        if (number != null){
+            sql.append(" AND Course_Number = ").append(String.valueOf(number));
+        }
+        // Needs to be case-insensitive
+        if (title != null){
+            sql.append(" AND Course_Title LIKE '").append("%").append(title).append("%'").append("COLLATE NOCASE");
+        }
+        PreparedStatement statement = connection.prepareStatement(String.valueOf(sql));
+
+        ResultSet resultSet = statement.executeQuery();
+
+        ArrayList<Course> courses = new ArrayList<>();
+        while (resultSet.next()) {
+            Course course = new Course(
+                    resultSet.getInt(1),
+                    resultSet.getString(2),
+                    resultSet.getInt(3),
+                    resultSet.getString(4),
+                    resultSet.getDouble(5)
+            );
+
+            courses.add(course);
+        }
+        statement.close();
+
+        return courses;
+    }
+    public Optional<Course> getIDOfCourse(String mnemonic, int number, String title) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(
+                "SELECT ID FROM Courses " +
+                        "WHERE Mnemonic = ? AND Course_Number = ? AND Course_Title = ?");
+        statement.setString(1, mnemonic);
+        statement.setInt(2, number);
+        statement.setString(3, title);
+        ResultSet resultSet = statement.executeQuery();
+        if (isEmpty(resultSet)) {
+            statement.close();
+            return Optional.empty();
+        }
+
+        Course course = new Course(
+                resultSet.getInt(1),
+                resultSet.getString(2),
+                resultSet.getInt(3),
+                resultSet.getString(4),
+                resultSet.getDouble(5)
+        );
+        return Optional.of(course);
     }
 
     private boolean isEmpty(ResultSet resultSet) throws SQLException {

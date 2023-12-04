@@ -1,7 +1,9 @@
 package edu.virginia.sde.reviews;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ReviewDataDriver extends DatabaseDriver{
 
@@ -45,6 +47,34 @@ public class ReviewDataDriver extends DatabaseDriver{
             super.rollback();
             throw e;
         }
+    }
+    public ArrayList<Review> findAllReviewsForCourse(int courseID) throws SQLException {
+        // NEEDS CHECKER TO MAKE SURE THIS ID IS IN THE COURSE
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Reviews WHERE Course_ID = ?");
+        statement.setInt(1, courseID);
+        ResultSet results = statement.executeQuery();
+
+
+        ArrayList<Review> reviews = new ArrayList<>();
+        if (isEmpty(results)) {
+            throw new RuntimeException("There is no course with this ID " + courseID);
+        }
+
+        while (results.next()) {
+            Review review = new Review(
+                    results.getInt(2),
+                    results.getString(3),
+                    results.getString(4),
+                    results.getString(5),
+                    results.getInt(6)
+            );
+            reviews.add(review);
+        }
+        statement.close();
+        return reviews;
+    }
+    private boolean isEmpty(ResultSet resultSet) throws SQLException {
+        return !resultSet.isBeforeFirst() && resultSet.getRow() == 0;
     }
 }
 
