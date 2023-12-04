@@ -77,5 +77,6 @@ public class LoginController {
     }
     public void switchToCourseSearch(ActionEvent event){
         // implement after making course search fxml
+
     }
 }

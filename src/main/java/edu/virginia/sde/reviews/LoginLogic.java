@@ -13,7 +13,7 @@ public class LoginLogic {
     }
     public static boolean isLoginSuccessful(String username, String password) throws SQLException {
         loginDataDriver.loginCredentialsIsValid(username, password);
-        UserLogic.setUsername(username);
+        Credentials.setUsername(username);
         return true;
     }
 
