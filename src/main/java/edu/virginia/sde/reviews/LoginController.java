@@ -50,7 +50,7 @@ public class LoginController {
             // handle successful user creation
             System.out.println("User created successfully");
         } catch (UserAlreadyExistsException e) {
-            // handle user already exists error
+            // handle user already exists
             errorLabel.setText("User already exists");
         } catch (SQLException e) {
             e.printStackTrace();
