@@ -40,8 +40,12 @@ public class CourseLogic {
 
     public static ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
         if (mnemonic.strip().equals("")) {mnemonic = null;}
+
         if (courseNumber == 0) { courseNumber = null; }
+        else if (courseNumber < 0) {throw new InvalidCourseException("You cannot have a course number of negative value.");}
+
         if (courseTitle.strip().equals("")) { courseTitle = null; }
+
         return courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
     }
     public static double calculateReviewAverage(int courseID) throws SQLException {
