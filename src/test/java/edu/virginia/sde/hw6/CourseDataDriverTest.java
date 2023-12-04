@@ -70,7 +70,7 @@ public class CourseDataDriverTest {
     void searchCourses() throws SQLException {
         CourseDataDriver cdd = new CourseDataDriver("LoginDataDriverTester.sqlite");
         cdd.connect();
-        ArrayList<Course> courses = cdd.searchCourses(null, null, null);
+        ArrayList<Course> courses = cdd.searchCourses(null, null, "GoR");
         courses.stream().forEach(System.out::println);
 
     }
