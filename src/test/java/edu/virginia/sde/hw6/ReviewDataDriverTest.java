@@ -31,7 +31,7 @@ public class ReviewDataDriverTest {
     void addReview_populated() throws SQLException {
         ReviewDataDriver cdd = new ReviewDataDriver("LoginDataDriverTester.sqlite");
         cdd.connect();
-        cdd.addReview(3, "kevinlam0", 3, "Cool");
+        cdd.addReview(3, "Kevinlam0", 3, "Cool");
         cdd.commit();
     }
     @Test
@@ -52,7 +52,7 @@ public class ReviewDataDriverTest {
     void deleteReview_test() throws SQLException {
         ReviewDataDriver cdd = new ReviewDataDriver("LoginDataDriverTester.sqlite");
         cdd.connect();
-        cdd.deleteReview(1, "Kevinlam0");
+        cdd.deleteReview(3, "Kevinlam0");
     }
 
 
