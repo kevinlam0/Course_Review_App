@@ -35,6 +35,6 @@ public class Course {
         return average;
     }
     public String toString() {
-        return "Primary ID: " + id + " Course: " + mnemonic + number + " " + title + " Rating: " + average;
+        return "Primary ID: " + id + "\nCourse: " + mnemonic + number + " " + title + " Rating: " + average;
     }
 }
