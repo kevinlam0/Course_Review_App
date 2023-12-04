@@ -6,8 +6,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class CourseSearchController {
     public Button searchButton;
@@ -40,14 +42,12 @@ public class CourseSearchController {
     private ObservableList<Course> courses;
 
     private LoginLogic loginLogic;
-    private CourseLogic courseLogic;
+    private Stage primaryStage;
 
     //private CourseReviewController courseReviewController
     // (implement after CourseReviewController is made)
-    public CourseSearchController(LoginLogic loginLogic, CourseLogic courseLogic){
+    public CourseSearchController(){
         // arguments should be LoginLogic loginLogic, CourseLogic courseLogic, CourseReviewController courseReviewController
-        this.loginLogic = loginLogic;
-        this.courseLogic = courseLogic;
         //this.courseReviewController = courseReviewController;
         this.courses = FXCollections.observableArrayList();
     }
@@ -58,7 +58,7 @@ public class CourseSearchController {
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("average"));
 
         try {
-            courses.addAll(courseLogic.getAllCourses());
+            courses.addAll(CourseLogic.getAllCourses());
         } catch (SQLException e) {
             e.printStackTrace();
             // handle database errors
@@ -68,11 +68,16 @@ public class CourseSearchController {
     @FXML
     private void handleSearch(){
         String subject = subjectField.getText();
+//        System.out.println("This is the subject: " + "\""+subject+" \"");
         int number = parseNumber(numberField.getText());
+        System.out.println("This is the subject: " + "\""+number+" \"");
         String title = titleField.getText();
 
         try {
-            ObservableList<Course> searchResults = FXCollections.observableArrayList(courseLogic.filterCoursesBy(subject, number, title));
+            ArrayList<Course> courses = CourseLogic.filterCoursesBy(subject, number, title);
+            System.out.println(courses.size());
+            courses.forEach(System.out::println);
+            ObservableList<Course> searchResults = FXCollections.observableArrayList(CourseLogic.filterCoursesBy(subject, number, title));
             courseTable.setItems(searchResults);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -86,15 +91,18 @@ public class CourseSearchController {
             int number = parseNumber(addNumberField.getText());
             String title = addTitleField.getText();
 
-            courseLogic.addCourse(subject, number, title);
+            CourseLogic.addCourse(subject, number, title);
 
             // Refresh the course list after adding
             courses.clear();
-            courses.addAll(courseLogic.getAllCourses());
+            courses.addAll(CourseLogic.getAllCourses());
         } catch (InvalidCourseException | SQLException e) {
             e.printStackTrace();
             // Handle invalid course or database errors
         }
+    }
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
     @FXML
     private void switchToMyReviews(){

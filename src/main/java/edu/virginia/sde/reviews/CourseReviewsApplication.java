@@ -22,6 +22,19 @@ public class CourseReviewsApplication extends Application {
         LoginLogic.setLoginDataDriver(new LoginDataDriver("LoginDataDriverTester.sqlite"));
         var controller = (LoginController) fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
+//        FXMLLoader fxmlLoader = new FXMLLoader(
+//                CourseReviewsApplication.class.getResource("course-search.fxml")
+//        );
+//        CourseDataDriver cdd = new CourseDataDriver("LoginDataDriverTester.sqlite");
+//        CourseLogic.setCourseDataDriver(cdd);
+//
+//        Scene scene = new Scene(fxmlLoader.load());
+//        primaryStage.setTitle("Course Reviews");
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
+//
+//        var controller = (CourseSearchController) fxmlLoader.getController();
+//        controller.setPrimaryStage(primaryStage);
     }
 
 }

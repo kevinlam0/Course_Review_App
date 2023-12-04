@@ -39,6 +39,13 @@ public class CourseLogic {
     }
 
     public static ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
+        if (mnemonic.strip().equals("")) {
+//            System.out.println(mnemonic.strip().equals(""));
+            mnemonic = null;
+//            System.out.println(mnemonic);
+        }
+        if (courseNumber == 0) { courseNumber = null; }
+        if (courseTitle.strip().equals("")) { courseTitle = null; }
         return courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
     }
     public static double calculateReviewAverage(int courseID) throws SQLException {
