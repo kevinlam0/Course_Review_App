@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public class CourseLogic {
     CourseDataDriver courseDataDriver;
-    public CourseLogic(String sqliteFileName) { this.courseDataDriver = new CourseDataDriver(sqliteFileName);}
+    public CourseLogic(String sqliteFileName) { courseDataDriver = new CourseDataDriver(sqliteFileName);}
     public void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
         if (mnemonic.length() < 2 || mnemonic.length() > 4) {
             throw new InvalidCourseException("The mnemonic cannot be blank nor longer than four characters");
