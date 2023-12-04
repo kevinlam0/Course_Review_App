@@ -23,8 +23,15 @@
             <!--connect search button action method to controller-->
             <Button fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
         </HBox>
-        <ListView fx:id="courseListView" prefHeight="300" prefWidth="600" />
 
+        <TableView fx:id="courseTable" prefHeight="200" prefWidth="600">
+            <columns>
+                <TableColumn fx:id="subjectColumn" text="Subject"/>
+                <TableColumn fx:id="numberColumn" text="Number"/>
+                <TableColumn fx:id="titleColumn" text="Title"/>
+                <TableColumn fx:id="ratingColumn" text="Rating"/>
+            </columns>
+        </TableView>
         <!-- Add Course Section -->
         <Label text="Add Course"/>
         <HBox spacing="10">
