@@ -68,15 +68,10 @@ public class CourseSearchController {
     @FXML
     private void handleSearch(){
         String subject = subjectField.getText();
-//        System.out.println("This is the subject: " + "\""+subject+" \"");
         int number = parseNumber(numberField.getText());
-        System.out.println("This is the subject: " + "\""+number+" \"");
         String title = titleField.getText();
 
         try {
-            ArrayList<Course> courses = CourseLogic.filterCoursesBy(subject, number, title);
-            System.out.println(courses.size());
-            courses.forEach(System.out::println);
             ObservableList<Course> searchResults = FXCollections.observableArrayList(CourseLogic.filterCoursesBy(subject, number, title));
             courseTable.setItems(searchResults);
         } catch (SQLException e) {
