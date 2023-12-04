@@ -1,6 +1,9 @@
 package edu.virginia.sde.reviews;
+import java.util.Optional;
+
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CourseDataDriver extends DatabaseDriver{
@@ -40,5 +43,31 @@ public class CourseDataDriver extends DatabaseDriver{
             super.rollback();
             throw e;
         }
+    }
+
+    public Optional<Object> allCourses(){
+        try {
+            if (connection.isClosed()) {
+                throw new IllegalStateException("Connection is not open");
+            }
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM Courses");
+            ResultSet resultSet = statement.executeQuery();
+            statement.close();
+
+            if (isEmpty(resultSet)) {
+                statement.close();
+                return Optional.empty();
+
+            }
+        }
+        catch (SQLException e) {
+
+        }
+        return null;
+    }
+
+    private boolean isEmpty(ResultSet resultSet) throws SQLException {
+        return !resultSet.isBeforeFirst() && resultSet.getRow() == 0;
     }
 }
