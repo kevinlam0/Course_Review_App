@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.SQLException;
 
@@ -21,20 +20,21 @@ public class CourseSearchController {
     @FXML
     private TableColumn<Course, Double> ratingColumn;
 
+    //objects for search
     @FXML
-    private TextField subjectSearchField;
+    private TextField subjectField;
     @FXML
-    private TextField numberSearchField;
+    private TextField numberField;
     @FXML
-    private TextField titleSearchField;
+    private TextField titleField;
+
+    //objects for add
     @FXML
-    private Button searchButton;
+    private TextField addSubjectField;
     @FXML
-    private Button addButton;
+    private TextField addNumberField;
     @FXML
-    private Button myReviewsButton;
-    @FXML
-    private Button logoutButton;
+    private TextField addTitleField;
 
     private ObservableList<Course> courses;
 
@@ -53,10 +53,11 @@ public class CourseSearchController {
     public void initialize(){
         // initialize tables
     }
+    @FXML
     private void handleSearch(){
-        String subject = subjectSearchField.getText();
-        int number = parseNumber(numberSearchField.getText());
-        String title = titleSearchField.getText();
+        String subject = subjectField.getText();
+        int number = parseNumber(numberField.getText());
+        String title = titleField.getText();
 
         // Perform the search using CourseLogic
         try {
@@ -67,11 +68,12 @@ public class CourseSearchController {
             // Handle database-related errors
         }
     }
+    @FXML
     private void handleAdd(){
         try {
-            String subject = subjectSearchField.getText();
-            int number = parseNumber(numberSearchField.getText());
-            String title = titleSearchField.getText();
+            String subject = addSubjectField.getText();
+            int number = parseNumber(addNumberField.getText());
+            String title = addTitleField.getText();
 
             courseLogic.addCourse(subject, number, title);
 
@@ -83,12 +85,14 @@ public class CourseSearchController {
             // Handle invalid course or database-related errors
         }
     }
+    @FXML
     private void switchToMyReviews(){
-
+        // scene switch my reviews screen
     }
-
+    @FXML
     private void handleLogout(){
-
+        // scene switch to log in screen
+        // make sure previous log in data is cleared
     }
     private int parseNumber(String input) {
         try {

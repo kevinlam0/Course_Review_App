@@ -7,12 +7,11 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml/1"
+            xmlns:fx="http://javafx.com/fxml"
             fx:controller="edu.virginia.sde.reviews.CourseSearchController"
-
             prefHeight="400.0" prefWidth="600.0">
     <!-- Search Section -->
-    <VBox alignment="CENTER" spacing="10" layoutX="20" layoutY="20">
+    <VBox spacing="10" layoutX="20" layoutY="20">
         <Label text="Course Search" font="Bold 16"/>
         <HBox spacing="10">
             <Label text="Subject:"/>
@@ -23,7 +22,7 @@
             <TextField fx:id="titleField" />
             <!--Button text="Search" onAction="#searchButtonClicked"/ -->
             <!--connect search button action method to controller-->
-            <!--Button text = "Search"/-->
+            <Button fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
         </HBox>
         <ListView fx:id="courseListView" prefHeight="300" prefWidth="600" />
 
@@ -37,13 +36,11 @@
             <Label text="Title:"/>
             <TextField fx:id="addTitleField" />
             <!-- Add action to controller: Button text="Add Course" onAction="#addCourseButtonClicked"/-->
-            <!--Button text="Add Course" /-->
+            <Button text="Add Course" onAction="#handleAdd"/>
         </HBox>
 
         <!-- Navigation Buttons that need to be implemented-->
-        <!--Button text="My Reviews" onAction="#myReviewsButtonClicked"/-->
-        <!--Button text = "My Reviews"/-->
-        <!--Button text="Log Out" onAction="#logOutButtonClicked"/-->
-        <!--Button text="Log out"/-->
+        <Button text = "My Reviews" onAction="#switchToMyReviews"/>
+        <Button text="Log out" onAction="#handleLogout"/>
     </VBox>
 </AnchorPane>
