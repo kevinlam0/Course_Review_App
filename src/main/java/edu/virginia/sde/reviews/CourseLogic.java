@@ -34,5 +34,8 @@ public class CourseLogic {
     public ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
         return courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
     }
+    public double calculateReviewAverage(int id) {
+        return 0.0;
+    }
 
 }
