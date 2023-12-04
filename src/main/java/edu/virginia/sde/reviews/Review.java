@@ -36,6 +36,6 @@ public class Review {
         return comment;
     }
     public String toString() {
-        return courseID + " " + username +" "+datetime+" "+ rating + " " + comment;
+        return "Review:\n"+courseID + " " + username +" "+datetime+" "+ rating + " " + comment;
     }
 }
