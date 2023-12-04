@@ -7,19 +7,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.Scene?>
 
-<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
+<VBox xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/fxml/1"
+            fx:controller="edu.virginia.sde.reviews.Exceptions.MyReviewsController"
+            prefHeight="400.0" prefWidth="600.0">
 
     <Label text="My Reviews" />
-
-    <!-- ListView to display reviews -->
     <ListView fx:id="reviewsListView"
-              prefHeight="400" prefWidth="600"
-              onMouseClicked="#handleReviewClick">
+              prefHeight="400" prefWidth="600"/>
+
+
+
         <!-- Define your cell factory here -->
-    </ListView>
+    </VBox>
 
     <!-- Back button -->
-    <HBox alignment="CENTER_RIGHT" padding="10">
-        <Button text="Back" onAction="#handleBackButton"/>
-    </HBox>
-</VBox>
+
+
+
