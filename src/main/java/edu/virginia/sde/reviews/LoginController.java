@@ -67,6 +67,7 @@ public class LoginController {
                 LoginLogic.createUser(newUsername, newPassword);
                 // handle successful user creation
                 System.out.println("User created successfully");
+                errorLabel.setText("");
             }
 
         } catch (UserAlreadyExistsException e) {
