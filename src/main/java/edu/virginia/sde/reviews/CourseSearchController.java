@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.sql.SQLException;
 
@@ -51,7 +52,18 @@ public class CourseSearchController {
         this.courses = FXCollections.observableArrayList();
     }
     public void initialize(){
-        // initialize tables
+        subjectColumn.setCellValueFactory(new PropertyValueFactory<>("mnemonic"));
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("average"));
+
+        try {
+            courses.addAll(courseLogic.getAllCourses());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // handle database errors
+        }
+        courseTable.setItems(courses);
     }
     @FXML
     private void handleSearch(){
@@ -59,13 +71,12 @@ public class CourseSearchController {
         int number = parseNumber(numberField.getText());
         String title = titleField.getText();
 
-        // Perform the search using CourseLogic
         try {
             ObservableList<Course> searchResults = FXCollections.observableArrayList(courseLogic.filterCoursesBy(subject, number, title));
             courseTable.setItems(searchResults);
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle database-related errors
+            // handle database errors
         }
     }
     @FXML
@@ -82,7 +93,7 @@ public class CourseSearchController {
             courses.addAll(courseLogic.getAllCourses());
         } catch (InvalidCourseException | SQLException e) {
             e.printStackTrace();
-            // Handle invalid course or database-related errors
+            // Handle invalid course or database errors
         }
     }
     @FXML
