@@ -20,7 +20,6 @@
             <TextField fx:id="numberField" />
             <Label text="Title:"/>
             <TextField fx:id="titleField" />
-            <!--Button text="Search" onAction="#searchButtonClicked"/ -->
             <!--connect search button action method to controller-->
             <Button fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
         </HBox>
