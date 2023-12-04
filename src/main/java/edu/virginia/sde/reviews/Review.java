@@ -8,7 +8,7 @@ public class Review {
     int rating;
     String comment;
 
-    public Review(int courseID, String username, String datetime, int rating, String comment){
+    public Review(int courseID, String username, String datetime, String comment, int rating){
         this.courseID = courseID;
         this.username = username;
         this.datetime = datetime;

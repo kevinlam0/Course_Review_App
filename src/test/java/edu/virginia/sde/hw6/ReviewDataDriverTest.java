@@ -38,7 +38,7 @@ public class ReviewDataDriverTest {
     void findAllReviewForCourse_existingCourse() throws SQLException {
         ReviewDataDriver cdd = new ReviewDataDriver("LoginDataDriverTester.sqlite");
         cdd.connect();
-        ArrayList<Review> courses = cdd.findAllReviewsForCourse(3);
+        ArrayList<Review> courses = cdd.findAllReviewsForCourse(1);
         courses.forEach(System.out::println);
     }
     @Test
