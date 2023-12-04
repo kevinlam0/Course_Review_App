@@ -6,13 +6,13 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/fxml/1"
             fx:controller="edu.virginia.sde.reviews.CourseSearchController"
             prefHeight="400.0" prefWidth="600.0">
     <!-- Search Section -->
     <VBox spacing="10" layoutX="20" layoutY="20">
-        <Label text="Course Search" font="Bold 16"/>
+        <Label text="Course Search"/>
         <HBox spacing="10">
             <Label text="Subject:"/>
             <TextField fx:id="subjectField" />
@@ -27,7 +27,7 @@
         <ListView fx:id="courseListView" prefHeight="300" prefWidth="600" />
 
         <!-- Add Course Section -->
-        <Label text="Add Course" font="Bold 16"/>
+        <Label text="Add Course"/>
         <HBox spacing="10">
             <Label text="Subject:"/>
             <TextField fx:id="addSubjectField" />
