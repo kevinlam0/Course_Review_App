@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginController {
+    public Label createSuccessLabel;
     @FXML
     private TextField usernameField;
     @FXML
@@ -59,6 +60,7 @@ public class LoginController {
     public void handleCreateAccount(){
         String newUsername = newUsernameField.getText();
         String newPassword = newPasswordField.getText();
+        createSuccessLabel.setText("");
 
         try {
             if (newPassword.length() < 8)
@@ -67,6 +69,8 @@ public class LoginController {
                 LoginLogic.createUser(newUsername, newPassword);
                 // handle successful user creation
                 System.out.println("User created successfully");
+                errorLabel.setText("");
+                createSuccessLabel.setText("Successfully created new account: " + newUsername);
             }
 
         } catch (UserAlreadyExistsException e) {
