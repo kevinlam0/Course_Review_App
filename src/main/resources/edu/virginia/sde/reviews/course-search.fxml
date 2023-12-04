@@ -1,47 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
-    <VBox alignment="CENTER" prefHeight="300.0" prefWidth="400.0" spacing="20" style="-fx-background-color: #fafafa; -fx-padding: 20;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="50.0">
-        <Label style="-fx-background-color: #232D4B; -fx-text-fill: white; -fx-padding: 10" text="Course Search" />
-
-        <!-- Search Section -->
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/fxml/1"
+            fx:controller="edu.virginia.sde.reviews.CourseSearchController"
+            prefHeight="400.0" prefWidth="600.0">
+    <!-- Search Section -->
+    <VBox spacing="10" layoutX="20" layoutY="20">
+        <Label text="Course Search"/>
         <HBox spacing="10">
             <Label text="Subject:"/>
-            <TextField fx:id="subjectField" promptText="Subject" />
+            <TextField fx:id="subjectField" />
             <Label text="Number:"/>
-            <TextField fx:id="numberField" promptText="Number" />
+            <TextField fx:id="numberField" />
             <Label text="Title:"/>
-            <TextField fx:id="titleField" promptText="Title" />
-            <Button text="Search" onAction="#handleSearch" />
+            <TextField fx:id="titleField" />
+            <!--connect search button action method to controller-->
+            <Button fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
         </HBox>
-
-        <!-- TableView Section -->
-        <TableView fx:id="courseTable" prefHeight="200" prefWidth="600">
-            <columns>
-                <TableColumn fx:id="subjectColumn" text="Subject"/>
-                <TableColumn fx:id="numberColumn" text="Number"/>
-                <TableColumn fx:id="titleColumn" text="Title"/>
-                <TableColumn fx:id="ratingColumn" text="Rating"/>
-            </columns>
-        </TableView>
+        <ListView fx:id="courseListView" prefHeight="300" prefWidth="600" />
 
         <!-- Add Course Section -->
+        <Label text="Add Course"/>
         <HBox spacing="10">
             <Label text="Subject:"/>
-            <TextField fx:id="addSubjectField" promptText="Subject" />
+            <TextField fx:id="addSubjectField" />
             <Label text="Number:"/>
-            <TextField fx:id="addNumberField" promptText="Number" />
+            <TextField fx:id="addNumberField" />
             <Label text="Title:"/>
-            <TextField fx:id="addTitleField" promptText="Title" />
-            <Button text="Add Course" onAction="#handleAdd" />
+            <TextField fx:id="addTitleField" />
+            <!-- Add action to controller: Button text="Add Course" onAction="#addCourseButtonClicked"/-->
+            <Button text="Add Course" onAction="#handleAdd"/>
         </HBox>
 
-        <!-- Navigation Buttons Section -->
-        <Button text="My Reviews" onAction="#switchToMyReviews"/>
+        <!-- Navigation Buttons that need to be implemented-->
+        <Button text = "My Reviews" onAction="#switchToMyReviews"/>
         <Button text="Log out" onAction="#handleLogout"/>
     </VBox>
 </AnchorPane>
-

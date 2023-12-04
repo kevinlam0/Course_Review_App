@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.SQLException;
 
 public class CourseSearchController {
+    public Button searchButton;
+    public ListView courseListView;
     @FXML
     private TableView<Course> courseTable;
     @FXML
@@ -21,7 +23,6 @@ public class CourseSearchController {
     @FXML
     private TableColumn<Course, Double> ratingColumn;
 
-    //objects for search
     @FXML
     private TextField subjectField;
     @FXML
@@ -29,7 +30,6 @@ public class CourseSearchController {
     @FXML
     private TextField titleField;
 
-    //objects for add
     @FXML
     private TextField addSubjectField;
     @FXML
