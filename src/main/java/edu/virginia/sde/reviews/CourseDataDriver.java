@@ -1,6 +1,5 @@
 package edu.virginia.sde.reviews;
 import edu.virginia.sde.reviews.Exceptions.InvalidCourseException;
-
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -47,6 +46,7 @@ public class CourseDataDriver extends DatabaseDriver{
             throw e;
         }
     }
+
 
     /* Used for querying for the main screen */
     public ArrayList<Course> getAllCourses() throws SQLException{
@@ -159,6 +159,7 @@ public class CourseDataDriver extends DatabaseDriver{
         );
         return Optional.of(course);
     }
+
     private boolean isEmpty(ResultSet resultSet) throws SQLException {
         return !resultSet.isBeforeFirst() && resultSet.getRow() == 0;
     }
