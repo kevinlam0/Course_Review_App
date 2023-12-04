@@ -82,6 +82,16 @@ public class ReviewDataDriver extends DatabaseDriver{
         statement.close();
         this.commit();
     }
+
+    public void updateReview(int reviewID, String newComment) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(
+                "UPDATE Reviews SET Time = CURRENT_TIMESTAMP, Review = ? WHERE ID = ?");
+        statement.setString(1, newComment);
+        statement.setInt(2, reviewID);
+        statement.execute();
+        statement.close();
+        this.commit();
+    }
     private boolean isEmpty(ResultSet resultSet) throws SQLException {
         return !resultSet.isBeforeFirst() && resultSet.getRow() == 0;
     }
