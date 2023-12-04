@@ -58,8 +58,10 @@ public class CourseReviewsController {
 
     private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
 
+    private ReviewDataDriver reviewDataDriver;
+
     public CourseReviewsController(){
-        ReviewDataDriver reviewDataDriver = new ReviewDataDriver(sqliteFileName);
+        reviewDataDriver = new ReviewDataDriver(sqliteFileName);
     }
 
     public void initialize() {
@@ -106,6 +108,11 @@ public class CourseReviewsController {
 
     }
     @FXML
+    private void handleBack() {
+        // Implement navigation logic to go back to the Course Search Screen
+        // You can use the FXMLLoader to load the Course Search FXML file and show the scene
+    }
+    @FXML
     private void handleReviewSubmission() {
         // Get user input for new review
         int newRating = Integer.parseInt(ratingField.getText());
@@ -120,7 +127,7 @@ public class CourseReviewsController {
 
         // Insert the new review into the database (replace with your data insertion logic)
         try {
-            reviewDataDriver.addReview(newReview);
+            reviewDataDriver.addReview(currentCourseID, getCurrentUsername(), newRating, newComment);
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle database error
