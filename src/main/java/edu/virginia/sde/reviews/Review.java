@@ -35,4 +35,7 @@ public class Review {
     public String getComment() {
         return comment;
     }
+    public String toString() {
+        return courseID + " " + username +" "+datetime+" "+ rating + " " + comment;
+    }
 }
