@@ -1,5 +1,7 @@
 package edu.virginia.sde.reviews;
+import edu.virginia.sde.reviews.Exceptions.PasswordIncorrectException;
 import edu.virginia.sde.reviews.Exceptions.UserAlreadyExistsException;
+import edu.virginia.sde.reviews.Exceptions.UserNotFoundException;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
