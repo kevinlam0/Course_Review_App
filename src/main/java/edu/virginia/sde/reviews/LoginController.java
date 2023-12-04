@@ -15,6 +15,10 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
     @FXML
+    private TextField newUsernameField;
+    @FXML
+    private PasswordField newPasswordField;
+    @FXML
     private Label errorLabel;
     private LoginLogic loginLogic;
 
@@ -39,8 +43,8 @@ public class LoginController {
         }
     }
     public void handleCreateAccount(){
-        String newUsername = usernameField.getText();
-        String newPassword = passwordField.getText();
+        String newUsername = newUsernameField.getText();
+        String newPassword = newPasswordField.getText();
 
         try {
             loginLogic.createUser(newUsername, newPassword);
