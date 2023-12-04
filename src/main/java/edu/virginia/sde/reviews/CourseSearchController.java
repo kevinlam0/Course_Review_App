@@ -102,4 +102,6 @@ public class CourseSearchController {
             return 0;
         }
     }
+
+
 }
