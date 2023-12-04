@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.Scene?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.MyReviewsController">
+
+    <Label text="My Reviews" />
+
+    <!-- ListView to display reviews -->
+    <ListView fx:id="reviewsListView"
+              prefHeight="400" prefWidth="600"
+              onMouseClicked="#handleReviewClick">
+        <!-- Define your cell factory here -->
+    </ListView>
+
+    <!-- Back button -->
+    <HBox alignment="CENTER_RIGHT" padding="10">
+        <Button text="Back" onAction="#handleBackButton"/>
+    </HBox>
+</VBox>
