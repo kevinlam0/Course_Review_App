@@ -60,6 +60,7 @@ public class LoginDataDriver extends DatabaseDriver{
         if (connection.isClosed()) {
             throw new IllegalStateException("Connection is not open");
         }
+
         PreparedStatement statement = connection.prepareStatement(
                 ("SELECT * FROM Users WHERE Username = ?"));
         statement.setString(1, username);
@@ -80,11 +81,13 @@ public class LoginDataDriver extends DatabaseDriver{
             statement.setString(1, username);
             statement.setString(2, password);
             statement.execute();
+
             statement.close();
         }
         catch (SQLException e) {
             super.rollback();
             throw e;
         }
+        this.commit();
     }
 }
