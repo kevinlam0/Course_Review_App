@@ -17,7 +17,7 @@ public class ReviewDataDriver extends DatabaseDriver{
                     Username Text,
                     Time DATETIME,
                     Review TEXT,
-                    Rating INTEGER, 
+                    Rating INTEGER,
                     FOREIGN KEY (Course_ID) REFERENCES Courses(ID) ON DELETE CASCADE,
                     FOREIGN KEY (Username) REFERENCES Users(Username) ON DELETE CASCADE,
                     UNIQUE (Course_ID, Username)
@@ -42,6 +42,7 @@ public class ReviewDataDriver extends DatabaseDriver{
             statement.setInt(4, rating);
             statement.execute();
             statement.close();
+            this.commit();
         }
         catch (SQLException e) {
             super.rollback();

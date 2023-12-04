@@ -81,6 +81,7 @@ public class LoginController {
     public void handleClose(){
         Platform.exit();
     }
+
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
@@ -97,5 +98,6 @@ public class LoginController {
         catch (IOException e) {
             throw new RuntimeException(e);
         }
+
     }
 }
