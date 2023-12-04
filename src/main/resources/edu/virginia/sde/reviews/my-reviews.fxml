@@ -15,7 +15,9 @@
     <Label text="My Reviews" />
     <ListView fx:id="reviewsListView"
               prefHeight="400" prefWidth="600"/>
-
+    <HBox>
+        <Button text="Back"/>
+    </HBox>
 
 
         <!-- Define your cell factory here -->
