@@ -10,6 +10,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.sql.SQLException;
 
 public class CourseSearchController {
+    public Button searchButton;
+    public ListView courseListView;
     @FXML
     private TableView<Course> courseTable;
     @FXML
@@ -22,19 +24,18 @@ public class CourseSearchController {
     private TableColumn<Course, Double> ratingColumn;
 
     @FXML
-    private TextField subjectSearchField;
+    private TextField subjectField;
     @FXML
-    private TextField numberSearchField;
+    private TextField numberField;
     @FXML
-    private TextField titleSearchField;
+    private TextField titleField;
+
     @FXML
-    private Button searchButton;
+    private TextField addSubjectField;
     @FXML
-    private Button addButton;
+    private TextField addNumberField;
     @FXML
-    private Button myReviewsButton;
-    @FXML
-    private Button logoutButton;
+    private TextField addTitleField;
 
     private ObservableList<Course> courses;
 
@@ -51,27 +52,39 @@ public class CourseSearchController {
         this.courses = FXCollections.observableArrayList();
     }
     public void initialize(){
-        // initialize tables
-    }
-    private void handleSearch(){
-        String subject = subjectSearchField.getText();
-        int number = parseNumber(numberSearchField.getText());
-        String title = titleSearchField.getText();
+        subjectColumn.setCellValueFactory(new PropertyValueFactory<>("mnemonic"));
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("average"));
 
-        // Perform the search using CourseLogic
+        try {
+            courses.addAll(courseLogic.getAllCourses());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // handle database errors
+        }
+        courseTable.setItems(courses);
+    }
+    @FXML
+    private void handleSearch(){
+        String subject = subjectField.getText();
+        int number = parseNumber(numberField.getText());
+        String title = titleField.getText();
+
         try {
             ObservableList<Course> searchResults = FXCollections.observableArrayList(courseLogic.filterCoursesBy(subject, number, title));
             courseTable.setItems(searchResults);
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle database-related errors
+            // handle database errors
         }
     }
+    @FXML
     private void handleAdd(){
         try {
-            String subject = subjectSearchField.getText();
-            int number = parseNumber(numberSearchField.getText());
-            String title = titleSearchField.getText();
+            String subject = addSubjectField.getText();
+            int number = parseNumber(addNumberField.getText());
+            String title = addTitleField.getText();
 
             courseLogic.addCourse(subject, number, title);
 
@@ -80,15 +93,17 @@ public class CourseSearchController {
             courses.addAll(courseLogic.getAllCourses());
         } catch (InvalidCourseException | SQLException e) {
             e.printStackTrace();
-            // Handle invalid course or database-related errors
+            // Handle invalid course or database errors
         }
     }
+    @FXML
     private void switchToMyReviews(){
-
+        // scene switch my reviews screen
     }
-
+    @FXML
     private void handleLogout(){
-
+        // scene switch to log in screen
+        // make sure previous log in data is cleared
     }
     private int parseNumber(String input) {
         try {
@@ -98,4 +113,6 @@ public class CourseSearchController {
             return 0;
         }
     }
+
+
 }
