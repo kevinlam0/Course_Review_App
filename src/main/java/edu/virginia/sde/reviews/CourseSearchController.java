@@ -123,7 +123,7 @@ public class CourseSearchController {
         Course course = courseTable.getSelectionModel().getSelectedItem();
         if (course != null) {
             CourseLogic.setCurrentCourse(course.getId());
-            switchToCourse(course.getId());
+            switchToCourse();
         }
     }
 
@@ -147,7 +147,7 @@ public class CourseSearchController {
             return 0;
         }
     }
-    private void switchToCourse(int id) throws IOException {
+    private void switchToCourse() throws IOException {
         FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"course-reviews.fxml", "Review of Course");
         CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);

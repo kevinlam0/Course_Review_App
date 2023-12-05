@@ -49,10 +49,10 @@ public class MyReviewsController {
         Review review = reviewTable.getSelectionModel().getSelectedItem();
         if (review != null) {
             CourseLogic.setCurrentCourse(review.getCourseID());
-            switchToCourse(review.getCourseID());
+            switchToCourse();
         }
     }
-    private void switchToCourse(int id) throws IOException {
+    private void switchToCourse() throws IOException {
         FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage, "course-reviews.fxml", "Review of Course");
         CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
