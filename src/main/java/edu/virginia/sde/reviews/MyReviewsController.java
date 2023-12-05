@@ -117,7 +117,7 @@ public class MyReviewsController {
 
             // Load the FXML file for the CourseSearch scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("course-search.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
+            Scene scene = new Scene(loader.load());
 
 
 
