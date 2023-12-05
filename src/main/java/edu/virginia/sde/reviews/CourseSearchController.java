@@ -63,8 +63,9 @@ public class CourseSearchController {
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("average"));
         errorLabel.setText("Hello "+Credentials.getUsername());
-        ReviewDataDriver rdd = new ReviewDataDriver(Credentials.getSqliteDataName());
-        ReviewLogic.setReviewDataDriver(rdd);
+        ReviewLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
+        CourseLogic.setCourseDataDriver(new CourseDataDriver(Credentials.getSqliteDataName()));
+        CourseLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
 
         try {
             courses.addAll(CourseLogic.getAllCourses());
