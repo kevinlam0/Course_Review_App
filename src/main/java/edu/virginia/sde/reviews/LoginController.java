@@ -95,7 +95,7 @@ public class LoginController {
                     CourseReviewsApplication.class.getResource(
                             "course-search.fxml")
             );
-            CourseDataDriver cdd = new CourseDataDriver("LoginDataDriverTester.sqlite");
+            CourseDataDriver cdd = new CourseDataDriver(Credentials.getSqliteDataName());
             CourseLogic.setCourseDataDriver(cdd);
             Scene scene = new Scene(fxmlLoader.load());
             primaryStage.setTitle("Course Reviews");
