@@ -49,49 +49,14 @@ public class MyReviewsController {
             commentsColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
             //add logic to get data from database
-        try {
 
-            List<Review> userReviews = DatabaseHelper.getUserReviews("username");
-            reviewTable.getItems().addAll(userReviews);
-
-            // Make each row clickable
-            reviewTable.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1) {
-                    handleReviewClick(); // Handle the click event
-                }
-            });
-
-        } catch (SQLException e) {
-            e.printStackTrace(); // Handle database errors
-        }
 
         //missing try-catch for database errors(?)
     }
 
-    private void handleReviewClick() {
-        Review selectedReview = reviewTable.getSelectionModel().getSelectedItem();
 
-        // Assuming you have a method to get the Course details based on the review
-        Course selectedCourse = getCourseDetails(selectedReview.getCourseID());
 
-        // Navigate to the CourseReview scene or perform any other desired action
-        navigateToCourse(selectedCourse);
-    }
 
-    private void navigateToCourse(Course selectedCourse)  {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("course-review.fxml"));
-        Parent root = loader.load();
-        Object controller = loader.getController();
-        controller.initialize(course); // Pass the selected Course to the CourseReviewController if needed
-
-        Scene scene = new Scene(root);
-        Stage stage = (Stage) backButton.getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    } catch ( IOException e) {
-        e.printStackTrace(); // Handle FXML loading errors
-    }
-    }
 
     private Course getCourseDetails(int courseID) {
         //need to get the logic to get the course details from the data source
