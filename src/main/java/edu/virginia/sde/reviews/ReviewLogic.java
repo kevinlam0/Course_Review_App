@@ -24,6 +24,7 @@ public class ReviewLogic {
         reviewDataDriver.addReview(course_id, username, rating, comment);
         reviewDataDriver.disconnect();
     }
+
     public static void setReviewDataDriver(ReviewDataDriver rdd) {
         reviewDataDriver = rdd;
     }

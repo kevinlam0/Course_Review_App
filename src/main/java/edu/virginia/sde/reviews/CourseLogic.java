@@ -157,5 +157,22 @@ public class CourseLogic {
         courseDataDriver.disconnect();
     }
 
+    public static void deleteCurrentReview() throws SQLException {
+        reviewDataDriver.connect();
+        try {
+            reviewDataDriver.deleteReview(currentCourse, Credentials.getUsername());
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            reviewDataDriver.disconnect();
+        }
+        double avg = CourseLogic.calculateReviewAverage(currentCourse);
+        courseDataDriver.connect();
+        courseDataDriver.updateCourseAverage(currentCourse, avg);
+        courseDataDriver.disconnect();
+    }
+
 
 }

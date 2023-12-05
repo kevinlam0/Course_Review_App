@@ -30,6 +30,8 @@ public class CourseReviewsController {
     public RadioButton rating4;
     @FXML
     public RadioButton rating5;
+    public Button deleteReviewButton;
+    public Label errorLabel;
     @FXML
     private ToggleGroup ratingToggleGroup;
     @FXML
@@ -158,14 +160,39 @@ public class CourseReviewsController {
             Course course = CourseLogic.getCurrentCourse();
             averageRatingLabel.setText(course.getAverage());
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
+    private void handleDeleteReview() {
 
+        try {
+            ArrayList<Review> reviews = CourseLogic.getCurrentReview();
+
+            if (reviews.isEmpty()){
+                throw new IllegalStateException("You cannot delete a review if you do not have one currently submitted");
+            }
+            else {
+                CourseLogic.deleteCurrentReview();
+                reviewsData.clear();
+                reviewsData.addAll(CourseLogic.getAllReviews());
+
+                // Clears the review fields
+                ratingToggleGroup.selectToggle(null);
+                commentField.clear();
+            }
+
+            Course course = CourseLogic.getCurrentCourse();
+            averageRatingLabel.setText(course.getAverage());
 
         } catch (SQLException e) {
             e.printStackTrace();
             // handle database error
         }
-
-
+        catch (IllegalStateException e){
+            errorLabel.setText(e.getMessage());
+        }
         // Clear input fields
 //        ratingField.clear();
 //        commentField.clear();
