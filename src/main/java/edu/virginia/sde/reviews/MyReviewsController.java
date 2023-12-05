@@ -96,16 +96,27 @@ public class MyReviewsController {
         return null;
     }
 
+    /*
+    * // scene switch to log in screen
+        // make sure previous log in data is cleared
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                CourseReviewsApplication.class.getResource("log-in.fxml")
+        );
+        Scene scene = new Scene(fxmlLoader.load());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        LoginController controller = (LoginController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+        Credentials.setUsername("");*/
     @FXML
     private void backToCourseSearch(){
         // scene switch CourseSearch scene
-        try {
+
             // Load the FXML file for the CourseSearch scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("course-search.fxml"));
-            Parent root = loader.load();
+            Scene scene = new Scene(fxmlLoader.load());
 
-            // Create a new Scene with the loaded FXML content
-            Scene scene = new Scene(root);
+
 
             // Get the Stage from the current button (assuming the button is part of a Scene)
             Stage stage = (Stage) backButton.getScene().getWindow();
@@ -115,9 +126,7 @@ public class MyReviewsController {
 
 
             stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
     }
     }
 
