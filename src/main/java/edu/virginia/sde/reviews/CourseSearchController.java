@@ -48,6 +48,8 @@ public class CourseSearchController {
     private LoginLogic loginLogic;
     private Stage primaryStage;
 
+    private String[] prevQuery = {"", "", ""};
+
     //private CourseReviewController courseReviewController
     // (implement after CourseReviewController is made)
     public CourseSearchController(){
@@ -73,9 +75,16 @@ public class CourseSearchController {
     @FXML
     private void handleSearch(){
         errorLabel.setText("");
+
         String subject = subjectField.getText().strip();
         int number = parseNumber(numberField.getText().strip());
         String title = titleField.getText().strip();
+
+        prevQuery[0] = subject;
+        prevQuery[1] = numberField.getText().strip();
+        prevQuery[2] = title;
+
+
 
 
         try {
@@ -101,6 +110,7 @@ public class CourseSearchController {
             // Refresh the course list after adding
             courses.clear();
             courses.addAll(CourseLogic.getAllCourses());
+            prevSearch();
 
         } catch (InvalidCourseException e) {
             errorLabel.setText(e.getMessage());
@@ -138,6 +148,25 @@ public class CourseSearchController {
         } catch (NumberFormatException e) {
             // handle invalid number format
             return 0;
+        }
+    }
+
+    private void prevSearch(){
+        errorLabel.setText("");
+        String subject = prevQuery[0].strip();
+        int number = parseNumber(prevQuery[1].strip());
+        String title = prevQuery[2].strip();
+
+
+        try {
+            ObservableList<Course> searchResults = FXCollections.observableArrayList(CourseLogic.filterCoursesBy(subject, number, title));
+            courseTable.setItems(searchResults);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // handle database errors
+        }
+        catch (InvalidCourseException e) {
+            errorLabel.setText(e.getMessage());
         }
     }
 
