@@ -135,7 +135,6 @@ public class MyReviewsController {
         primaryStage.show();
         CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
-        controller.setCurrentCourseID(id);
 
     }
     @FXML
