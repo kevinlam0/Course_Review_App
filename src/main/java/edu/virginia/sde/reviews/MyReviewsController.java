@@ -75,7 +75,7 @@ public class MyReviewsController {
         navigateToCourse(selectedCourse);
     }
 
-    private void navigateToCourse(Course selectedCourse) throws IOException {
+    private void navigateToCourse(Course selectedCourse)  {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("course-review.fxml"));
         Parent root = loader.load();
         Object controller = loader.getController();
