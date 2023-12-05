@@ -56,7 +56,7 @@ public class CourseReviewsController {
     @FXML
     private Button backButton;
 
-    private int currentCourseID;  // Placeholder for the current course ID
+    private int currentCourseID;
 
     private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
 
@@ -74,7 +74,7 @@ public class CourseReviewsController {
         timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
-        // Add button to each row for actions (edit/delete)
+        // Add button to each row for edit and delete actions
         actionsColumn.setCellFactory(col -> new TableCell<>() {
             private final Button editButton = new Button("Edit");
 
@@ -98,12 +98,12 @@ public class CourseReviewsController {
             }
         });
 
-        // Populate the TableView with reviews data
+        // Add reviews data to TableView
         try {
             reviewsData.addAll(reviewDataDriver.findAllReviewsForCourse(currentCourseID));
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle database error
+            // handle database error
         }
 
         reviewsTable.setItems(reviewsData);
@@ -116,13 +116,11 @@ public class CourseReviewsController {
             ReviewLogic.editReview(course_id, rating, comment);
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle database error
+            // handle database error
         }
     }
     @FXML
     private void handleBack() {
-        // Implement navigation logic to go back to the Course Search Screen
-        // You can use the FXMLLoader to load the Course Search FXML file and show the scene
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("course-search.fxml"));
             Parent root = loader.load();
@@ -134,23 +132,19 @@ public class CourseReviewsController {
     }
     @FXML
     private void handleReviewSubmission() {
-        // Get user input for new review
         int newRating = Integer.parseInt(ratingField.getText());
         String newComment = commentField.getText();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        // Create a new review object
         Review newReview = new Review(currentCourseID, getCurrentUsername(), timestamp.toString(), newComment, newRating);
 
-        // Add the new review to the TableView
         reviewsData.add(newReview);
 
-        // Insert the new review into the database (replace with your data insertion logic)
         try {
             reviewDataDriver.addReview(currentCourseID, getCurrentUsername(), newRating, newComment);
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle database error
+            // handle database error
         }
 
         // Clear input fields
