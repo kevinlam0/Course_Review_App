@@ -11,13 +11,9 @@ import java.util.Optional;
 import static java.lang.Math.round;
 
 public class CourseLogic {
-    CourseDataDriver courseDataDriver;
-    private final String sqlDatabaseFile;
-    public CourseLogic(String sqliteFileName) {
-        this.sqlDatabaseFile = sqliteFileName;
-        this.courseDataDriver = new CourseDataDriver(sqlDatabaseFile);
-    }
-    public void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
+    private static CourseDataDriver courseDataDriver;
+
+    public static void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
         if (mnemonic.length() < 2 || mnemonic.length() > 4) {
             throw new InvalidCourseException("The mnemonic cannot be blank nor longer than four characters");
         }
@@ -33,17 +29,20 @@ public class CourseLogic {
         }
         courseDataDriver.addCourse(mnemonic.toUpperCase(), courseNumber, courseTitle);
     }
-    public ArrayList<Course> getAllCourses() throws SQLException {
+    public static ArrayList<Course> getAllCourses() throws SQLException {
         return courseDataDriver.getAllCourses();
     }
-    public Optional<Course> getCourseByID(int id) throws SQLException {
-        return courseDataDriver.selectCourseByID(id);
+    public static Course getCourseByID(int id) throws SQLException {
+        Optional<Course> course = courseDataDriver.selectCourseByID(id);
+        if (course.isEmpty()) {throw new InvalidCourseException("There is no course with this ID");}
+        return course.get();
     }
-    public ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
+
+    public static ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
         return courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
     }
-    public double calculateReviewAverage(int courseID) throws SQLException {
-        ReviewDataDriver rdd = new ReviewDataDriver(this.sqlDatabaseFile);
+    public static double calculateReviewAverage(int courseID) throws SQLException {
+        ReviewDataDriver rdd = new ReviewDataDriver(CourseLogic.courseDataDriver.getSqliteFileName());
         rdd.connect();
         ArrayList<Review> reviews = rdd.findAllReviewsForCourse(courseID);
         rdd.disconnect();
@@ -66,5 +65,8 @@ public class CourseLogic {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-
+    public static void setCourseDataDriver(CourseDataDriver courseDataDriver) throws SQLException {
+        CourseLogic.courseDataDriver = courseDataDriver;
+        CourseLogic.courseDataDriver.connect();
+    }
 }
