@@ -80,9 +80,7 @@ public class CourseSearchController {
         int number = parseNumber(numberField.getText().strip());
         String title = titleField.getText().strip();
 
-        prevQuery[0] = subject;
-        prevQuery[1] = numberField.getText().strip();
-        prevQuery[2] = title;
+
 
 
 
@@ -90,6 +88,10 @@ public class CourseSearchController {
         try {
             ObservableList<Course> searchResults = FXCollections.observableArrayList(CourseLogic.filterCoursesBy(subject, number, title));
             courseTable.setItems(searchResults);
+
+            prevQuery[0] = subject;
+            prevQuery[1] = numberField.getText().strip();
+            prevQuery[2] = title;
         } catch (SQLException e) {
             e.printStackTrace();
             // handle database errors
@@ -101,9 +103,9 @@ public class CourseSearchController {
     @FXML
     private void handleAdd(){
         try {
-            String subject = addSubjectField.getText();
-            int number = parseCourseNumber(addNumberField.getText());
-            String title = addTitleField.getText();
+            String subject = addSubjectField.getText().strip();
+            int number = parseCourseNumber(addNumberField.getText().strip());
+            String title = addTitleField.getText().strip();
 
             CourseLogic.addCourse(subject, number, title);
             errorLabel.setText("");
