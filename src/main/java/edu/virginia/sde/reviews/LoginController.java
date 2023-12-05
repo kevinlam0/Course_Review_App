@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class LoginController {
+    public Label createSuccessLabel;
     @FXML
     private TextField usernameField;
     @FXML
@@ -29,22 +30,15 @@ public class LoginController {
 
     private Stage primaryStage;
 
-
-
-
     public void handleLogin(){
         String username = usernameField.getText();
         String password = passwordField.getText();
 
         try {
-            if (LoginLogic.isLoginSuccessful(username, password)) {
-                System.out.println("Login successful");
-                switchToCourseSearch();
-            } else {
-                // handle unsuccessful login
-                errorLabel.setText("Invalid username or password");
+            LoginLogic.isLoginSuccessful(username, password);
+            System.out.println("Login successful");
+            switchToCourseSearch();
 
-            }
         } catch (SQLException e){
             e.printStackTrace();
             errorLabel.setText("Database error");
@@ -53,12 +47,11 @@ public class LoginController {
         } catch (UserNotFoundException e){
             errorLabel.setText("Invalid Username");
         }
-
-
     }
     public void handleCreateAccount(){
-        String newUsername = newUsernameField.getText();
-        String newPassword = newPasswordField.getText();
+        String newUsername = usernameField.getText();
+        String newPassword = passwordField.getText();
+        createSuccessLabel.setText("");
 
         try {
             if (newPassword.length() < 8)
@@ -67,6 +60,8 @@ public class LoginController {
                 LoginLogic.createUser(newUsername, newPassword);
                 // handle successful user creation
                 System.out.println("User created successfully");
+                errorLabel.setText("");
+                createSuccessLabel.setText("Successfully created new account: " + newUsername);
             }
 
         } catch (UserAlreadyExistsException e) {
@@ -89,13 +84,21 @@ public class LoginController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
                     CourseReviewsApplication.class.getResource(
-                            "course-search.fxml"));
+                            "course-search.fxml")
+            );
+            CourseDataDriver cdd = new CourseDataDriver(Credentials.getSqliteDataName());
+            CourseLogic.setCourseDataDriver(cdd);
+            CourseLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
             Scene scene = new Scene(fxmlLoader.load());
             primaryStage.setTitle("Course Reviews");
             primaryStage.setScene(scene);
             primaryStage.show();
+            var controller = (CourseSearchController) fxmlLoader.getController();
+            controller.setPrimaryStage(primaryStage);
         }
         catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 

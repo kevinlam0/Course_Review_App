@@ -12,34 +12,76 @@ import static java.lang.Math.round;
 
 public class CourseLogic {
     private static CourseDataDriver courseDataDriver;
+    private static ReviewDataDriver reviewDataDriver;
+    private static int currentCourse;
+
+    public static int getCurrentCourseId() {
+        return currentCourse;
+    }
+
+    public static void setCurrentCourse(int currentCourse) {
+        CourseLogic.currentCourse = currentCourse;
+    }
 
     public static void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
+        String[] words = mnemonic.split(" ");
+        if (words.length > 1) {
+            throw new InvalidCourseException("The mnemonic cannot have a space.");
+        }
         if (mnemonic.length() < 2 || mnemonic.length() > 4) {
             throw new InvalidCourseException("The mnemonic cannot be blank nor longer than four characters");
         }
-        String courseNumberString = String.valueOf(courseNumber);
-        if (courseNumberString.length() != 4) {
-            throw new InvalidCourseException("The course number needs to be exactly 4-digits");
-        }
+
         if (courseNumber > 9999 || courseNumber < 0) {
             throw new InvalidCourseException("The course number must be a positive 4-digit number");
         }
         if (courseTitle.length() > 50) {
             throw new InvalidCourseException("The course title cannot have more than 50 characters (including spaces).");
         }
-        courseDataDriver.addCourse(mnemonic.toUpperCase(), courseNumber, courseTitle);
+        if (courseTitle.length() == 0) {
+            throw new InvalidCourseException("The course title cannot be blank.");
+        }
+        try {
+            courseDataDriver.connect();
+            courseDataDriver.addCourse(mnemonic.toUpperCase(), courseNumber, courseTitle);
+        }
+        catch (SQLException e) { e.printStackTrace(); }
+        catch (InvalidCourseException e) { throw new InvalidCourseException(e.getMessage()); }
+        finally { courseDataDriver.disconnect(); }
     }
     public static ArrayList<Course> getAllCourses() throws SQLException {
-        return courseDataDriver.getAllCourses();
+        courseDataDriver.connect();
+        ArrayList<Course> courses = courseDataDriver.getAllCourses();
+        courseDataDriver.disconnect();
+        return courses;
     }
-    public static Optional<Course> getCourseByID(int id) throws SQLException {
-        return courseDataDriver.selectCourseByID(id);
+    public static Course getCourseByID(int id) throws SQLException {
+        courseDataDriver.connect();
+        Optional<Course> course = courseDataDriver.selectCourseByID(id);
+        courseDataDriver.disconnect();
+        if (course.isEmpty()) {throw new InvalidCourseException("There is no course with this ID");}
+        return course.get();
     }
+
     public static ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
-        return courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
+        if (mnemonic.strip().equals("")) {mnemonic = null;}
+        if (mnemonic != null) {
+            if (mnemonic.strip().length() > 4) {
+                throw new InvalidCourseException("You cannot have a mnemonic longer than four characters.");
+            }
+        }
+
+        if (courseNumber == 0) { courseNumber = null; }
+        else if (courseNumber < 0) {throw new InvalidCourseException("You cannot have a course number of negative value.");}
+
+        if (courseTitle.strip().equals("")) { courseTitle = null; }
+        courseDataDriver.connect();
+        ArrayList<Course> courses = courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
+        courseDataDriver.disconnect();
+        return courses;
     }
     public static double calculateReviewAverage(int courseID) throws SQLException {
-        ReviewDataDriver rdd = new ReviewDataDriver(CourseLogic.courseDataDriver.getSqliteFileName());
+        ReviewDataDriver rdd = new ReviewDataDriver(Credentials.getSqliteDataName());
         rdd.connect();
         ArrayList<Review> reviews = rdd.findAllReviewsForCourse(courseID);
         rdd.disconnect();
@@ -49,6 +91,7 @@ public class CourseLogic {
             total += review.getRating();
             count++;
         }
+        if (count == 0) {return 0;}
         total = round(total/count, 2);
         return total;
     }
@@ -64,6 +107,55 @@ public class CourseLogic {
     }
     public static void setCourseDataDriver(CourseDataDriver courseDataDriver) throws SQLException {
         CourseLogic.courseDataDriver = courseDataDriver;
-        CourseLogic.courseDataDriver.connect();
+
+//        CourseLogic.courseDataDriver.connect();
     }
+    public static void setReviewDataDriver(ReviewDataDriver reviewDataDriver) throws SQLException {
+        CourseLogic.reviewDataDriver = reviewDataDriver;
+
+//        CourseLogic.courseDataDriver.connect();
+    }
+
+    public static ArrayList<Review> getAllReviews() throws SQLException {
+        reviewDataDriver.connect();
+        ArrayList<Review> ret = reviewDataDriver.findAllReviewsForCourse(currentCourse);
+        reviewDataDriver.disconnect();
+        return ret;
+    }
+
+    public static Course getCurrentCourse() throws SQLException {
+        courseDataDriver.connect();
+        Course course = courseDataDriver.selectCourseByID(currentCourse).get();
+        courseDataDriver.disconnect();
+        return course;
+    }
+
+    public static void addReviewToCourse(int rating, String comment) throws SQLException {
+        reviewDataDriver.connect();
+        reviewDataDriver.addReview(currentCourse, Credentials.getUsername(),rating, comment);
+        reviewDataDriver.disconnect();
+        double avg = CourseLogic.calculateReviewAverage(currentCourse);
+        courseDataDriver.connect();
+        courseDataDriver.updateCourseAverage(currentCourse, avg);
+        courseDataDriver.disconnect();
+    }
+
+    public static ArrayList<Review> getCurrentReview() throws SQLException {
+        reviewDataDriver.connect();
+        ArrayList<Review> reviews = reviewDataDriver.findReviewsByUsernameAndCourse(Credentials.getUsername(), currentCourse);
+        reviewDataDriver.disconnect();
+        return reviews;
+    }
+
+    public static void editCurrentReview(int newRating, String newComment) throws SQLException {
+        reviewDataDriver.connect();
+        reviewDataDriver.updateReview(newRating, newComment, currentCourse, Credentials.getUsername());
+        reviewDataDriver.disconnect();
+        double avg = CourseLogic.calculateReviewAverage(currentCourse);
+        courseDataDriver.connect();
+        courseDataDriver.updateCourseAverage(currentCourse, avg);
+        courseDataDriver.disconnect();
+    }
+
+
 }

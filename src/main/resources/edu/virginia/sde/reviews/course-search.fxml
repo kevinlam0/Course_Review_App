@@ -10,6 +10,9 @@
             xmlns:fx="http://javafx.com/fxml/fxml/1"
             fx:controller="edu.virginia.sde.reviews.CourseSearchController"
             prefHeight="400.0" prefWidth="600.0">
+    <!-- Red Text Box-->
+    <Label fx:id= "errorLabel" textFill="red" layoutX="20"/>
+
     <!-- Search Section -->
     <VBox spacing="10" layoutX="20" layoutY="20">
         <Label text="Course Search"/>
@@ -24,7 +27,7 @@
             <Button fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
         </HBox>
 
-        <TableView fx:id="courseTable" prefHeight="200" prefWidth="600">
+        <TableView fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="600">
             <columns>
                 <TableColumn fx:id="subjectColumn" text="Subject"/>
                 <TableColumn fx:id="numberColumn" text="Number"/>
@@ -46,7 +49,7 @@
         </HBox>
 
         <!-- Navigation Buttons that need to be implemented-->
-        <Button text = "My Reviews" onAction="#switchToMyReviews"/>
+        <Button fx:id = "myReviewButton" text = "My Reviews" onAction="#switchToMyReviews"/>
         <Button text="Log out" onAction="#handleLogout"/>
     </VBox>
 </AnchorPane>

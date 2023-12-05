@@ -7,28 +7,39 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.Parent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 
 public class CourseReviewsController {
-    @FXML
-    private Label courseInfoLabel;
 
     @FXML
-    private Label mnemonicLabel;
-
+    public Label courseInfoLabel;
     @FXML
-    private Label numberLabel;
-
+    public Label mnemonicLabel;
     @FXML
-    private Label titleLabel;
-
+    public RadioButton rating1;
     @FXML
-    private Label averageRatingLabel;
-
+    public RadioButton rating2;
+    @FXML
+    public RadioButton rating3;
+    @FXML
+    public RadioButton rating4;
+    @FXML
+    public RadioButton rating5;
+    @FXML
+    private ToggleGroup ratingToggleGroup;
+    @FXML
+    public Label numberLabel;
+    @FXML
+    public Label titleLabel;
+    @FXML
+    public Label averageRatingLabel;
+    @FXML
+    public Button submitReviewButton;
     @FXML
     private TableView<Review> reviewsTable;
 
@@ -44,29 +55,17 @@ public class CourseReviewsController {
     @FXML
     private TableColumn<Review, Void> actionsColumn;
 
-    @FXML
-    private TextField ratingField;
 
     @FXML
     private TextField commentField;
 
-    @FXML
-    private Button submitReviewButton;
 
-    @FXML
-    private Button backButton;
-
-    private int currentCourseID;
+    private Stage primaryStage;
 
     private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
 
-    private final ReviewDataDriver reviewDataDriver;
-
-    public CourseReviewsController(int currentCourseID){
-        this.currentCourseID = currentCourseID;
-        String sqliteFileName = Credentials.getSqliteDataName();
-        reviewDataDriver = new ReviewDataDriver(sqliteFileName);
-    }
+    private static ReviewDataDriver reviewDataDriver;
+    private static CourseDataDriver courseDataDriver;
 
     public void initialize() {
         // Set up the columns in the TableView
@@ -74,33 +73,42 @@ public class CourseReviewsController {
         timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
 
+        reviewDataDriver = new ReviewDataDriver(Credentials.getSqliteDataName());
+        courseDataDriver = new CourseDataDriver(Credentials.getSqliteDataName());
+
+        ratingToggleGroup = new ToggleGroup();
+        rating1.setToggleGroup(ratingToggleGroup);
+        rating2.setToggleGroup(ratingToggleGroup);
+        rating3.setToggleGroup(ratingToggleGroup);
+        rating4.setToggleGroup(ratingToggleGroup);
+        rating5.setToggleGroup(ratingToggleGroup);
+
+
         // Add button to each row for edit and delete actions
-        actionsColumn.setCellFactory(col -> new TableCell<>() {
-            private final Button editButton = new Button("Edit");
 
-            {
-                editButton.setOnAction(event -> {
-                    Review selectedReview = getTableRow().getItem();
-                    if (selectedReview != null) {
-                        handleEditReview(selectedReview);
-                    }
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(editButton);
-                }
-            }
-        });
 
         // Add reviews data to TableView
         try {
-            reviewsData.addAll(reviewDataDriver.findAllReviewsForCourse(currentCourseID));
+            reviewsData.addAll(CourseLogic.getAllReviews());
+            ArrayList<Review> review = CourseLogic.getCurrentReview();
+            if (!review.isEmpty()){
+                commentField.setText(review.get(0).comment);
+                switch (review.get(0).rating) {
+                    case 1 -> ratingToggleGroup.selectToggle(rating1);
+                    case 2 -> ratingToggleGroup.selectToggle(rating2);
+                    case 3 -> ratingToggleGroup.selectToggle(rating3);
+                    case 4 -> ratingToggleGroup.selectToggle(rating4);
+                    case 5 -> ratingToggleGroup.selectToggle(rating5);
+                }
+            }
+
+
+            Course course = CourseLogic.getCurrentCourse();
+            mnemonicLabel.setText(course.getMnemonic());
+            numberLabel.setText(course.getNumber());
+            titleLabel.setText(course.getTitle());
+            averageRatingLabel.setText(course.getAverage());
+
         } catch (SQLException e) {
             e.printStackTrace();
             // handle database error
@@ -108,52 +116,69 @@ public class CourseReviewsController {
 
         reviewsTable.setItems(reviewsData);
     }
-    private void handleEditReview(Review selectedReview) {
-        int course_id = selectedReview.courseID;
-        int rating = selectedReview.rating;
-        String comment = selectedReview.comment;
+    private void handleEditReview(int newRating, String newComment) {
+
         try {
-            ReviewLogic.editReview(course_id, rating, comment);
+            CourseLogic.editCurrentReview(newRating, newComment);
         } catch (SQLException e) {
             e.printStackTrace();
             // handle database error
         }
     }
     @FXML
-    private void handleBack() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("course-search.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) backButton.getScene().getWindow();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void handleBack() throws IOException {
+        FXMLLoader loader = new FXMLLoader(CourseReviewsApplication.class.getResource("course-search.fxml"));
+        Scene scene = new Scene(loader.load());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        var controller = (CourseSearchController) loader.getController();
+        controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleReviewSubmission() {
-        int newRating = Integer.parseInt(ratingField.getText());
+        RadioButton selectedRadioButton = (RadioButton) ratingToggleGroup.getSelectedToggle();
+        int newRating = Integer.parseInt(selectedRadioButton.getText());
         String newComment = commentField.getText();
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        Review newReview = new Review(currentCourseID, getCurrentUsername(), timestamp.toString(), newComment, newRating);
-
-        reviewsData.add(newReview);
 
         try {
-            reviewDataDriver.addReview(currentCourseID, getCurrentUsername(), newRating, newComment);
+            ArrayList<Review> reviews = CourseLogic.getCurrentReview();
+
+            if (reviews.isEmpty()){
+                CourseLogic.addReviewToCourse(newRating, newComment);
+                reviewsData.clear();
+                reviewsData.addAll(CourseLogic.getAllReviews());
+            }
+            else {
+                handleEditReview(newRating, newComment);
+                reviewsData.clear();
+                reviewsData.addAll(CourseLogic.getAllReviews());
+            }
+
+            Course course = CourseLogic.getCurrentCourse();
+            averageRatingLabel.setText(course.getAverage());
+
+
+
         } catch (SQLException e) {
             e.printStackTrace();
             // handle database error
         }
 
+
         // Clear input fields
-        ratingField.clear();
-        commentField.clear();
+//        ratingField.clear();
+//        commentField.clear();
     }
     private String getCurrentUsername(){
         return Credentials.getUsername();
     }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+
 }
 
 

@@ -26,9 +26,50 @@ public class ReviewDataDriver extends DatabaseDriver{
         PreparedStatement statement = connection.prepareStatement(query);
         statement.execute();
         statement.close();
+        this.commit();
     }
 
+    public ArrayList<Review> findReviewsByUsernameAndCourse(String username, int courseID) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Reviews WHERE Username = ? AND Course_ID = ?");
+        statement.setString(1, username);
+        statement.setInt(2, courseID);
+        ResultSet results = statement.executeQuery();
 
+        ArrayList<Review> reviews = new ArrayList<>();
+        while(results.next()){
+            Review review = new Review(
+                    results.getInt(2),
+                    results.getString(3),
+                    results.getString(4),
+                    results.getString(5),
+                    results.getInt(6)
+            );
+            reviews.add(review);
+        }
+        statement.close();
+        return reviews;
+
+    }
+    public ArrayList<Review> findReviewsByUsername(String username) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Reviews WHERE Username = ?");
+        statement.setString(1, username);
+        ResultSet results = statement.executeQuery();
+
+        ArrayList<Review> reviews = new ArrayList<>();
+        while(results.next()){
+            Review review = new Review(
+                    results.getInt(2),
+                    results.getString(3),
+                    results.getString(4),
+                    results.getString(5),
+                    results.getInt(6)
+            );
+            reviews.add(review);
+        }
+        statement.close();
+        return reviews;
+
+    }
     public void addReview(int courseID, String username, int rating, String comment) throws SQLException {
         try {
             if (connection.isClosed()) {
@@ -57,9 +98,7 @@ public class ReviewDataDriver extends DatabaseDriver{
 
 
         ArrayList<Review> reviews = new ArrayList<>();
-        if (isEmpty(results)) {
-            throw new RuntimeException("There is no course with this ID " + courseID);
-        }
+
 
         while (results.next()) {
             Review review = new Review(
@@ -79,6 +118,18 @@ public class ReviewDataDriver extends DatabaseDriver{
         PreparedStatement statement = connection.prepareStatement("DELETE FROM Reviews WHERE Course_ID = ? AND Username = ?");
         statement.setInt(1, courseID);
         statement.setString(2, username);
+        statement.execute();
+        statement.close();
+        this.commit();
+    }
+
+    public void updateReview(int newRating, String newComment, int courseID, String username) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(
+                "UPDATE Reviews SET Time = CURRENT_TIMESTAMP, Review = ?, Rating = ? WHERE Course_ID = ? AND Username = ?");
+        statement.setString(1, newComment);
+        statement.setInt(2, newRating);
+        statement.setInt(3, courseID);
+        statement.setString(4, username);
         statement.execute();
         statement.close();
         this.commit();

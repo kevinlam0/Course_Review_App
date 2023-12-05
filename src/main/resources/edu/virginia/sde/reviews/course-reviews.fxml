@@ -12,7 +12,7 @@
             prefHeight="400.0" prefWidth="600.0">
 
     <VBox spacing="10" layoutX="20" layoutY="20">
-
+<!--test-->
         <!-- Course Information Section -->
         <Label fx:id="courseInfoLabel" text="Course Information"/>
 
@@ -46,7 +46,14 @@
         <Label text="Add/Edit Review"/>
 
         <!-- Rating Input (TextField or other control) -->
-        <TextField fx:id="ratingField" promptText="Rating (1-5)" />
+        <HBox spacing="10">
+            <Label text="Rating:" />
+            <RadioButton fx:id="rating1" text="1" />
+            <RadioButton fx:id="rating2" text="2" />
+            <RadioButton fx:id="rating3" text="3" />
+            <RadioButton fx:id="rating4" text="4" />
+            <RadioButton fx:id="rating5" text="5" />
+        </HBox>
 
         <!-- Comment Input (TextField or other control) -->
         <TextField fx:id="commentField" promptText="Comment (optional)" />
