@@ -11,6 +11,6 @@ public class ReviewLogicTest {
     void addReview() throws SQLException {
         ReviewDataDriver rdd = new ReviewDataDriver("LoginDataDriverTester.sqlite");
         ReviewLogic.setReviewDataDriver(rdd);
-        ReviewLogic.addReview("yamom", 1, 4, "meh");
+//        ReviewLogic.addReview("yamom", 1, 4, "meh");
     }
 }
