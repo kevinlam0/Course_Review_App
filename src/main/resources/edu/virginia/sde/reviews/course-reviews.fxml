@@ -12,7 +12,7 @@
             prefHeight="400.0" prefWidth="600.0">
 
     <VBox spacing="10" layoutX="20" layoutY="20">
-
+<!--test-->
         <!-- Course Information Section -->
         <Label fx:id="courseInfoLabel" text="Course Information"/>
 
