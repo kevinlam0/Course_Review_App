@@ -204,8 +204,6 @@ public class CourseReviewsController {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
-
-
 }
 
 
