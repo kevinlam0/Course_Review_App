@@ -37,6 +37,9 @@ public class MyReviewsController {
     @FXML
     private Button backButton;
 
+    private LoginLogic loginLogic;
+    private Stage primaryStage;
+
     private void initialize(){
 
             subjectColumn.setCellValueFactory(new PropertyValueFactory<>("mnemonic"));
