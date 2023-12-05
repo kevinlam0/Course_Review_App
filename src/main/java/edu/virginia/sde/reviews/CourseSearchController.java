@@ -144,12 +144,24 @@ public class CourseSearchController {
 
     }
 
+    private void switchToCourse() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                CourseReviewsApplication.class.getResource("course-reviews.fxml")
+        );
+        Scene scene = new Scene(fxmlLoader.load());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+
+    }
     @FXML
-    private void handleClickTableView(){
+    private void handleClickTableView() throws IOException {
         Course course = courseTable.getSelectionModel().getSelectedItem();
         if (course != null) {
-            int test = course.getId();
-            System.out.println(test);
+            CourseLogic.setCurrentCourse(course.getId());
+            switchToCourse();
+
         }
     }
     private int parseNumber(String input) {
