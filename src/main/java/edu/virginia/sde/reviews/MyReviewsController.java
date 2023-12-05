@@ -50,7 +50,7 @@ public class MyReviewsController {
 
             //add logic to get data from database
         try {
-            Object DatabaseHelper;
+
             List<Review> userReviews = DatabaseHelper.getUserReviews("username");
             reviewTable.getItems().addAll(userReviews);
 
