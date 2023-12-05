@@ -29,7 +29,27 @@ public class ReviewDataDriver extends DatabaseDriver{
         this.commit();
     }
 
+    public ArrayList<Review> findReviewsByUsername(String username, int courseID) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Reviews WHERE Username = ? AND Course_ID = ?");
+        statement.setString(1, username);
+        statement.setInt(2, courseID);
+        ResultSet results = statement.executeQuery();
 
+        ArrayList<Review> reviews = new ArrayList<>();
+        while(results.next()){
+            Review review = new Review(
+                    results.getInt(2),
+                    results.getString(3),
+                    results.getString(4),
+                    results.getString(5),
+                    results.getInt(6)
+            );
+            reviews.add(review);
+        }
+        statement.close();
+        return reviews;
+
+    }
     public void addReview(int courseID, String username, int rating, String comment) throws SQLException {
         try {
             if (connection.isClosed()) {
@@ -78,6 +98,16 @@ public class ReviewDataDriver extends DatabaseDriver{
         PreparedStatement statement = connection.prepareStatement("DELETE FROM Reviews WHERE Course_ID = ? AND Username = ?");
         statement.setInt(1, courseID);
         statement.setString(2, username);
+        statement.execute();
+        statement.close();
+        this.commit();
+    }
+
+    public void updateReview(int reviewID, String newComment) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(
+                "UPDATE Reviews SET Time = CURRENT_TIMESTAMP, Review = ? WHERE ID = ?");
+        statement.setString(1, newComment);
+        statement.setInt(2, reviewID);
         statement.execute();
         statement.close();
         this.commit();
