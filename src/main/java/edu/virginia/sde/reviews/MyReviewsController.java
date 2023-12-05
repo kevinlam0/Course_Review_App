@@ -17,7 +17,7 @@ import java.sql.SQLException;
 
 public class MyReviewsController {
     @FXML
-    private TableView<Course> courseTable;
+    private TableView<Review> reviewTable;
     @FXML
     private TableColumn<Course, String> subjectColumn;
     @FXML
