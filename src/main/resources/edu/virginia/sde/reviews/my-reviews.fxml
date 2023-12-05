@@ -28,7 +28,7 @@
               prefHeight="400" prefWidth="600"/>
 
     <HBox>
-        <Button text="Back"/>
+        <Button text="Back" onAction="#backToCourseSearch"/>
     </HBox>
 
 
