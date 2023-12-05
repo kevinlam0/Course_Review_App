@@ -49,8 +49,8 @@ public class LoginController {
         }
     }
     public void handleCreateAccount(){
-        String newUsername = newUsernameField.getText();
-        String newPassword = newPasswordField.getText();
+        String newUsername = usernameField.getText();
+        String newPassword = passwordField.getText();
         createSuccessLabel.setText("");
 
         try {
