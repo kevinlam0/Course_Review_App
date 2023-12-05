@@ -12,9 +12,10 @@ import static java.lang.Math.round;
 
 public class CourseLogic {
     private static CourseDataDriver courseDataDriver;
+    private static ReviewDataDriver reviewDataDriver;
     private static int currentCourse;
 
-    public static int getCurrentCourse() {
+    public static int getCurrentCourseId() {
         return currentCourse;
     }
 
@@ -106,6 +107,55 @@ public class CourseLogic {
     }
     public static void setCourseDataDriver(CourseDataDriver courseDataDriver) throws SQLException {
         CourseLogic.courseDataDriver = courseDataDriver;
+
 //        CourseLogic.courseDataDriver.connect();
     }
+    public static void setReviewDataDriver(ReviewDataDriver reviewDataDriver) throws SQLException {
+        CourseLogic.reviewDataDriver = reviewDataDriver;
+
+//        CourseLogic.courseDataDriver.connect();
+    }
+
+    public static ArrayList<Review> getAllReviews() throws SQLException {
+        reviewDataDriver.connect();
+        ArrayList<Review> ret = reviewDataDriver.findAllReviewsForCourse(currentCourse);
+        reviewDataDriver.disconnect();
+        return ret;
+    }
+
+    public static Course getCurrentCourse() throws SQLException {
+        courseDataDriver.connect();
+        Course course = courseDataDriver.selectCourseByID(currentCourse).get();
+        courseDataDriver.disconnect();
+        return course;
+    }
+
+    public static void addReviewToCourse(int rating, String comment) throws SQLException {
+        reviewDataDriver.connect();
+        reviewDataDriver.addReview(currentCourse, Credentials.getUsername(),rating, comment);
+        reviewDataDriver.disconnect();
+        double avg = CourseLogic.calculateReviewAverage(currentCourse);
+        courseDataDriver.connect();
+        courseDataDriver.updateCourseAverage(currentCourse, avg);
+        courseDataDriver.disconnect();
+    }
+
+    public static ArrayList<Review> getCurrentReview() throws SQLException {
+        reviewDataDriver.connect();
+        ArrayList<Review> reviews = reviewDataDriver.findReviewsByUsernameAndCourse(Credentials.getUsername(), currentCourse);
+        reviewDataDriver.disconnect();
+        return reviews;
+    }
+
+    public static void editCurrentReview(int newRating, String newComment) throws SQLException {
+        reviewDataDriver.connect();
+        reviewDataDriver.updateReview(newRating, newComment, currentCourse, Credentials.getUsername());
+        reviewDataDriver.disconnect();
+        double avg = CourseLogic.calculateReviewAverage(currentCourse);
+        courseDataDriver.connect();
+        courseDataDriver.updateCourseAverage(currentCourse, avg);
+        courseDataDriver.disconnect();
+    }
+
+
 }

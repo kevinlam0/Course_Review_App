@@ -88,6 +88,7 @@ public class LoginController {
             );
             CourseDataDriver cdd = new CourseDataDriver(Credentials.getSqliteDataName());
             CourseLogic.setCourseDataDriver(cdd);
+            CourseLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
             Scene scene = new Scene(fxmlLoader.load());
             primaryStage.setTitle("Course Reviews");
             primaryStage.setScene(scene);
