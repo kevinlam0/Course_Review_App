@@ -28,7 +28,15 @@ public class Course {
         return mnemonic;
     }
 
-    public int getNumber() {
+    public String getNumber() {
+        String num = String.valueOf(number);
+        while (num.length() < 4){
+            num = "0" + num;
+        }
+        return num;
+    }
+
+    public int getRealNumber() {
         return number;
     }
 

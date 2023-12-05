@@ -10,10 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class CourseSearchController {
     public Button searchButton;
@@ -104,11 +102,11 @@ public class CourseSearchController {
     private void handleAdd(){
         try {
             String subject = addSubjectField.getText();
-            int number = parseNumber(addNumberField.getText());
+            int number = parseCourseNumber(addNumberField.getText());
             String title = addTitleField.getText();
 
             CourseLogic.addCourse(subject, number, title);
-
+            errorLabel.setText("");
             // Refresh the course list after adding
             courses.clear();
             courses.addAll(CourseLogic.getAllCourses());
@@ -120,6 +118,9 @@ public class CourseSearchController {
         }
         catch (SQLException e) {
             e.printStackTrace();
+        }
+        catch (NumberFormatException e){
+            errorLabel.setText(e.getMessage());
         }
     }
     public void setPrimaryStage(Stage primaryStage) {
@@ -134,8 +135,8 @@ public class CourseSearchController {
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setScene(scene);
         primaryStage.show();
-        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
-        controller.setPrimaryStage(primaryStage);
+//        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
+//        controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleLogout() throws IOException {
@@ -160,8 +161,8 @@ public class CourseSearchController {
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setScene(scene);
         primaryStage.show();
-        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
-        controller.setPrimaryStage(primaryStage);
+//        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
+//        controller.setPrimaryStage(primaryStage);
 
     }
     @FXML
@@ -173,7 +174,20 @@ public class CourseSearchController {
 
         }
     }
-    private int parseNumber(String input) {
+    private int parseCourseNumber(String input) throws NumberFormatException{
+        try {
+            if (input.length() != 4)
+                throw new InvalidCourseException("The course number needs to be exactly 4-digits");
+            return Integer.parseInt(input);
+        }
+        catch (NumberFormatException e){
+            throw new NumberFormatException("The course number has to be numbers only");
+        }
+
+
+    }
+
+    private int parseNumber(String input){
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
