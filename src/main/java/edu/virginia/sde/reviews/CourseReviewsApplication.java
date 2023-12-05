@@ -28,7 +28,7 @@ public class CourseReviewsApplication extends Application {
         }
         firstCourseDataDriver.disconnect();
 
-        /* MAIN START SCREEN */
+        /* MAINtest START SCREEN */
         FXMLLoader fxmlLoader = new FXMLLoader(
                 CourseReviewsApplication.class.getResource(
                         "log-in.fxml"));

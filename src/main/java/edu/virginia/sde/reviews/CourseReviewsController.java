@@ -178,7 +178,7 @@ public class CourseReviewsController {
                 throw new IllegalStateException("You cannot delete a review if you do not have one currently submitted");
             }
             else {
-                ReviewLogic.deleteReview();
+                CourseLogic.deleteCurrentReview();
                 reviewsData.clear();
                 reviewsData.addAll(CourseLogic.getAllReviews());
             }
