@@ -162,11 +162,7 @@ public class CourseReviewsController {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            // handle database error
         }
-        // Clear input fields
-//        ratingField.clear();
-//        commentField.clear();
     }
     @FXML
     private void handleDeleteReview() {
@@ -181,6 +177,10 @@ public class CourseReviewsController {
                 CourseLogic.deleteCurrentReview();
                 reviewsData.clear();
                 reviewsData.addAll(CourseLogic.getAllReviews());
+
+                // Clears the review fields
+                ratingToggleGroup.selectToggle(null);
+                commentField.clear();
             }
 
             Course course = CourseLogic.getCurrentCourse();
