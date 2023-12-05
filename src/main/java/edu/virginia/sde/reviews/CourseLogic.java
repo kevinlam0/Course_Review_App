@@ -32,9 +32,12 @@ public class CourseLogic {
     public static ArrayList<Course> getAllCourses() throws SQLException {
         return courseDataDriver.getAllCourses();
     }
-    public static Optional<Course> getCourseByID(int id) throws SQLException {
-        return courseDataDriver.selectCourseByID(id);
+    public static Course getCourseByID(int id) throws SQLException {
+        Optional<Course> course = courseDataDriver.selectCourseByID(id);
+        if (course.isEmpty()) {throw new InvalidCourseException("There is no course with this ID");}
+        return course.get();
     }
+
     public static ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
         return courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
     }

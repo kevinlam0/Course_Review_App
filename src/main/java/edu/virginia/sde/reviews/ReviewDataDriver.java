@@ -26,6 +26,7 @@ public class ReviewDataDriver extends DatabaseDriver{
         PreparedStatement statement = connection.prepareStatement(query);
         statement.execute();
         statement.close();
+        this.commit();
     }
 
 
