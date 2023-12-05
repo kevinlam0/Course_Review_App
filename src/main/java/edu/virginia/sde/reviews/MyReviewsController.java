@@ -112,23 +112,25 @@ public class MyReviewsController {
         controller.setPrimaryStage(primaryStage);
         Credentials.setUsername("");*/
     @FXML
-    private void backToCourseSearch(){
+    private void backToCourseSearch() throws IOException {
         // scene switch CourseSearch scene
 
             // Load the FXML file for the CourseSearch scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("course-search.fxml"));
             Scene scene = new Scene(loader.load());
 
+            primaryStage.show();
 
+            CourseSearchController controller = (CourseSearchController) loader.getController();
 
             // Get the Stage from the current button (assuming the button is part of a Scene)
-            Stage stage = (Stage) backButton.getScene().getWindow();
+            //Stage stage = (Stage) backButton.getScene().getWindow();
 
             // Set the new Scene on the Stage
-            stage.setScene(scene);
+            //stage.setScene(scene);
 
 
-            stage.show();
+            //stage.show();
 
     }
     }
