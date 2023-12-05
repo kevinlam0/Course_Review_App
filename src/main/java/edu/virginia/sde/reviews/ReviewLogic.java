@@ -24,6 +24,18 @@ public class ReviewLogic {
         reviewDataDriver.addReview(course_id, username, rating, comment);
         reviewDataDriver.disconnect();
     }
+    public static void deleteReview() throws SQLException {
+        reviewDataDriver.connect();
+        try {
+        reviewDataDriver.deleteReview(CourseLogic.getCurrentCourseId(), Credentials.getUsername());
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            reviewDataDriver.disconnect();
+        }
+    }
     public static void setReviewDataDriver(ReviewDataDriver rdd) {
         reviewDataDriver = rdd;
     }

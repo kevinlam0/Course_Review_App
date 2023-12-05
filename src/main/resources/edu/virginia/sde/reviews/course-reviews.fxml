@@ -57,10 +57,14 @@
 
         <!-- Comment Input (TextField or other control) -->
         <TextField fx:id="commentField" promptText="Comment (optional)" />
+        <HBox spacing = "1">
+            <!-- Submit Review Button -->
+            <Button fx:id="submitReviewButton" text="Submit Review" onAction="#handleReviewSubmission"/>
+            <Button fx:id="deleteReviewButton" text = "Delete Review" onAction="#handleDeleteReview"/>
 
-        <!-- Submit Review Button -->
-        <Button fx:id="submitReviewButton" text="Submit Review" onAction="#handleReviewSubmission"/>
-
+        </HBox>
+        <!-- Error Label -->
+        <Label fx:id="errorLabel" textFill="red" />
         <!-- Back Button -->
         <Button fx:id="backButton" text="Back" onAction="#handleBack"/>
 
