@@ -66,17 +66,11 @@ public class CourseReviewsController {
 
     private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
 
-    private static ReviewDataDriver reviewDataDriver;
-    private static CourseDataDriver courseDataDriver;
-
     public void initialize() {
         // Set up the columns in the TableView
         ratingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getRating()));
         timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
-
-        reviewDataDriver = new ReviewDataDriver(Credentials.getSqliteDataName());
-        courseDataDriver = new CourseDataDriver(Credentials.getSqliteDataName());
 
         ratingToggleGroup = new ToggleGroup();
         rating1.setToggleGroup(ratingToggleGroup);
