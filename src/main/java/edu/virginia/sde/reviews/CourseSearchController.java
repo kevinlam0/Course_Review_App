@@ -134,6 +134,8 @@ public class CourseSearchController {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 CourseReviewsApplication.class.getResource("my-reviews.fxml")
         );
+        ReviewDataDriver rdd = new ReviewDataDriver(Credentials.getSqliteDataName());
+        ReviewLogic.setReviewDataDriver(rdd);
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setScene(scene);
         primaryStage.show();
