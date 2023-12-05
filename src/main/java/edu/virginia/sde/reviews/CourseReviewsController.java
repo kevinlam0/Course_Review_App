@@ -7,27 +7,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.Parent;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
 public class CourseReviewsController {
-    @FXML
-    private Label courseInfoLabel;
-
-    @FXML
-    private Label mnemonicLabel;
-
-    @FXML
-    private Label numberLabel;
-
-    @FXML
-    private Label titleLabel;
-
-    @FXML
-    private Label averageRatingLabel;
 
     @FXML
     private TableView<Review> reviewsTable;
@@ -50,13 +36,9 @@ public class CourseReviewsController {
     @FXML
     private TextField commentField;
 
-    @FXML
-    private Button submitReviewButton;
-
-    @FXML
-    private Button backButton;
-
     private int currentCourseID;
+
+    private Stage primaryStage;
 
     private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
 
@@ -120,15 +102,11 @@ public class CourseReviewsController {
         }
     }
     @FXML
-    private void handleBack() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("course-search.fxml"));
-            Parent root = loader.load();
-            Scene scene = new Scene(root);
-            Stage stage = (Stage) backButton.getScene().getWindow();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void handleBack() throws IOException {
+        FXMLLoader loader = new FXMLLoader(CourseReviewsApplication.class.getResource("course-search.fxml"));
+        Scene scene = new Scene(loader.load());
+        primaryStage.setScene(scene);
+        primaryStage.show();
     }
     @FXML
     private void handleReviewSubmission() {
