@@ -58,9 +58,7 @@ public class ReviewDataDriver extends DatabaseDriver{
 
 
         ArrayList<Review> reviews = new ArrayList<>();
-        if (isEmpty(results)) {
-            throw new RuntimeException("There is no course with this ID " + courseID);
-        }
+
 
         while (results.next()) {
             Review review = new Review(

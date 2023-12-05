@@ -69,7 +69,7 @@ public class CourseLogic {
         return courses;
     }
     public static double calculateReviewAverage(int courseID) throws SQLException {
-        ReviewDataDriver rdd = new ReviewDataDriver(CourseLogic.courseDataDriver.getSqliteFileName());
+        ReviewDataDriver rdd = new ReviewDataDriver(Credentials.getSqliteDataName());
         rdd.connect();
         ArrayList<Review> reviews = rdd.findAllReviewsForCourse(courseID);
         rdd.disconnect();
@@ -79,6 +79,7 @@ public class CourseLogic {
             total += review.getRating();
             count++;
         }
+        if (count == 0) {return 0;}
         total = round(total/count, 2);
         return total;
     }

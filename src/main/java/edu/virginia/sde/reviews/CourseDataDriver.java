@@ -170,6 +170,16 @@ public class CourseDataDriver extends DatabaseDriver{
         return Optional.of(course);
     }
 
+    public void updateCourseAverage(int id, double average) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(
+                "UPDATE Courses SET Rating = ? WHERE ID = ?");
+        statement.setDouble(1, average);
+        statement.setInt(2, id);
+        statement.execute();
+        statement.close();
+        this.commit();
+    }
+
     private boolean isEmpty(ResultSet resultSet) throws SQLException {
         return !resultSet.isBeforeFirst() && resultSet.getRow() == 0;
     }
