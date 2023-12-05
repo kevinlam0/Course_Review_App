@@ -30,7 +30,7 @@ public class MyReviewsController {
     @FXML
     private TableColumn<Course, Integer> numberColumn;
     @FXML
-    private TableColumn<Course, String> titleColumn;
+    private TableColumn<Course, String> datetimeColumn;
     @FXML
     private TableColumn<Course, Double> ratingColumn;
     @FXML
@@ -38,9 +38,8 @@ public class MyReviewsController {
 
     @FXML
     private ListView<String> reviewsListView;
-    private ReviewDataDriver reviewDataDriver;
 
-    private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
+    private ObservableList<Review> reviewsData;
     @FXML
     private Button backButton;
 
@@ -50,31 +49,26 @@ public class MyReviewsController {
     private  int currentCourseID;
     private String username;
 
-    private void initialize(){
+    public void initialize(){
+        reviewsData = FXCollections.observableArrayList();
+        subjectColumn.setCellValueFactory(new PropertyValueFactory<>("courseMnemonic"));
+        numberColumn.setCellValueFactory(new PropertyValueFactory<>("courseNumber"));
+        datetimeColumn.setCellValueFactory(new PropertyValueFactory<>("datetime"));
+        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("rating"));
+        commentsColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
 
-            subjectColumn.setCellValueFactory(new PropertyValueFactory<>("mnemonic"));
-            numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
-            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-            ratingColumn.setCellValueFactory(new PropertyValueFactory<>("average"));
-            commentsColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
-
-            //add logic to get data from database
-            populateUserReviewsData(username);
-
+        //add logic to get data from database
+        populateUserReviewsData();
     }
 
-    private void populateUserReviewsData(String username){
+    private void populateUserReviewsData(){
         try{
-            reviewsData.clear();
-
-
-
-            reviewsData.addAll(reviewDataDriver.findReviewsByUsername(username, currentCourseID));
-
-            reviewTable.setItems(reviewsData);
+//            reviewsData.clear();
+            reviewsData.addAll(ReviewLogic.findReviewsByCurrentUser());
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        reviewTable.setItems(reviewsData);
     }
     /**
      * private void handleSearch(){
@@ -91,9 +85,6 @@ public class MyReviewsController {
      *         }
      *     }
      */
-
-
-
 
 /*
 
@@ -122,21 +113,23 @@ public class MyReviewsController {
             // Load the FXML file for the CourseSearch scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("course-search.fxml"));
             Scene scene = new Scene(loader.load());
-
+            primaryStage.setScene(scene);
             primaryStage.show();
 
+
+
             CourseSearchController controller = (CourseSearchController) loader.getController();
+            controller.setPrimaryStage(primaryStage);
 
             // Get the Stage from the current button (assuming the button is part of a Scene)
-            Stage stage = (Stage) backButton.getScene().getWindow();
 
             // Set the new Scene on the Stage
-            stage.setScene(scene);
-
-
-            stage.show();
 
     }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
+}
 
 

@@ -134,11 +134,13 @@ public class CourseSearchController {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 CourseReviewsApplication.class.getResource("my-reviews.fxml")
         );
+        ReviewDataDriver rdd = new ReviewDataDriver(Credentials.getSqliteDataName());
+        ReviewLogic.setReviewDataDriver(rdd);
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setScene(scene);
         primaryStage.show();
-//        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
-//        controller.setPrimaryStage(primaryStage);
+        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleLogout() throws IOException {
@@ -156,15 +158,16 @@ public class CourseSearchController {
 
     }
 
-    private void switchToCourse() throws IOException {
+    private void switchToCourse(int id) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(
                 CourseReviewsApplication.class.getResource("course-reviews.fxml")
         );
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setScene(scene);
         primaryStage.show();
-//        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
-//        controller.setPrimaryStage(primaryStage);
+        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+        controller.setCurrentCourseID(id);
 
     }
     @FXML
@@ -172,7 +175,7 @@ public class CourseSearchController {
         Course course = courseTable.getSelectionModel().getSelectedItem();
         if (course != null) {
             CourseLogic.setCurrentCourse(course.getId());
-            switchToCourse();
+            switchToCourse(course.getId());
 
         }
     }

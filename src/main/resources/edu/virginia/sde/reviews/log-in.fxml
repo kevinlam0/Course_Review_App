@@ -3,8 +3,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import java.net.URL?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.LoginController">
-    <VBox alignment="CENTER" prefHeight="250.0" prefWidth="300.0" spacing="20" style="-fx-background-color: #232D4B; -fx-padding: 20;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="50.0">
+    <stylesheets>
+        <URL value="@./styles.css" />
+    </stylesheets>
+    <VBox alignment="CENTER" prefHeight="250.0" prefWidth="300.0" spacing="20" style="-fx-padding: 20;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="50.0">
         <Label style="-fx-background-color: #fafafa; -fx-padding: 10" text="Log In or Create an Account" />
 
         <!-- Log In Section -->

@@ -29,10 +29,30 @@ public class ReviewDataDriver extends DatabaseDriver{
         this.commit();
     }
 
-    public ArrayList<Review> findReviewsByUsername(String username, int courseID) throws SQLException{
+    public ArrayList<Review> findReviewsByUsernameAndCourse(String username, int courseID) throws SQLException{
         PreparedStatement statement = connection.prepareStatement("SELECT * FROM Reviews WHERE Username = ? AND Course_ID = ?");
         statement.setString(1, username);
         statement.setInt(2, courseID);
+        ResultSet results = statement.executeQuery();
+
+        ArrayList<Review> reviews = new ArrayList<>();
+        while(results.next()){
+            Review review = new Review(
+                    results.getInt(2),
+                    results.getString(3),
+                    results.getString(4),
+                    results.getString(5),
+                    results.getInt(6)
+            );
+            reviews.add(review);
+        }
+        statement.close();
+        return reviews;
+
+    }
+    public ArrayList<Review> findReviewsByUsername(String username) throws SQLException{
+        PreparedStatement statement = connection.prepareStatement("SELECT * FROM Reviews WHERE Username = ?");
+        statement.setString(1, username);
         ResultSet results = statement.executeQuery();
 
         ArrayList<Review> reviews = new ArrayList<>();

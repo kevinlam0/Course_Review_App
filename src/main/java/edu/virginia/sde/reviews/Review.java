@@ -1,5 +1,8 @@
 package edu.virginia.sde.reviews;
 
+import java.sql.SQLException;
+import java.util.Optional;
+
 public class Review {
 
     int courseID;
@@ -8,12 +11,32 @@ public class Review {
     int rating;
     String comment;
 
+    String courseMnemonic;
+    String courseNumber;
+
+
+
+
+
     public Review(int courseID, String username, String datetime, String comment, int rating){
         this.courseID = courseID;
         this.username = username;
         this.datetime = datetime;
         this.rating = rating;
         this.comment = comment;
+        CourseDataDriver cdd = new CourseDataDriver(Credentials.getSqliteDataName());
+
+        try {
+            cdd.connect();
+            Course course = (cdd.selectCourseByID(courseID).get());
+            courseNumber = course.getNumber();
+            courseMnemonic = course.getMnemonic();
+            cdd.disconnect();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+
     }
 
     public int getCourseID() {
@@ -30,6 +53,13 @@ public class Review {
 
     public String getDatetime() {
         return datetime;
+    }
+    public String getCourseMnemonic() {
+        return courseMnemonic;
+    }
+
+    public String getCourseNumber() {
+        return courseNumber;
     }
 
     public String getComment() {

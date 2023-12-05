@@ -16,6 +16,16 @@ import java.sql.Timestamp;
 public class CourseReviewsController {
 
     @FXML
+    public Label courseInfoLabel;
+    @FXML
+    public Label mnemonicLabel;
+    @FXML
+    public Label numberLabel;
+    @FXML
+    public Label titleLabel;
+    @FXML
+    public Label averageRatingLabel;
+    @FXML
     private TableView<Review> reviewsTable;
 
     @FXML
@@ -42,19 +52,21 @@ public class CourseReviewsController {
 
     private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
 
-    private final ReviewDataDriver reviewDataDriver;
+    private static ReviewDataDriver reviewDataDriver;
 
-    public CourseReviewsController(int currentCourseID){
-        this.currentCourseID = currentCourseID;
-        String sqliteFileName = Credentials.getSqliteDataName();
-        reviewDataDriver = new ReviewDataDriver(sqliteFileName);
-    }
+//    public CourseReviewsController(int currentCourseID){
+//        this.currentCourseID = currentCourseID;
+//        String sqliteFileName = Credentials.getSqliteDataName();
+//        reviewDataDriver = new ReviewDataDriver(sqliteFileName);
+//    }
 
     public void initialize() {
         // Set up the columns in the TableView
         ratingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getRating()));
         timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
+
+        reviewDataDriver = new ReviewDataDriver(Credentials.getSqliteDataName());
 
         // Add button to each row for edit and delete actions
         actionsColumn.setCellFactory(col -> new TableCell<>() {
@@ -82,7 +94,10 @@ public class CourseReviewsController {
 
         // Add reviews data to TableView
         try {
+            reviewDataDriver.connect();
             reviewsData.addAll(reviewDataDriver.findAllReviewsForCourse(currentCourseID));
+            reviewDataDriver.disconnect();
+
         } catch (SQLException e) {
             e.printStackTrace();
             // handle database error
@@ -107,6 +122,8 @@ public class CourseReviewsController {
         Scene scene = new Scene(loader.load());
         primaryStage.setScene(scene);
         primaryStage.show();
+        var controller = (CourseSearchController) loader.getController();
+        controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleReviewSubmission() {
@@ -131,6 +148,14 @@ public class CourseReviewsController {
     }
     private String getCurrentUsername(){
         return Credentials.getUsername();
+    }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+    }
+
+    public void setCurrentCourseID(int id){
+        this.currentCourseID = id;
     }
 }
 
