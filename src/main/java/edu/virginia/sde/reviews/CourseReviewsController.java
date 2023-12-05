@@ -4,11 +4,15 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.Parent;
+import javafx.stage.Stage;
 
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Optional;
+
 public class CourseReviewsController {
     @FXML
     private Label courseInfoLabel;
@@ -58,7 +62,8 @@ public class CourseReviewsController {
 
     private final ReviewDataDriver reviewDataDriver;
 
-    public CourseReviewsController(){
+    public CourseReviewsController(int currentCourseID){
+        this.currentCourseID = currentCourseID;
         String sqliteFileName = Credentials.getSqliteDataName();
         reviewDataDriver = new ReviewDataDriver(sqliteFileName);
     }
@@ -118,6 +123,14 @@ public class CourseReviewsController {
     private void handleBack() {
         // Implement navigation logic to go back to the Course Search Screen
         // You can use the FXMLLoader to load the Course Search FXML file and show the scene
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("course-search.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            Stage stage = (Stage) backButton.getScene().getWindow();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @FXML
     private void handleReviewSubmission() {
