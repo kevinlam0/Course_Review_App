@@ -16,11 +16,11 @@
     <!-- Search Section -->
     <VBox spacing="10" layoutX="20" layoutY="20">
         <Label text="Course Search"/>
-        <HBox spacing="10">
+        <HBox spacing="10" >
             <Label text="Subject:"/>
-            <TextField fx:id="subjectField" />
+            <TextField fx:id="subjectField" alignment="BASELINE_LEFT"/>
             <Label text="Number:"/>
-            <TextField fx:id="numberField" />
+            <TextField fx:id="numberField" alignment="BASELINE_LEFT"/>
             <Label text="Title:"/>
             <TextField fx:id="titleField" />
             <!--connect search button action method to controller-->
