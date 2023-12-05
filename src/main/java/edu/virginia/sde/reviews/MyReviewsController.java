@@ -122,21 +122,23 @@ public class MyReviewsController {
             // Load the FXML file for the CourseSearch scene
             FXMLLoader loader = new FXMLLoader(getClass().getResource("course-search.fxml"));
             Scene scene = new Scene(loader.load());
-
+            primaryStage.setScene(scene);
             primaryStage.show();
 
+
+
             CourseSearchController controller = (CourseSearchController) loader.getController();
+            controller.setPrimaryStage(primaryStage);
 
             // Get the Stage from the current button (assuming the button is part of a Scene)
-            Stage stage = (Stage) backButton.getScene().getWindow();
 
             // Set the new Scene on the Stage
-            stage.setScene(scene);
-
-
-            stage.show();
 
     }
+
+    public void setPrimaryStage(Stage primaryStage) {
+        this.primaryStage = primaryStage;
     }
+}
 
 

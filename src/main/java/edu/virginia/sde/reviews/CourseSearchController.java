@@ -137,8 +137,8 @@ public class CourseSearchController {
         Scene scene = new Scene(fxmlLoader.load());
         primaryStage.setScene(scene);
         primaryStage.show();
-//        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
-//        controller.setPrimaryStage(primaryStage);
+        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleLogout() throws IOException {
