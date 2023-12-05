@@ -91,58 +91,41 @@ public class CourseReviewsController {
                     case 5 -> ratingToggleGroup.selectToggle(rating5);
                 }
             }
+            // Course Details
             Course course = CourseLogic.getCurrentCourse();
             mnemonicLabel.setText(course.getMnemonic());
             numberLabel.setText(course.getNumber());
             titleLabel.setText(course.getTitle());
             averageRatingLabel.setText(course.getAverage());
-
         } catch (SQLException e) {e.printStackTrace();}
         reviewsTable.setItems(reviewsData);
     }
-    private void handleEditReview(int newRating, String newComment) {
-
-        try {
-            CourseLogic.editCurrentReview(newRating, newComment);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // handle database error
-        }
-    }
     @FXML
     private void handleBack() throws IOException {
-        FXMLLoader loader = new FXMLLoader(CourseReviewsApplication.class.getResource("course-search.fxml"));
-        Scene scene = new Scene(loader.load());
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        FXMLLoader loader = CourseReviewsApplication.openScene(primaryStage, "course-search.fxml", Credentials.getAppName());
         var controller = (CourseSearchController) loader.getController();
         controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleReviewSubmission() {
+        // Get fields
         RadioButton selectedRadioButton = (RadioButton) ratingToggleGroup.getSelectedToggle();
         int newRating = Integer.parseInt(selectedRadioButton.getText());
         String newComment = commentField.getText();
 
-
         try {
             ArrayList<Review> reviews = CourseLogic.getCurrentReview();
-
-            if (reviews.isEmpty()){
-                CourseLogic.addReviewToCourse(newRating, newComment);
-                reviewsData.clear();
-                reviewsData.addAll(CourseLogic.getAllReviews());
-            }
-            else {
-                handleEditReview(newRating, newComment);
-                reviewsData.clear();
-                reviewsData.addAll(CourseLogic.getAllReviews());
-            }
-
+            // If there is no review existing for this course and user
+            if (reviews.isEmpty()){CourseLogic.addReviewToCourse(newRating, newComment);}
+            else {handleEditReview(newRating, newComment);}
+            // Display
+            reviewsData.clear();
+            reviewsData.addAll(CourseLogic.getAllReviews());
+            // Recalculate the average
             Course course = CourseLogic.getCurrentCourse();
             averageRatingLabel.setText(course.getAverage());
-
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -150,42 +133,34 @@ public class CourseReviewsController {
     private void handleDeleteReview() {
 
         try {
+            // See if the review exists
             ArrayList<Review> reviews = CourseLogic.getCurrentReview();
-
             if (reviews.isEmpty()){
                 throw new IllegalStateException("You cannot delete a review if you do not have one currently submitted");
             }
+
             else {
+                // Perform the delete
                 CourseLogic.deleteCurrentReview();
+                // Refresh reviews
                 reviewsData.clear();
                 reviewsData.addAll(CourseLogic.getAllReviews());
-
                 // Clears the review fields
                 ratingToggleGroup.selectToggle(null);
                 commentField.clear();
             }
-
+            // Display new average
             Course course = CourseLogic.getCurrentCourse();
             averageRatingLabel.setText(course.getAverage());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // handle database error
         }
-        catch (IllegalStateException e){
-            errorLabel.setText(e.getMessage());
-        }
-        // Clear input fields
-//        ratingField.clear();
-//        commentField.clear();
+        catch (SQLException e) {e.printStackTrace();}
+        catch (IllegalStateException e){errorLabel.setText(e.getMessage());}
     }
-    private String getCurrentUsername(){
-        return Credentials.getUsername();
+    private void handleEditReview(int newRating, String newComment) {
+        try {CourseLogic.editCurrentReview(newRating, newComment);}
+        catch (SQLException e) {e.printStackTrace();}
     }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
+    public void setPrimaryStage(Stage primaryStage) {this.primaryStage = primaryStage;}
 }
 
 

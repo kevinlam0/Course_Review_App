@@ -40,7 +40,7 @@ public class MyReviewsController {
     }
     @FXML
     private void backToCourseSearch() throws IOException {
-        FXMLLoader loader = CourseReviewsApplication.openScene(primaryStage, "course-search.fxml", "Course Search");
+        FXMLLoader loader = CourseReviewsApplication.openScene(primaryStage, "course-search.fxml", Credentials.getAppName());
         CourseSearchController controller = (CourseSearchController) loader.getController();
         controller.setPrimaryStage(primaryStage);
     }

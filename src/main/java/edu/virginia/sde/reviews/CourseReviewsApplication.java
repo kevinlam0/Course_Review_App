@@ -18,6 +18,7 @@ public class CourseReviewsApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Credentials.setSqliteDataName("LoginDataDriverTester.sqlite");
+        Credentials.setAppName("Course Review");
         recalculateRatingAverageForAllCourses();
 
         /* MAIN START SCREEN */
@@ -26,6 +27,7 @@ public class CourseReviewsApplication extends Application {
         LoginController controller = (LoginController) fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
     }
+
     private static void recalculateRatingAverageForAllCourses() throws SQLException {
         CourseDataDriver firstCourseDataDriver = new CourseDataDriver(Credentials.getSqliteDataName());
         // Getting all the courses in the database

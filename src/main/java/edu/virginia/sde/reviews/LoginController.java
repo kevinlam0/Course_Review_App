@@ -34,7 +34,6 @@ public class LoginController {
             LoginLogic.isLoginSuccessful(username, password);
             System.out.println("Login successful");
             switchToCourseSearch();
-
         } catch (SQLException e){
             e.printStackTrace();
             errorLabel.setText("Database error");
@@ -78,7 +77,7 @@ public class LoginController {
     }
     public void switchToCourseSearch() {
         try {
-            FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"course-search.fxml", "Course Review");
+            FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"course-search.fxml", Credentials.getAppName());
             CourseSearchController controller = (CourseSearchController) fxmlLoader.getController();
             controller.setPrimaryStage(primaryStage);
         } catch (IOException e) {throw new RuntimeException(e);}
