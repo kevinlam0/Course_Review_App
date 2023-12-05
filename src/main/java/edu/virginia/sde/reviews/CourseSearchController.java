@@ -167,13 +167,13 @@ public class CourseSearchController {
         primaryStage.show();
         CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
-        controller.setCurrentCourseID(id);
 
     }
     @FXML
     private void handleClickTableView() throws IOException {
         Course course = courseTable.getSelectionModel().getSelectedItem();
         if (course != null) {
+            System.out.println(course.getId());
             CourseLogic.setCurrentCourse(course.getId());
             switchToCourse(course.getId());
 
