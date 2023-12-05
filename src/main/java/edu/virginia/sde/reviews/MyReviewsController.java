@@ -95,14 +95,14 @@ public class MyReviewsController {
 
 
 
-
+/*
 
     private Course getCourseDetails(int courseID) {
         //need to get the logic to get the course details from the data source
         //return a course object based on the id
         return null;
     }
-
+*/
     /*
     * // scene switch to log in screen
         // make sure previous log in data is cleared
