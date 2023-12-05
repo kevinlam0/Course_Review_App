@@ -9,7 +9,7 @@
 
 ## To Run
 
-[Add a brief description of which .java file to run, and what vm arguments are needed]
+Navigate to the CourseReviewsApplication.java file in the `src/main/java/edu/virginia/sde/reviews/` directory. 
 
 ## Contributions
 
@@ -17,7 +17,11 @@ List the primary contributions of each author. It is recommended to update this 
 
 ### [Author 1 - Kevin Lam]
 
-* 
+* Constructed the data drivers for each scene
+* Implemented logic for each each
+* Connected the logic to the controllers
+* Worked on connecting controller to the FXML
+* Assisted in UI enhancement
 
 ### [Author 2 - replace this with their name]
 
