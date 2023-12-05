@@ -41,7 +41,7 @@ public class CourseReviewsController {
     private TableColumn<Review, Void> actionsColumn;
 
     @FXML
-    private TextField ratingField;
+    private ToggleGroup ratingToggleGroup;
 
     @FXML
     private TextField commentField;
@@ -127,7 +127,8 @@ public class CourseReviewsController {
     }
     @FXML
     private void handleReviewSubmission() {
-        int newRating = Integer.parseInt(ratingField.getText());
+        RadioButton selectedRadioButton = (RadioButton) ratingToggleGroup.getSelectedToggle();
+        int newRating = Integer.parseInt(selectedRadioButton.getText());
         String newComment = commentField.getText();
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
@@ -143,7 +144,7 @@ public class CourseReviewsController {
         }
 
         // Clear input fields
-        ratingField.clear();
+        ratingToggleGroup.selectToggle(null);
         commentField.clear();
     }
     private String getCurrentUsername(){
