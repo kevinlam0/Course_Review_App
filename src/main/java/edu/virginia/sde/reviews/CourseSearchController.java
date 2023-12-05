@@ -19,6 +19,7 @@ public class CourseSearchController {
     public Button searchButton;
     public ListView courseListView;
     public Label errorLabel;
+    public Button myReviewButton;
     @FXML
     private TableView<Course> courseTable;
     @FXML
@@ -125,8 +126,16 @@ public class CourseSearchController {
         this.primaryStage = primaryStage;
     }
     @FXML
-    private void switchToMyReviews(){
+    private void switchToMyReviews() throws IOException {
         // scene switch my reviews screen
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                CourseReviewsApplication.class.getResource("my-reviews.fxml")
+        );
+        Scene scene = new Scene(fxmlLoader.load());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleLogout() throws IOException {
