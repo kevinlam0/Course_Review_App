@@ -15,7 +15,7 @@
       prefHeight="400.0" prefWidth="600.0">
 
     <Label text="My Reviews" />
-    <TableView fx:id="courseTable" prefHeight="200" prefWidth="600">
+    <TableView fx:id="reviewTable" prefHeight="200" prefWidth="600">
         <columns>
             <TableColumn fx:id="subjectColumn" text="Subject"/>
             <TableColumn fx:id="numberColumn" text="Number"/>
