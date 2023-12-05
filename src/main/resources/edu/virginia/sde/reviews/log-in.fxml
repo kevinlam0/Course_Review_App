@@ -14,7 +14,7 @@
 
         <!-- Create Account Section -->
         <TextField fx:id="newUsernameField" promptText="New Username" />
-        <PasswordField fx:id="newPasswordField" promptText="New Password (at least 8 characters)" />
+        <PasswordField fx:id="newPasswordField" promptText="New Password (at least 8 characters)"/>
         <Button onAction="#handleCreateAccount" text="Create Account" />
 
         <!-- Error Label -->
