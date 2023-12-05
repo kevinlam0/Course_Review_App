@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,6 +49,8 @@ public class CourseSearchController {
     private LoginLogic loginLogic;
     private Stage primaryStage;
 
+    private String[] prevQuery = {"", "", ""};
+
     //private CourseReviewController courseReviewController
     // (implement after CourseReviewController is made)
     public CourseSearchController(){
@@ -73,9 +76,16 @@ public class CourseSearchController {
     @FXML
     private void handleSearch(){
         errorLabel.setText("");
+
         String subject = subjectField.getText().strip();
         int number = parseNumber(numberField.getText().strip());
         String title = titleField.getText().strip();
+
+        prevQuery[0] = subject;
+        prevQuery[1] = numberField.getText().strip();
+        prevQuery[2] = title;
+
+
 
 
         try {
@@ -101,6 +111,7 @@ public class CourseSearchController {
             // Refresh the course list after adding
             courses.clear();
             courses.addAll(CourseLogic.getAllCourses());
+            prevSearch();
 
         } catch (InvalidCourseException e) {
             errorLabel.setText(e.getMessage());
@@ -132,12 +143,52 @@ public class CourseSearchController {
         Credentials.setUsername("");
 
     }
+
+    private void switchToCourse() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                CourseReviewsApplication.class.getResource("course-reviews.fxml")
+        );
+        Scene scene = new Scene(fxmlLoader.load());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+
+    }
+    @FXML
+    private void handleClickTableView() throws IOException {
+        Course course = courseTable.getSelectionModel().getSelectedItem();
+        if (course != null) {
+            CourseLogic.setCurrentCourse(course.getId());
+            switchToCourse();
+
+        }
+    }
     private int parseNumber(String input) {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             // handle invalid number format
             return 0;
+        }
+    }
+
+    private void prevSearch(){
+        errorLabel.setText("");
+        String subject = prevQuery[0].strip();
+        int number = parseNumber(prevQuery[1].strip());
+        String title = prevQuery[2].strip();
+
+
+        try {
+            ObservableList<Course> searchResults = FXCollections.observableArrayList(CourseLogic.filterCoursesBy(subject, number, title));
+            courseTable.setItems(searchResults);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // handle database errors
+        }
+        catch (InvalidCourseException e) {
+            errorLabel.setText(e.getMessage());
         }
     }
 
