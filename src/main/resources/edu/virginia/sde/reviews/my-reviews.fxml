@@ -8,13 +8,21 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/fxml/1"
             fx:controller="edu.virginia.sde.reviews.MyReviewsController"
             prefHeight="400.0" prefWidth="600.0">
+    <stylesheets>
+        <URL value="@./style-my-reviews.css" />
+    </stylesheets>
     <VBox >
-        <Label text="My Reviews" />
+        <Label styleClass="title" text="My Reviews" />
         <TableView fx:id="reviewTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="600">
             <columns>
                 <TableColumn fx:id="subjectColumn" text="Subject"/>
