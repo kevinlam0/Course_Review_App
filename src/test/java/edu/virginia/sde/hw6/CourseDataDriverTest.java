@@ -75,4 +75,11 @@ public class CourseDataDriverTest {
 
     }
 
+    @Test
+    void editCourseRating() throws SQLException {
+        CourseDataDriver cdd = new CourseDataDriver("LoginDataDriverTester.sqlite");
+        cdd.connect();
+        cdd.updateCourseAverage(3, 4.5);
+    }
+
 }
