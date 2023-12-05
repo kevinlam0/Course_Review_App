@@ -15,11 +15,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class CourseReviewsController {
-
+    /* GROUP FOR THE RATING IN REVIEW */
     @FXML
-    public Label courseInfoLabel;
-    @FXML
-    public Label mnemonicLabel;
+    private ToggleGroup ratingToggleGroup;
     @FXML
     public RadioButton rating1;
     @FXML
@@ -30,48 +28,48 @@ public class CourseReviewsController {
     public RadioButton rating4;
     @FXML
     public RadioButton rating5;
-    public Button deleteReviewButton;
-    public Label errorLabel;
     @FXML
-    private ToggleGroup ratingToggleGroup;
+    private TextField commentField;
+
+    /* BUTTONS */
+    @FXML
+    public Button deleteReviewButton;
+    @FXML
+    public Button submitReviewButton;
+
+    /* COURSE INFORMATION DISPLAY */
+    @FXML
+    public Label courseInfoLabel;
+    @FXML
+    public Label mnemonicLabel;
     @FXML
     public Label numberLabel;
     @FXML
     public Label titleLabel;
     @FXML
     public Label averageRatingLabel;
-    @FXML
-    public Button submitReviewButton;
+
+    /* TABLE STUFF */
     @FXML
     private TableView<Review> reviewsTable;
-
     @FXML
     private TableColumn<Review, Integer> ratingColumn;
-
     @FXML
     private TableColumn<Review, String> timestampColumn;
-
     @FXML
     private TableColumn<Review, String> commentColumn;
-
-    @FXML
-    private TableColumn<Review, Void> actionsColumn;
-
-
-    @FXML
-    private TextField commentField;
-
-
-    private Stage primaryStage;
-
     private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
+
+    @FXML
+    public Label errorLabel;
+    private Stage primaryStage;
 
     public void initialize() {
         // Set up the columns in the TableView
         ratingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getRating()));
         timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
-
+        // Set up rating radio buttons
         ratingToggleGroup = new ToggleGroup();
         rating1.setToggleGroup(ratingToggleGroup);
         rating2.setToggleGroup(ratingToggleGroup);
@@ -79,12 +77,8 @@ public class CourseReviewsController {
         rating4.setToggleGroup(ratingToggleGroup);
         rating5.setToggleGroup(ratingToggleGroup);
 
-
-        // Add button to each row for edit and delete actions
-
-
-        // Add reviews data to TableView
         try {
+            reviewsData.clear();
             reviewsData.addAll(CourseLogic.getAllReviews());
             ArrayList<Review> review = CourseLogic.getCurrentReview();
             if (!review.isEmpty()){
@@ -97,19 +91,13 @@ public class CourseReviewsController {
                     case 5 -> ratingToggleGroup.selectToggle(rating5);
                 }
             }
-
-
             Course course = CourseLogic.getCurrentCourse();
             mnemonicLabel.setText(course.getMnemonic());
             numberLabel.setText(course.getNumber());
             titleLabel.setText(course.getTitle());
             averageRatingLabel.setText(course.getAverage());
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // handle database error
-        }
-
+        } catch (SQLException e) {e.printStackTrace();}
         reviewsTable.setItems(reviewsData);
     }
     private void handleEditReview(int newRating, String newComment) {
