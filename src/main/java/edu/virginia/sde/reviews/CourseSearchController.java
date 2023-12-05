@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -141,6 +142,15 @@ public class CourseSearchController {
         controller.setPrimaryStage(primaryStage);
         Credentials.setUsername("");
 
+    }
+
+    @FXML
+    private void handleClickTableView(){
+        Course course = courseTable.getSelectionModel().getSelectedItem();
+        if (course != null) {
+            int test = course.getId();
+            System.out.println(test);
+        }
     }
     private int parseNumber(String input) {
         try {

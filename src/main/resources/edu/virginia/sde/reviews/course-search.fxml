@@ -27,7 +27,7 @@
             <Button fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
         </HBox>
 
-        <TableView fx:id="courseTable" prefHeight="200" prefWidth="600">
+        <TableView fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="600">
             <columns>
                 <TableColumn fx:id="subjectColumn" text="Subject"/>
                 <TableColumn fx:id="numberColumn" text="Number"/>

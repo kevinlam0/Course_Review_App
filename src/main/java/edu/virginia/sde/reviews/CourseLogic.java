@@ -12,6 +12,15 @@ import static java.lang.Math.round;
 
 public class CourseLogic {
     private static CourseDataDriver courseDataDriver;
+    private static int currentCourse;
+
+    public static int getCurrentCourse() {
+        return currentCourse;
+    }
+
+    public static void setCurrentCourse(int currentCourse) {
+        CourseLogic.currentCourse = currentCourse;
+    }
 
     public static void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
         String[] words = mnemonic.split(" ");
