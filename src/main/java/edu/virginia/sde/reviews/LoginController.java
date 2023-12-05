@@ -30,22 +30,15 @@ public class LoginController {
 
     private Stage primaryStage;
 
-
-
-
     public void handleLogin(){
         String username = usernameField.getText();
         String password = passwordField.getText();
 
         try {
-            if (LoginLogic.isLoginSuccessful(username, password)) {
-                System.out.println("Login successful");
-                switchToCourseSearch();
-            } else {
-                // handle unsuccessful login
-                errorLabel.setText("Invalid username or password");
+            LoginLogic.isLoginSuccessful(username, password);
+            System.out.println("Login successful");
+            switchToCourseSearch();
 
-            }
         } catch (SQLException e){
             e.printStackTrace();
             errorLabel.setText("Database error");
@@ -54,8 +47,6 @@ public class LoginController {
         } catch (UserNotFoundException e){
             errorLabel.setText("Invalid Username");
         }
-
-
     }
     public void handleCreateAccount(){
         String newUsername = newUsernameField.getText();

@@ -176,7 +176,6 @@ public class CourseSearchController {
             System.out.println(course.getId());
             CourseLogic.setCurrentCourse(course.getId());
             switchToCourse(course.getId());
-
         }
     }
     private int parseCourseNumber(String input) throws NumberFormatException{

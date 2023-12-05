@@ -17,13 +17,13 @@
             prefHeight="400.0" prefWidth="600.0">
     <VBox >
         <Label text="My Reviews" />
-        <TableView fx:id="reviewTable" prefHeight="200" prefWidth="600">
+        <TableView fx:id="reviewTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="600">
             <columns>
                 <TableColumn fx:id="subjectColumn" text="Subject"/>
                 <TableColumn fx:id="numberColumn" text="Number"/>
                 <TableColumn fx:id="datetimeColumn" text="Timestamp"/>
                 <TableColumn fx:id="ratingColumn" text="Rating"/>
-                <TableColumn fx:id="commentsColumn" text="Comments"/>
+                <TableColumn fx:id="commentsColumn" text="Comment"/>
             </columns>
         </TableView>
         <ListView fx:id="reviewsListView"
