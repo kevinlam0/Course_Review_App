@@ -1,5 +1,8 @@
 package edu.virginia.sde.reviews;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class Course {
 
     private final int id;
@@ -7,6 +10,8 @@ public class Course {
     private final int number;
     private final String title;
     private double average;
+
+    private NumberFormat formatter = new DecimalFormat("#0.00");
 
     public Course(int id, String mnemonic, int num, String title, double average){
         this.id = id;
@@ -31,7 +36,13 @@ public class Course {
         return title;
     }
 
-    public double getAverage() {
+    public String getAverage() {
+        if (average < 1)
+            return null;
+        return formatter.format(average);
+    }
+
+    public double getActualAverage(){
         return average;
     }
     public String toString() {

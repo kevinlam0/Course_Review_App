@@ -27,7 +27,7 @@ public class CourseSearchController {
     @FXML
     private TableColumn<Course, String> titleColumn;
     @FXML
-    private TableColumn<Course, Double> ratingColumn;
+    private TableColumn<Course, String> ratingColumn;
 
     @FXML
     private TextField subjectField;
