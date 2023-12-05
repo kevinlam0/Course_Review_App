@@ -22,10 +22,6 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
     @FXML
-    private TextField newUsernameField;
-    @FXML
-    private PasswordField newPasswordField;
-    @FXML
     private Label errorLabel;
 
     private Stage primaryStage;
@@ -38,7 +34,6 @@ public class LoginController {
             LoginLogic.isLoginSuccessful(username, password);
             System.out.println("Login successful");
             switchToCourseSearch();
-
         } catch (SQLException e){
             e.printStackTrace();
             errorLabel.setText("Database error");
@@ -80,27 +75,11 @@ public class LoginController {
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
-    public void switchToCourseSearch(){
+    public void switchToCourseSearch() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    CourseReviewsApplication.class.getResource(
-                            "course-search.fxml")
-            );
-            CourseDataDriver cdd = new CourseDataDriver(Credentials.getSqliteDataName());
-            CourseLogic.setCourseDataDriver(cdd);
-            CourseLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
-            Scene scene = new Scene(fxmlLoader.load());
-            primaryStage.setTitle("Course Reviews");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-            var controller = (CourseSearchController) fxmlLoader.getController();
+            FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"course-search.fxml", Credentials.getAppName());
+            CourseSearchController controller = (CourseSearchController) fxmlLoader.getController();
             controller.setPrimaryStage(primaryStage);
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-
+        } catch (IOException e) {throw new RuntimeException(e);}
     }
 }

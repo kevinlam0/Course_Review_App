@@ -15,11 +15,9 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class CourseReviewsController {
-
+    /* GROUP FOR THE RATING IN REVIEW */
     @FXML
-    public Label courseInfoLabel;
-    @FXML
-    public Label mnemonicLabel;
+    private ToggleGroup ratingToggleGroup;
     @FXML
     public RadioButton rating1;
     @FXML
@@ -30,54 +28,49 @@ public class CourseReviewsController {
     public RadioButton rating4;
     @FXML
     public RadioButton rating5;
-    public Button deleteReviewButton;
-    public Label errorLabel;
     @FXML
-    private ToggleGroup ratingToggleGroup;
+    private TextField commentField;
+
+    /* BUTTONS */
+    @FXML
+    public Button deleteReviewButton;
+    @FXML
+    public Button submitReviewButton;
+
+    /* COURSE INFORMATION DISPLAY */
+    @FXML
+    public Label courseInfoLabel;
+    @FXML
+    public Label mnemonicLabel;
     @FXML
     public Label numberLabel;
     @FXML
     public Label titleLabel;
     @FXML
     public Label averageRatingLabel;
-    @FXML
-    public Button submitReviewButton;
+
+    /* TABLE STUFF */
     @FXML
     private TableView<Review> reviewsTable;
-
     @FXML
     private TableColumn<Review, Integer> ratingColumn;
-
     @FXML
     private TableColumn<Review, String> timestampColumn;
-
     @FXML
     private TableColumn<Review, String> commentColumn;
+    private ObservableList<Review> reviewsData;
 
     @FXML
-    private TableColumn<Review, Void> actionsColumn;
-
-
-    @FXML
-    private TextField commentField;
-
-
+    public Label errorLabel;
     private Stage primaryStage;
 
-    private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
-
-    private static ReviewDataDriver reviewDataDriver;
-    private static CourseDataDriver courseDataDriver;
-
     public void initialize() {
+        reviewsData = FXCollections.observableArrayList();
         // Set up the columns in the TableView
         ratingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getRating()));
         timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
-
-        reviewDataDriver = new ReviewDataDriver(Credentials.getSqliteDataName());
-        courseDataDriver = new CourseDataDriver(Credentials.getSqliteDataName());
-
+        // Set up rating radio buttons
         ratingToggleGroup = new ToggleGroup();
         rating1.setToggleGroup(ratingToggleGroup);
         rating2.setToggleGroup(ratingToggleGroup);
@@ -85,12 +78,8 @@ public class CourseReviewsController {
         rating4.setToggleGroup(ratingToggleGroup);
         rating5.setToggleGroup(ratingToggleGroup);
 
-
-        // Add button to each row for edit and delete actions
-
-
-        // Add reviews data to TableView
         try {
+            reviewsData.clear();
             reviewsData.addAll(CourseLogic.getAllReviews());
             ArrayList<Review> review = CourseLogic.getCurrentReview();
             if (!review.isEmpty()){
@@ -103,64 +92,41 @@ public class CourseReviewsController {
                     case 5 -> ratingToggleGroup.selectToggle(rating5);
                 }
             }
-
-
+            // Course Details
             Course course = CourseLogic.getCurrentCourse();
             mnemonicLabel.setText(course.getMnemonic());
             numberLabel.setText(course.getNumber());
             titleLabel.setText(course.getTitle());
             averageRatingLabel.setText(course.getAverage());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // handle database error
-        }
-
+        } catch (SQLException e) {e.printStackTrace();}
         reviewsTable.setItems(reviewsData);
-    }
-    private void handleEditReview(int newRating, String newComment) {
-
-        try {
-            CourseLogic.editCurrentReview(newRating, newComment);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // handle database error
-        }
     }
     @FXML
     private void handleBack() throws IOException {
-        FXMLLoader loader = new FXMLLoader(CourseReviewsApplication.class.getResource("course-search.fxml"));
-        Scene scene = new Scene(loader.load());
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        FXMLLoader loader = CourseReviewsApplication.openScene(primaryStage, "course-search.fxml", Credentials.getAppName());
         var controller = (CourseSearchController) loader.getController();
         controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleReviewSubmission() {
+        // Get fields
         RadioButton selectedRadioButton = (RadioButton) ratingToggleGroup.getSelectedToggle();
         int newRating = Integer.parseInt(selectedRadioButton.getText());
         String newComment = commentField.getText();
 
-
         try {
             ArrayList<Review> reviews = CourseLogic.getCurrentReview();
-
-            if (reviews.isEmpty()){
-                CourseLogic.addReviewToCourse(newRating, newComment);
-                reviewsData.clear();
-                reviewsData.addAll(CourseLogic.getAllReviews());
-            }
-            else {
-                handleEditReview(newRating, newComment);
-                reviewsData.clear();
-                reviewsData.addAll(CourseLogic.getAllReviews());
-            }
-
+            // If there is no review existing for this course and user
+            if (reviews.isEmpty()){CourseLogic.addReviewToCourse(newRating, newComment);}
+            else {handleEditReview(newRating, newComment);}
+            // Display
+            reviewsData.clear();
+            reviewsData.addAll(CourseLogic.getAllReviews());
+            // Recalculate the average
             Course course = CourseLogic.getCurrentCourse();
             averageRatingLabel.setText(course.getAverage());
-
-        } catch (SQLException e) {
+        }
+        catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -168,44 +134,34 @@ public class CourseReviewsController {
     private void handleDeleteReview() {
 
         try {
+            // See if the review exists
             ArrayList<Review> reviews = CourseLogic.getCurrentReview();
-
             if (reviews.isEmpty()){
                 throw new IllegalStateException("You cannot delete a review if you do not have one currently submitted");
             }
+
             else {
+                // Perform the delete
                 CourseLogic.deleteCurrentReview();
+                // Refresh reviews
                 reviewsData.clear();
                 reviewsData.addAll(CourseLogic.getAllReviews());
-
                 // Clears the review fields
                 ratingToggleGroup.selectToggle(null);
                 commentField.clear();
             }
-
+            // Display new average
             Course course = CourseLogic.getCurrentCourse();
             averageRatingLabel.setText(course.getAverage());
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // handle database error
         }
-        catch (IllegalStateException e){
-            errorLabel.setText(e.getMessage());
-        }
-        // Clear input fields
-//        ratingField.clear();
-//        commentField.clear();
+        catch (SQLException e) {e.printStackTrace();}
+        catch (IllegalStateException e){errorLabel.setText(e.getMessage());}
     }
-    private String getCurrentUsername(){
-        return Credentials.getUsername();
+    private void handleEditReview(int newRating, String newComment) {
+        try {CourseLogic.editCurrentReview(newRating, newComment);}
+        catch (SQLException e) {e.printStackTrace();}
     }
-
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-    }
-
-
+    public void setPrimaryStage(Stage primaryStage) {this.primaryStage = primaryStage;}
 }
 
 

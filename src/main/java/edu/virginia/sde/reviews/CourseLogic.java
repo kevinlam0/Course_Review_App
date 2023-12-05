@@ -105,15 +105,11 @@ public class CourseLogic {
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
     }
-    public static void setCourseDataDriver(CourseDataDriver courseDataDriver) throws SQLException {
+    public static void setCourseDataDriver(CourseDataDriver courseDataDriver){
         CourseLogic.courseDataDriver = courseDataDriver;
-
-//        CourseLogic.courseDataDriver.connect();
     }
-    public static void setReviewDataDriver(ReviewDataDriver reviewDataDriver) throws SQLException {
+    public static void setReviewDataDriver(ReviewDataDriver reviewDataDriver){
         CourseLogic.reviewDataDriver = reviewDataDriver;
-
-//        CourseLogic.courseDataDriver.connect();
     }
 
     public static ArrayList<Review> getAllReviews() throws SQLException {

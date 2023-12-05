@@ -49,7 +49,7 @@
         </HBox>
 
         <!-- Navigation Buttons that need to be implemented-->
-        <Button fx:id = "myReviewButton" text = "My Reviews" onAction="#switchToMyReviews"/>
+        <Button fx:id = "myReviewButton" text = "My Reviews" onAction="#handleSwitchToMyReviews"/>
         <Button text="Log out" onAction="#handleLogout"/>
     </VBox>
 </AnchorPane>

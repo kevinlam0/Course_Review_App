@@ -37,8 +37,6 @@
                 <!-- Comment Column -->
                 <TableColumn text="Comment" fx:id="commentColumn"/>
 
-                <!-- Edit/Delete Buttons Column -->
-                <TableColumn text="Actions" fx:id="actionsColumn"/>
             </columns>
         </TableView>
 
@@ -66,7 +64,7 @@
         <!-- Error Label -->
         <Label fx:id="errorLabel" textFill="red" />
         <!-- Back Button -->
-        <Button fx:id="backButton" text="Back" onAction="#handleBack"/>
+        <Button text="Back" onAction="#handleBack"/>
 
     </VBox>
 </AnchorPane>

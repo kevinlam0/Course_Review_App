@@ -15,7 +15,6 @@ import java.sql.SQLException;
 
 public class CourseSearchController {
     public Button searchButton;
-    public ListView courseListView;
     public Label errorLabel;
     public Button myReviewButton;
     @FXML
@@ -28,43 +27,32 @@ public class CourseSearchController {
     private TableColumn<Course, String> titleColumn;
     @FXML
     private TableColumn<Course, String> ratingColumn;
-
     @FXML
     private TextField subjectField;
     @FXML
     private TextField numberField;
     @FXML
     private TextField titleField;
-
     @FXML
     private TextField addSubjectField;
     @FXML
     private TextField addNumberField;
     @FXML
     private TextField addTitleField;
-
     private ObservableList<Course> courses;
-
-    private LoginLogic loginLogic;
     private Stage primaryStage;
-
     private String[] prevQuery = {"", "", ""};
 
-    //private CourseReviewController courseReviewController
-    // (implement after CourseReviewController is made)
-    public CourseSearchController(){
-        // arguments should be LoginLogic loginLogic, CourseLogic courseLogic, CourseReviewController courseReviewController
-        //this.courseReviewController = courseReviewController;
-        this.courses = FXCollections.observableArrayList();
-    }
     public void initialize(){
+        courses = FXCollections.observableArrayList();
         subjectColumn.setCellValueFactory(new PropertyValueFactory<>("mnemonic"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         ratingColumn.setCellValueFactory(new PropertyValueFactory<>("average"));
         errorLabel.setText("Hello "+Credentials.getUsername());
-        ReviewDataDriver rdd = new ReviewDataDriver(Credentials.getSqliteDataName());
-        ReviewLogic.setReviewDataDriver(rdd);
+        ReviewLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
+        CourseLogic.setCourseDataDriver(new CourseDataDriver(Credentials.getSqliteDataName()));
+        CourseLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
 
         try {
             courses.addAll(CourseLogic.getAllCourses());
@@ -76,109 +64,63 @@ public class CourseSearchController {
     }
     @FXML
     private void handleSearch(){
+        // Resets message when we search
         errorLabel.setText("");
-
+        // Get the information from the fields
         String subject = subjectField.getText().strip();
         int number = parseNumber(numberField.getText().strip());
         String title = titleField.getText().strip();
-
-
-
-
-
-
         try {
+            // Display the courses
             ObservableList<Course> searchResults = FXCollections.observableArrayList(CourseLogic.filterCoursesBy(subject, number, title));
             courseTable.setItems(searchResults);
-
+            // Saves the previous valid query
             prevQuery[0] = subject;
             prevQuery[1] = numberField.getText().strip();
             prevQuery[2] = title;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // handle database errors
         }
-        catch (InvalidCourseException e) {
-            errorLabel.setText(e.getMessage());
-        }
+        catch (SQLException e) {e.printStackTrace();}
+        catch (InvalidCourseException e) {errorLabel.setText(e.getMessage());}
     }
     @FXML
     private void handleAdd(){
         try {
+            // Getting the fields for adding
             String subject = addSubjectField.getText().strip();
             int number = parseCourseNumber(addNumberField.getText().strip());
             String title = addTitleField.getText().strip();
-
+            // Add to the database
             CourseLogic.addCourse(subject, number, title);
-            errorLabel.setText("");
             // Refresh the course list after adding
             courses.clear();
             courses.addAll(CourseLogic.getAllCourses());
             prevSearch();
-
-        } catch (InvalidCourseException e) {
-            errorLabel.setText(e.getMessage());
-            // Handle invalid course or database errors
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
-        catch (NumberFormatException e){
-            errorLabel.setText(e.getMessage());
-        }
-    }
-    public void setPrimaryStage(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+        catch (InvalidCourseException | NumberFormatException e) {errorLabel.setText(e.getMessage());}
+        catch (SQLException e) {e.printStackTrace();}
     }
     @FXML
-    private void switchToMyReviews() throws IOException {
-        // scene switch my reviews screen
-        FXMLLoader fxmlLoader = new FXMLLoader(
-                CourseReviewsApplication.class.getResource("my-reviews.fxml")
-        );
-
-        Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    private void handleSwitchToMyReviews() throws IOException {
+        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"my-reviews.fxml", "My Reviews");
         MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleLogout() throws IOException {
-        // scene switch to log in screen
-        // make sure previous log in data is cleared
-        FXMLLoader fxmlLoader = new FXMLLoader(
-                CourseReviewsApplication.class.getResource("log-in.fxml")
-        );
-        Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage, "log-in.fxml", "Course Review Application");
         LoginController controller = (LoginController) fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
         Credentials.setUsername("");
-
-    }
-
-    private void switchToCourse(int id) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(
-                CourseReviewsApplication.class.getResource("course-reviews.fxml")
-        );
-        Scene scene = new Scene(fxmlLoader.load());
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
-        controller.setPrimaryStage(primaryStage);
-
     }
     @FXML
     private void handleClickTableView() throws IOException {
         Course course = courseTable.getSelectionModel().getSelectedItem();
         if (course != null) {
-            System.out.println(course.getId());
             CourseLogic.setCurrentCourse(course.getId());
-            switchToCourse(course.getId());
+            switchToCourse();
         }
     }
+
     private int parseCourseNumber(String input) throws NumberFormatException{
         try {
             if (input.length() != 4)
@@ -191,7 +133,6 @@ public class CourseSearchController {
 
 
     }
-
     private int parseNumber(String input){
         try {
             return Integer.parseInt(input);
@@ -200,14 +141,16 @@ public class CourseSearchController {
             return 0;
         }
     }
-
+    private void switchToCourse() throws IOException {
+        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"course-reviews.fxml", "Review of Course");
+        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+    }
     private void prevSearch(){
-        errorLabel.setText("");
+        errorLabel.setText("Your course has been successfully added.");
         String subject = prevQuery[0].strip();
         int number = parseNumber(prevQuery[1].strip());
         String title = prevQuery[2].strip();
-
-
         try {
             ObservableList<Course> searchResults = FXCollections.observableArrayList(CourseLogic.filterCoursesBy(subject, number, title));
             courseTable.setItems(searchResults);
@@ -219,6 +162,5 @@ public class CourseSearchController {
             errorLabel.setText(e.getMessage());
         }
     }
-
-
+    public void setPrimaryStage(Stage primaryStage) {this.primaryStage = primaryStage;}
 }
