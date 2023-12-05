@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.virginia.sde.reviews.CourseReviewsController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <VBox spacing="10" layoutX="20" layoutY="20">
+
+        <!-- Course Information Section -->
+        <Label fx:id="courseInfoLabel" text="Course Information"/>
+
+        <!-- Labels for Course Mnemonic, Number, Title, and Average Rating -->
+        <Label fx:id="mnemonicLabel" />
+        <Label fx:id="numberLabel" />
+        <Label fx:id="titleLabel" />
+        <Label fx:id="averageRatingLabel" />
+
+        <!-- Reviews Section -->
+        <Label text="Reviews"/>
+
+        <!-- TableView to display reviews -->
+        <TableView fx:id="reviewsTable">
+            <columns>
+                <!-- Rating Column -->
+                <TableColumn text="Rating" fx:id="ratingColumn"/>
+
+                <!-- Timestamp Column  -->
+                <TableColumn text="Timestamp" fx:id="timestampColumn"/>
+
+                <!-- Comment Column -->
+                <TableColumn text="Comment" fx:id="commentColumn"/>
+
+                <!-- Edit/Delete Buttons Column -->
+                <TableColumn text="Actions" fx:id="actionsColumn"/>
+            </columns>
+        </TableView>
+
+        <!-- Add/Edit Review Section -->
+        <Label text="Add/Edit Review"/>
+
+        <!-- Rating Input (TextField or other control) -->
+        <TextField fx:id="ratingField" promptText="Rating (1-5)" />
+
+        <!-- Comment Input (TextField or other control) -->
+        <TextField fx:id="commentField" promptText="Comment (optional)" />
+
+        <!-- Submit Review Button -->
+        <Button fx:id="submitReviewButton" text="Submit Review" onAction="#handleReviewSubmission"/>
+
+        <!-- Back Button -->
+        <Button fx:id="backButton" text="Back" onAction="#handleBack"/>
+
+    </VBox>
+</AnchorPane>
