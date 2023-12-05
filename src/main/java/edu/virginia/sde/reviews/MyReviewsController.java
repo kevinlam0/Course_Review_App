@@ -126,6 +126,26 @@ public class MyReviewsController {
             // Set the new Scene on the Stage
 
     }
+    private void switchToCourse(int id) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(
+                CourseReviewsApplication.class.getResource("course-reviews.fxml")
+        );
+        Scene scene = new Scene(fxmlLoader.load());
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+        controller.setCurrentCourseID(id);
+
+    }
+    @FXML
+    private void handleClickTableView() throws IOException {
+        Review review = reviewTable.getSelectionModel().getSelectedItem();
+        if (review != null) {
+            CourseLogic.setCurrentCourse(review.getCourseID());
+            switchToCourse(review.getCourseID());
+        }
+    }
 
     public void setPrimaryStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
