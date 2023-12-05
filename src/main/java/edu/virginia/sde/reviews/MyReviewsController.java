@@ -89,13 +89,13 @@ public class MyReviewsController {
             CourseSearchController controller = (CourseSearchController) loader.getController();
 
             // Get the Stage from the current button (assuming the button is part of a Scene)
-            //Stage stage = (Stage) backButton.getScene().getWindow();
+            Stage stage = (Stage) backButton.getScene().getWindow();
 
             // Set the new Scene on the Stage
-            //stage.setScene(scene);
+            stage.setScene(scene);
 
 
-            //stage.show();
+            stage.show();
 
     }
     }
