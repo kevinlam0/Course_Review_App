@@ -76,6 +76,14 @@ public class CourseReviewsController {
         reviewDataDriver = new ReviewDataDriver(Credentials.getSqliteDataName());
         courseDataDriver = new CourseDataDriver(Credentials.getSqliteDataName());
 
+        ratingToggleGroup = new ToggleGroup();
+        rating1.setToggleGroup(ratingToggleGroup);
+        rating2.setToggleGroup(ratingToggleGroup);
+        rating3.setToggleGroup(ratingToggleGroup);
+        rating4.setToggleGroup(ratingToggleGroup);
+        rating5.setToggleGroup(ratingToggleGroup);
+
+
         // Add button to each row for edit and delete actions
 
 
@@ -85,6 +93,14 @@ public class CourseReviewsController {
             ArrayList<Review> review = CourseLogic.getCurrentReview();
             if (!review.isEmpty()){
                 commentField.setText(review.get(0).comment);
+                switch (review.get(0).rating){
+                    case 1: ratingToggleGroup.selectToggle(rating1); break;
+                    case 2: ratingToggleGroup.selectToggle(rating2); break;
+                    case 3: ratingToggleGroup.selectToggle(rating3); break;
+                    case 4: ratingToggleGroup.selectToggle(rating4); break;
+                    default: ratingToggleGroup.selectToggle(rating5); break;
+
+                }
             }
 
 
