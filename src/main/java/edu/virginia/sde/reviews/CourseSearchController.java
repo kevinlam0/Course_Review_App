@@ -103,9 +103,9 @@ public class CourseSearchController {
     @FXML
     private void handleAdd(){
         try {
-            String subject = addSubjectField.getText();
-            int number = parseCourseNumber(addNumberField.getText());
-            String title = addTitleField.getText();
+            String subject = addSubjectField.getText().strip();
+            int number = parseCourseNumber(addNumberField.getText().strip());
+            String title = addTitleField.getText().strip();
 
             CourseLogic.addCourse(subject, number, title);
             errorLabel.setText("");
