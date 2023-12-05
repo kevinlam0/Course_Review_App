@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml/fxml/1"
             fx:controller="edu.virginia.sde.reviews.CourseSearchController"
             prefHeight="400.0" prefWidth="600.0">
-    <!-- Red Text Box -->
+    <!-- Red Text Box-->
     <Label fx:id= "errorLabel" textFill="red" layoutX="20"/>
 
     <!-- Search Section -->
