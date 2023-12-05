@@ -43,14 +43,8 @@ public class CourseSearchController {
     private Stage primaryStage;
     private String[] prevQuery = {"", "", ""};
 
-    //private CourseReviewController courseReviewController
-    // (implement after CourseReviewController is made)
-    public CourseSearchController(){
-        // arguments should be LoginLogic loginLogic, CourseLogic courseLogic, CourseReviewController courseReviewController
-        //this.courseReviewController = courseReviewController;
-        this.courses = FXCollections.observableArrayList();
-    }
     public void initialize(){
+        courses = FXCollections.observableArrayList();
         subjectColumn.setCellValueFactory(new PropertyValueFactory<>("mnemonic"));
         numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));

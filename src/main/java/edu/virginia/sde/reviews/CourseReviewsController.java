@@ -58,13 +58,14 @@ public class CourseReviewsController {
     private TableColumn<Review, String> timestampColumn;
     @FXML
     private TableColumn<Review, String> commentColumn;
-    private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
+    private ObservableList<Review> reviewsData;
 
     @FXML
     public Label errorLabel;
     private Stage primaryStage;
 
     public void initialize() {
+        reviewsData = FXCollections.observableArrayList();
         // Set up the columns in the TableView
         ratingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getRating()));
         timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
