@@ -19,6 +19,8 @@
 
         <!-- Error Label -->
         <Label fx:id="errorLabel" textFill="red" />
+        <!-- Additional Label -->
+        <Label fx:id="createSuccessLabel" textFill="deeppink" />
 
         <!-- Close Button -->
         <Button onAction="#handleClose" text="Close" />
