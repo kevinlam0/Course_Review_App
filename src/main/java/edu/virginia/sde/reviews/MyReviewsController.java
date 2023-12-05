@@ -36,11 +36,13 @@ public class MyReviewsController {
     private Button backButton;
 
     private void initialize(){
-        subjectColumn.setCellValueFactory(new PropertyValueFactory<>("mnemonic"));
-        numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        ratingColumn.setCellValueFactory(new PropertyValueFactory<>("average"));
-        commentsColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
+            subjectColumn.setCellValueFactory(new PropertyValueFactory<>("mnemonic"));
+            numberColumn.setCellValueFactory(new PropertyValueFactory<>("number"));
+            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            ratingColumn.setCellValueFactory(new PropertyValueFactory<>("average"));
+            commentsColumn.setCellValueFactory(new PropertyValueFactory<>("comment"));
+
 
         //missing try-catch for database errors(?)
     }
