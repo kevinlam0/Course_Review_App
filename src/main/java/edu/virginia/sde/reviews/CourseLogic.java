@@ -64,6 +64,11 @@ public class CourseLogic {
 
     public static ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
         if (mnemonic.strip().equals("")) {mnemonic = null;}
+        if (mnemonic != null) {
+            if (mnemonic.strip().length() > 4) {
+                throw new InvalidCourseException("You cannot have a mnemonic longer than four characters.");
+            }
+        }
 
         if (courseNumber == 0) { courseNumber = null; }
         else if (courseNumber < 0) {throw new InvalidCourseException("You cannot have a course number of negative value.");}
