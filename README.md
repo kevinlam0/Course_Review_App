@@ -10,6 +10,7 @@
 ## To Run
 
 Navigate to the CourseReviewsApplication.java file in the `src/main/java/edu/virginia/sde/reviews/` directory. 
+Run main method in that file and use.
 
 ## Contributions
 
