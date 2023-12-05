@@ -118,12 +118,11 @@ public class CourseReviewsController {
             // If there is no review existing for this course and user
             if (reviews.isEmpty()){CourseLogic.addReviewToCourse(newRating, newComment);}
             else {handleEditReview(newRating, newComment);}
+            Course course = CourseLogic.getCurrentCourse();
             // Display
             errorLabel.setText("");
             reviewsData.clear();
             reviewsData.addAll(CourseLogic.getAllReviews());
-            // Recalculate the average
-            Course course = CourseLogic.getCurrentCourse();
             averageRatingLabel.setText(course.getAverage());
         }
         catch (SQLException e) {e.printStackTrace();}
