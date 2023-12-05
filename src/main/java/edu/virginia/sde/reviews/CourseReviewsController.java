@@ -109,26 +109,25 @@ public class CourseReviewsController {
     }
     @FXML
     private void handleReviewSubmission() {
-        // Get fields
-        RadioButton selectedRadioButton = (RadioButton) ratingToggleGroup.getSelectedToggle();
-        int newRating = Integer.parseInt(selectedRadioButton.getText());
-        String newComment = commentField.getText();
-
         try {
+            // Get fields
+            RadioButton selectedRadioButton = (RadioButton) ratingToggleGroup.getSelectedToggle();
+            int newRating = Integer.parseInt(selectedRadioButton.getText());
+            String newComment = commentField.getText();
             ArrayList<Review> reviews = CourseLogic.getCurrentReview();
             // If there is no review existing for this course and user
             if (reviews.isEmpty()){CourseLogic.addReviewToCourse(newRating, newComment);}
             else {handleEditReview(newRating, newComment);}
             // Display
+            errorLabel.setText("");
             reviewsData.clear();
             reviewsData.addAll(CourseLogic.getAllReviews());
             // Recalculate the average
             Course course = CourseLogic.getCurrentCourse();
             averageRatingLabel.setText(course.getAverage());
         }
-        catch (SQLException e) {
-            e.printStackTrace();
-        }
+        catch (SQLException e) {e.printStackTrace();}
+        catch (NullPointerException e) {errorLabel.setText("You cannot submit a review with no rating. Please select a rating 1-5");}
     }
     @FXML
     private void handleDeleteReview() {
