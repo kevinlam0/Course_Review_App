@@ -69,7 +69,7 @@ public class MyReviewsController {
 
 
 
-            reviewsData.addAll(reviewDataDriver.findReviewsByUsername(username, currentCourseID));
+            reviewsData.addAll(reviewDataDriver.findReviewsByUsername(username));
 
             reviewTable.setItems(reviewsData);
         } catch (SQLException e) {

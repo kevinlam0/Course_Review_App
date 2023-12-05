@@ -1,6 +1,7 @@
 package edu.virginia.sde.reviews;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class ReviewLogic {
     private static ReviewDataDriver reviewDataDriver;
@@ -8,5 +9,9 @@ public class ReviewLogic {
         String username = Credentials.getUsername();
         reviewDataDriver.deleteReview(course_id, username);
         reviewDataDriver.addReview(course_id, username, rating, comment);
+    }
+
+    public static ArrayList<Review> findReviewsByCurrentUser() throws SQLException {
+        return reviewDataDriver.findReviewsByUsername(Credentials.getUsername());
     }
 }
