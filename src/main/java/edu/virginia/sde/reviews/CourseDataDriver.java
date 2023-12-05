@@ -34,12 +34,16 @@ public class CourseDataDriver extends DatabaseDriver{
         this.commit();
     }
     public void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
+        if (this.getIDOfCourse(mnemonic, courseNumber, courseTitle).isPresent()) {
+            throw new InvalidCourseException("You cannot add a course that is already present.");
+        }
+
+        if (connection.isClosed()) {throw new IllegalStateException("Connection is not open");}
+
         try {
-            if (connection.isClosed()) {
-                throw new IllegalStateException("Connection is not open");
-            }
             PreparedStatement statement = connection.prepareStatement(
                     "INSERT INTO Courses(Mnemonic, Course_Number, Course_Title, Rating) values (?, ?, ?, ?)");
+
             statement.setString(1, mnemonic);
             statement.setInt(2, courseNumber);
             statement.setString(3, courseTitle);
@@ -143,7 +147,7 @@ public class CourseDataDriver extends DatabaseDriver{
     }
     public Optional<Course> getIDOfCourse(String mnemonic, int number, String title) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(
-                "SELECT ID FROM Courses " +
+                "SELECT * FROM Courses " +
                         "WHERE Mnemonic = ? AND Course_Number = ? AND Course_Title = ?");
         statement.setString(1, mnemonic);
         statement.setInt(2, number);

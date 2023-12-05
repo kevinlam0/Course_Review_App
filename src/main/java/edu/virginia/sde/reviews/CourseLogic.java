@@ -14,6 +14,10 @@ public class CourseLogic {
     private static CourseDataDriver courseDataDriver;
 
     public static void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
+        String[] words = mnemonic.split(" ");
+        if (words.length > 1) {
+            throw new InvalidCourseException("The mnemonic cannot have a space.");
+        }
         if (mnemonic.length() < 2 || mnemonic.length() > 4) {
             throw new InvalidCourseException("The mnemonic cannot be blank nor longer than four characters");
         }
@@ -27,13 +31,27 @@ public class CourseLogic {
         if (courseTitle.length() > 50) {
             throw new InvalidCourseException("The course title cannot have more than 50 characters (including spaces).");
         }
-        courseDataDriver.addCourse(mnemonic.toUpperCase(), courseNumber, courseTitle);
+        if (courseTitle.length() == 0) {
+            throw new InvalidCourseException("The course title cannot be blank.");
+        }
+        try {
+            courseDataDriver.connect();
+            courseDataDriver.addCourse(mnemonic.toUpperCase(), courseNumber, courseTitle);
+        }
+        catch (SQLException e) { e.printStackTrace(); }
+        catch (InvalidCourseException e) { throw new InvalidCourseException(e.getMessage()); }
+        finally { courseDataDriver.disconnect(); }
     }
     public static ArrayList<Course> getAllCourses() throws SQLException {
-        return courseDataDriver.getAllCourses();
+        courseDataDriver.connect();
+        ArrayList<Course> courses = courseDataDriver.getAllCourses();
+        courseDataDriver.disconnect();
+        return courses;
     }
     public static Course getCourseByID(int id) throws SQLException {
+        courseDataDriver.connect();
         Optional<Course> course = courseDataDriver.selectCourseByID(id);
+        courseDataDriver.disconnect();
         if (course.isEmpty()) {throw new InvalidCourseException("There is no course with this ID");}
         return course.get();
     }
@@ -45,8 +63,10 @@ public class CourseLogic {
         else if (courseNumber < 0) {throw new InvalidCourseException("You cannot have a course number of negative value.");}
 
         if (courseTitle.strip().equals("")) { courseTitle = null; }
-
-        return courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
+        courseDataDriver.connect();
+        ArrayList<Course> courses = courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
+        courseDataDriver.disconnect();
+        return courses;
     }
     public static double calculateReviewAverage(int courseID) throws SQLException {
         ReviewDataDriver rdd = new ReviewDataDriver(CourseLogic.courseDataDriver.getSqliteFileName());
@@ -74,6 +94,6 @@ public class CourseLogic {
     }
     public static void setCourseDataDriver(CourseDataDriver courseDataDriver) throws SQLException {
         CourseLogic.courseDataDriver = courseDataDriver;
-        CourseLogic.courseDataDriver.connect();
+//        CourseLogic.courseDataDriver.connect();
     }
 }

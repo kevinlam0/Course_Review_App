@@ -73,9 +73,9 @@ public class CourseSearchController {
     @FXML
     private void handleSearch(){
         errorLabel.setText("");
-        String subject = subjectField.getText();
-        int number = parseNumber(numberField.getText());
-        String title = titleField.getText();
+        String subject = subjectField.getText().strip();
+        int number = parseNumber(numberField.getText().strip());
+        String title = titleField.getText().strip();
 
 
         try {
@@ -101,9 +101,13 @@ public class CourseSearchController {
             // Refresh the course list after adding
             courses.clear();
             courses.addAll(CourseLogic.getAllCourses());
-        } catch (InvalidCourseException | SQLException e) {
-            e.printStackTrace();
+
+        } catch (InvalidCourseException e) {
+            errorLabel.setText(e.getMessage());
             // Handle invalid course or database errors
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
         }
     }
     public void setPrimaryStage(Stage primaryStage) {
