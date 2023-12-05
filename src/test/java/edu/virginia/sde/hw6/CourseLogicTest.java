@@ -7,6 +7,7 @@ import edu.virginia.sde.reviews.Exceptions.InvalidCourseException;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -30,5 +31,12 @@ public class CourseLogicTest {
         CourseDataDriver cdd = new CourseDataDriver("LoginDataDriverTester.sqlite");
         CourseLogic.setCourseDataDriver(cdd);
         assertThrows(InvalidCourseException.class, () -> CourseLogic.getCourseByID(4));
+    }
+    @Test
+    void filterCourses() throws SQLException {
+        CourseDataDriver cdd = new CourseDataDriver("LoginDataDriverTester.sqlite");
+        CourseLogic.setCourseDataDriver(cdd);
+        ArrayList<Course> courses = CourseLogic.filterCoursesBy("", null, "a");
+        courses.forEach(System.out::println);
     }
 }

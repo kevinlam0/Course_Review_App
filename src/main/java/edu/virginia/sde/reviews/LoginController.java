@@ -93,13 +93,20 @@ public class LoginController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(
                     CourseReviewsApplication.class.getResource(
-                            "course-search.fxml"));
+                            "course-search.fxml")
+            );
+            CourseDataDriver cdd = new CourseDataDriver("LoginDataDriverTester.sqlite");
+            CourseLogic.setCourseDataDriver(cdd);
             Scene scene = new Scene(fxmlLoader.load());
             primaryStage.setTitle("Course Reviews");
             primaryStage.setScene(scene);
             primaryStage.show();
+            var controller = (CourseSearchController) fxmlLoader.getController();
+            controller.setPrimaryStage(primaryStage);
         }
         catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
