@@ -7,14 +7,26 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.Scene?>
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <VBox xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/fxml/1"
-            fx:controller="edu.virginia.sde.reviews.Exceptions.MyReviewsController"
-            prefHeight="400.0" prefWidth="600.0">
+      xmlns:fx="http://javafx.com/fxml/fxml/1"
+      fx:controller="edu.virginia.sde.reviews.Exceptions.MyReviewsController"
+      prefHeight="400.0" prefWidth="600.0">
 
     <Label text="My Reviews" />
+    <TableView fx:id="courseTable" prefHeight="200" prefWidth="600">
+        <columns>
+            <TableColumn fx:id="subjectColumn" text="Subject"/>
+            <TableColumn fx:id="numberColumn" text="Number"/>
+            <TableColumn fx:id="titleColumn" text="Title"/>
+            <TableColumn fx:id="ratingColumn" text="Rating"/>
+            <TableColumn fx:id="commentsColumn" text="Comments"/>
+        </columns>
+    </TableView>
     <ListView fx:id="reviewsListView"
               prefHeight="400" prefWidth="600"/>
+
     <HBox>
         <Button text="Back"/>
     </HBox>
