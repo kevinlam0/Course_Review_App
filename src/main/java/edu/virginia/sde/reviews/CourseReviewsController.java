@@ -52,15 +52,14 @@ public class CourseReviewsController {
     @FXML
     private Button backButton;
 
-    private String sqliteFileName;
-
     private int currentCourseID;  // Placeholder for the current course ID
 
     private ObservableList<Review> reviewsData = FXCollections.observableArrayList();
 
-    private ReviewDataDriver reviewDataDriver;
+    private final ReviewDataDriver reviewDataDriver;
 
     public CourseReviewsController(){
+        String sqliteFileName = Credentials.getSqliteDataName();
         reviewDataDriver = new ReviewDataDriver(sqliteFileName);
     }
 
@@ -105,7 +104,15 @@ public class CourseReviewsController {
         reviewsTable.setItems(reviewsData);
     }
     private void handleEditReview(Review selectedReview) {
-
+        int course_id = selectedReview.courseID;
+        int rating = selectedReview.rating;
+        String comment = selectedReview.comment;
+        try {
+            ReviewLogic.editReview(course_id, rating, comment);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle database error
+        }
     }
     @FXML
     private void handleBack() {
@@ -138,7 +145,7 @@ public class CourseReviewsController {
         commentField.clear();
     }
     private String getCurrentUsername(){
-        return "user"; // IMPLEMENT
+        return Credentials.getUsername();
     }
 }
 
