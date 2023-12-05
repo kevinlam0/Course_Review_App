@@ -93,13 +93,12 @@ public class CourseReviewsController {
             ArrayList<Review> review = CourseLogic.getCurrentReview();
             if (!review.isEmpty()){
                 commentField.setText(review.get(0).comment);
-                switch (review.get(0).rating){
-                    case 1: ratingToggleGroup.selectToggle(rating1); break;
-                    case 2: ratingToggleGroup.selectToggle(rating2); break;
-                    case 3: ratingToggleGroup.selectToggle(rating3); break;
-                    case 4: ratingToggleGroup.selectToggle(rating4); break;
-                    default: ratingToggleGroup.selectToggle(rating5); break;
-
+                switch (review.get(0).rating) {
+                    case 1 -> ratingToggleGroup.selectToggle(rating1);
+                    case 2 -> ratingToggleGroup.selectToggle(rating2);
+                    case 3 -> ratingToggleGroup.selectToggle(rating3);
+                    case 4 -> ratingToggleGroup.selectToggle(rating4);
+                    case 5 -> ratingToggleGroup.selectToggle(rating5);
                 }
             }
 
