@@ -3,6 +3,7 @@
 .root {
     -fx-background-color: #101a3f; /* Dark background color */
     -fx-text-fill: #ffffff; /* Text color */
+    -fx-font-family: "Georgia";
 }
 
 .title {
