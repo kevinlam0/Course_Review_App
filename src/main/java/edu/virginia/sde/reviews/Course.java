@@ -46,7 +46,7 @@ public class Course {
 
     public String getAverage() {
         if (average < 1)
-            return null;
+            return "";
         return formatter.format(average);
     }
 
