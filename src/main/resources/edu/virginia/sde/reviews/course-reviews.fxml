@@ -14,10 +14,10 @@
     <stylesheets>
         <URL value="@./style-course-reviews.css" />
     </stylesheets>
-    <VBox spacing="10" layoutX="20" layoutY="20">
+    <VBox spacing="4" layoutX="20" layoutY="20">
 <!--test-->
         <!-- Course Information Section -->
-        <Label fx:id="courseInfoLabel" text="Course Information" style="-fx-font-size:20px"/>
+        <Label fx:id="courseInfoLabel" text="Course Information" style="-fx-font-size:18px"/>
 
         <!-- Labels for Course Mnemonic, Number, Title, and Average Rating -->
         <Label fx:id="mnemonicLabel" />
@@ -32,13 +32,13 @@
         <TableView fx:id="reviewsTable" prefHeight="300" prefWidth="500">
             <columns>
                 <!-- Rating Column -->
-                <TableColumn text="Rating" fx:id="ratingColumn" />
+                <TableColumn text="Rating" fx:id="ratingColumn" prefWidth="100"/>
 
                 <!-- Timestamp Column  -->
-                <TableColumn text="Timestamp" fx:id="timestampColumn"/>
+                <TableColumn text="Timestamp" fx:id="timestampColumn" prefWidth="100"/>
 
                 <!-- Comment Column -->
-                <TableColumn text="Comment" fx:id="commentColumn"/>
+                <TableColumn text="Comment" fx:id="commentColumn" prefWidth="300"/>
 
             </columns>
         </TableView>
@@ -49,10 +49,15 @@
         <!-- Rating Input (TextField or other control) -->
         <HBox spacing="10">
             <Label text="Rating:" />
+            <Label text="1" />
             <RadioButton fx:id="rating1" text="1" />
+            <Label text="2" />
             <RadioButton fx:id="rating2" text="2" />
+            <Label text="3" />
             <RadioButton fx:id="rating3" text="3" />
+            <Label text="4" />
             <RadioButton fx:id="rating4" text="4" />
+            <Label text="5" />
             <RadioButton fx:id="rating5" text="5" />
         </HBox>
 

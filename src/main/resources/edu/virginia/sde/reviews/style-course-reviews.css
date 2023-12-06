@@ -14,8 +14,12 @@
     -fx-control-inner-background: #934820; /* Table background color */
     -fx-table-cell-border-color: #1f1f1f; /* Table cell border color */
     -fx-table-header-border-color: #1f1f1f; /* Table header border color */
-    -fx-table-header-background: #2d2d2d; /* Table header background color */
-    -fx-text-fill: #101a3f;
+    -fx-table-header-background: #d46b2f; /* Table header background color */
+    -fx-text-fill: #ffffff;
+}
+
+.table-column .label {
+    -fx-text-fill: #000000; /* Text color for column header labels */
 }
 
 .button {
