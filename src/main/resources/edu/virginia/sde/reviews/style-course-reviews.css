@@ -15,7 +15,7 @@
     -fx-table-cell-border-color: #1f1f1f; /* Table cell border color */
     -fx-table-header-border-color: #1f1f1f; /* Table header border color */
     -fx-table-header-background: #d46b2f; /* Table header background color */
-    -fx-text-fill: #101a3f;
+    -fx-text-fill: #ffffff;
 }
 
 .button {
