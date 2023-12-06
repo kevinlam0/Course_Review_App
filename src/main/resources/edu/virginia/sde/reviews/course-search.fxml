@@ -19,13 +19,13 @@
 
     <!-- Search Section -->
     <VBox spacing="10" layoutX="20" layoutY="20">
-        <Label text="Course Search"/>
+        <Label text="Course Search" textFill="white"/>
         <HBox spacing="10" >
-            <Label text="Subject:"/>
+            <Label text="Subject:" textFill="white"/>
             <TextField fx:id="subjectField" alignment="BASELINE_LEFT"/>
-            <Label text="Number:"/>
+            <Label text="Number:" textFill="white"/>
             <TextField fx:id="numberField" alignment="BASELINE_LEFT"/>
-            <Label text="Title:"/>
+            <Label text="Title:" textFill="white"/>
             <TextField fx:id="titleField" />
             <!--connect search button action method to controller-->
             <Button fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
@@ -40,13 +40,13 @@
             </columns>
         </TableView>
         <!-- Add Course Section -->
-        <Label text="Add Course"/>
+        <Label text="Add Course" textFill="white"/>
         <HBox spacing="10">
-            <Label text="Subject:"/>
+            <Label text="Subject:" textFill="white"/>
             <TextField fx:id="addSubjectField" />
-            <Label text="Number:"/>
+            <Label text="Number:" textFill="white"/>
             <TextField fx:id="addNumberField" />
-            <Label text="Title:"/>
+            <Label text="Title:" textFill="white"/>
             <TextField fx:id="addTitleField" />
             <!-- Add action to controller: Button text="Add Course" onAction="#addCourseButtonClicked"/-->
             <Button text="Add Course" onAction="#handleAdd"/>
