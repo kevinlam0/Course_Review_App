@@ -30,11 +30,12 @@ List the primary contributions of each author. It is recommended to update this 
 * Implemented logic for each controller
 * Integration of parts
 
-### [Author 3 - replace this with their name]
+### [Author 3 - Suwan Lee]
 
-* Author 3 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Worked on creating and connecting fxml and controllers
+* Worked on FXML scenes and design
+* Contributed to connecting controller with logic
+* Created database for testing
 
 ### [Author 4 - Sammy Kee]
 
