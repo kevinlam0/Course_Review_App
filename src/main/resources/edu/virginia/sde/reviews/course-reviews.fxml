@@ -44,6 +44,7 @@
             </columns>
         </TableView>
         </ScrollPane>
+        <TextArea fx:id="fullCommentText" prefHeight="100" prefWidth="500" editable="false" visible="false"/>
         <!-- Add/Edit Review Section -->
         <Label text="Add/Edit Review"/>
 

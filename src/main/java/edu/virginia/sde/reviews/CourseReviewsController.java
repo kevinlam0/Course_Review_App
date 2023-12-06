@@ -17,6 +17,8 @@ import java.util.ArrayList;
 public class CourseReviewsController {
     /* GROUP FOR THE RATING IN REVIEW */
     @FXML
+    private TextArea fullCommentTextArea;
+    @FXML
     private ToggleGroup ratingToggleGroup;
     @FXML
     public RadioButton rating1;
@@ -70,6 +72,20 @@ public class CourseReviewsController {
         ratingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getRating()));
         timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
         commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
+
+        reviewsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
+            if(newValue != null){
+                // Update the text in the fullCommentTextArea with the selected comment
+                fullCommentTextArea.setText(newValue.getComment());
+
+                // Show the fullCommentTextArea when a row is selected
+                fullCommentTextArea.setVisible(true);
+            } else {
+                // Hide the fullCommentTextArea when no row is selected
+                fullCommentTextArea.setVisible(false);
+            }
+
+        });
         // Set up rating radio buttons
         ratingToggleGroup = new ToggleGroup();
         rating1.setToggleGroup(ratingToggleGroup);
