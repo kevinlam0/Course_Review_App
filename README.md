@@ -4,7 +4,7 @@
 ## Authors
 1) Kevin Lam, mvk2uy, [kevinlam0]
 2) Ja-Zhua Cheng, ajd8xe, [chengJazhua]
-3) Name, netid, [GitHub profile name]
+3) Suwan Lee, uty2zp, [suwanl0620]
 4) Sammy Kee, slk7ws, [smaykee]
 
 ## To Run
