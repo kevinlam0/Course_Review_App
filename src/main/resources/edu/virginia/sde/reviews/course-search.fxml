@@ -19,7 +19,7 @@
 
     <!-- Search Section -->
     <VBox spacing="10" layoutX="20" layoutY="20">
-        <Label text="Course Search" textFill="white"/>
+        <Label text="Course Search" textFill="white" style="-fx-font-size:15px"/>
         <HBox spacing="10" >
             <Label text="Subject:" textFill="white"/>
             <TextField fx:id="subjectField" alignment="BASELINE_LEFT"/>

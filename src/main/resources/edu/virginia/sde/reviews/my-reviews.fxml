@@ -23,7 +23,7 @@
         <URL value="@./style-my-reviews.css" />
     </stylesheets>
     <VBox >
-        <Label styleClass="title" text="My Reviews" />
+        <Label styleClass="title" text="My Reviews" style="-fx-font-size:20px"/>
         <TableView fx:id="reviewTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="600">
             <columns>
                 <TableColumn fx:id="subjectColumn" text="Subject"/>
