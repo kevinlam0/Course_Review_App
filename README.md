@@ -5,7 +5,7 @@
 1) Kevin Lam, mvk2uy, [kevinlam0]
 2) Name, netid, [GitHub profile name]
 3) Name, netid, [GitHub profile name]
-4) Name, netid, [GitHub profile name]
+4) Sammy Kee, slk7ws, [smaykee]
 
 ## To Run
 
@@ -36,11 +36,12 @@ List the primary contributions of each author. It is recommended to update this 
 * as a bulleted list
 * each line starts with an asterisk and a space
 
-### [Author 4 - replace this with their name]
+### [Author 4 - Sammy Kee]
 
-* Author 4 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Worked on JavaFXML scenes
+* Worked on corresponding controllers and connecting to scenes
+* UI and design of scenes
+* JavaFXML and CSS styling
 
 ## Issues
 
