@@ -32,7 +32,7 @@
         <TableView fx:id="reviewsTable">
             <columns>
                 <!-- Rating Column -->
-                <TableColumn text="Rating" fx:id="ratingColumn"/>
+                <TableColumn text="Rating" fx:id="ratingColumn" />
 
                 <!-- Timestamp Column  -->
                 <TableColumn text="Timestamp" fx:id="timestampColumn"/>

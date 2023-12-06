@@ -7,7 +7,7 @@
 }
 
 .label {
-    -fx-text-fill: #101a3f; /* Text color for labels */
+    -fx-text-fill: #ffffff; /* Text color for labels */
 }
 
 #reviewsTable {
