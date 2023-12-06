@@ -1,5 +1,5 @@
 .root {
-    -fx-background-color: #1f1f1f; /* Dark background color */
+    -fx-background-color: #421313; /* Dark background color */
     -fx-text-fill: #ffffff; /* Text color */
 }
 
@@ -12,7 +12,7 @@
     -fx-table-cell-border-color: #1f1f1f; /* Table cell border color */
     -fx-table-header-border-color: #1f1f1f; /* Table header border color */
     -fx-table-header-background: #2d2d2d; /* Table header background color */
-    -fx-table-cell-border-color: #1f1f1f; /* Table cell border color */
+
 }
 
 .button {
