@@ -3,7 +3,7 @@
 
 ## Authors
 1) Kevin Lam, mvk2uy, [kevinlam0]
-2) Name, netid, [GitHub profile name]
+2) Ja-Zhua Cheng, ajd8xe, [chengJazhua]
 3) Name, netid, [GitHub profile name]
 4) Sammy Kee, slk7ws, [smaykee]
 
@@ -24,11 +24,11 @@ List the primary contributions of each author. It is recommended to update this 
 * Worked on connecting controller to the FXML
 * Assisted in UI enhancement
 
-### [Author 2 - replace this with their name]
+### [Author 2 - Ja-Zhua Cheng]
 
-* Author 2 contributions
-* as a bulleted list
-* each line starts with an asterisk and a space
+* Implemented data query methods for each driver
+* Implemented logic for each controller
+* Integration of parts
 
 ### [Author 3 - replace this with their name]
 
