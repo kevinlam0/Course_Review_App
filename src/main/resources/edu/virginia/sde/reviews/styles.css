@@ -26,7 +26,7 @@
 }
 
 .button {
-    -fx-background-color: rgba(35, 133, 109, 0.7); /* Light blue color, you can change this value */
+    -fx-background-color: rgb(31, 68, 33); /* Light blue color, you can change this value */
     -fx-text-fill: white; /* Text color for the buttons */
 }
 .text-field {
