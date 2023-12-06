@@ -6,10 +6,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import java.net.URL?>
 <AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/fxml/1"
             fx:controller="edu.virginia.sde.reviews.CourseSearchController"
             prefHeight="400.0" prefWidth="600.0">
+    <stylesheets>
+        <URL value="@./style-course-search.css" />
+    </stylesheets>
     <!-- Red Text Box-->
     <Label fx:id= "errorLabel" textFill="red" layoutX="20"/>
 
