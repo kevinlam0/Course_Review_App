@@ -28,7 +28,7 @@
 }
 
 #rating1, #rating2, #rating3, #rating4, #rating5 {
-    -fx-text-fill: #ffffff; /* Radio button text color */
+    -fx-text-fill: #101a3f; /* Radio button text color */
 }
 
 #commentField {

@@ -17,7 +17,7 @@
     <VBox spacing="10" layoutX="20" layoutY="20">
 <!--test-->
         <!-- Course Information Section -->
-        <Label fx:id="courseInfoLabel" text="Course Information"/>
+        <Label fx:id="courseInfoLabel" text="Course Information" style="-fx-font-size:20px"/>
 
         <!-- Labels for Course Mnemonic, Number, Title, and Average Rating -->
         <Label fx:id="mnemonicLabel" />
@@ -26,10 +26,10 @@
         <Label fx:id="averageRatingLabel" />
 
         <!-- Reviews Section -->
-        <Label text="Reviews"/>
+        <Label text="Reviews" style="-fx-font-size:16px"/>
 
         <!-- TableView to display reviews -->
-        <TableView fx:id="reviewsTable">
+        <TableView fx:id="reviewsTable" prefHeight="300" prefWidth="500">
             <columns>
                 <!-- Rating Column -->
                 <TableColumn text="Rating" fx:id="ratingColumn" />
