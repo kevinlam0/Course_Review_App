@@ -32,12 +32,13 @@
             <Button onAction="#handleCreateAccount" text="Create Account" />
 
             <!-- Error Label -->
-            <Label fx:id="errorLabel" textFill="red" styleClass="solid-background"/>
-            <!-- Additional Label -->
-            <Label fx:id="createSuccessLabel" styleClass="successfulCreation" />
+
 
             <!-- Close Button -->
         </HBox>
         <Button onAction="#handleClose" text="Close" />
+        <Label fx:id="errorLabel" textFill="red" styleClass="solid-background"/>
+        <!-- Additional Label -->
+        <Label fx:id="createSuccessLabel" styleClass="successfulCreation" />
     </VBox>
 </AnchorPane>
