@@ -19,13 +19,47 @@ public class CourseReviewsApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         Credentials.setSqliteDataName("LoginDataDriverTester.sqlite");
         Credentials.setAppName("Course Review");
-        recalculateRatingAverageForAllCourses();
 
+        createTables();
+        recalculateRatingAverageForAllCourses();
         /* MAIN START SCREEN */
         LoginLogic.setLoginDataDriver(new LoginDataDriver(Credentials.getSqliteDataName()));
         FXMLLoader fxmlLoader = openScene(primaryStage, "log-in.fxml", "Course Reviews");
         LoginController controller = (LoginController) fxmlLoader.getController();
+
         controller.setPrimaryStage(primaryStage);
+    }
+
+    private static void createTables() {
+        LoginDataDriver loginCreator = new LoginDataDriver(Credentials.getSqliteDataName());
+        CourseDataDriver courseCreator = new CourseDataDriver(Credentials.getSqliteDataName());
+        ReviewDataDriver reviewCreator = new ReviewDataDriver(Credentials.getSqliteDataName());
+
+        try{
+            loginCreator.connect();
+            loginCreator.createTable();
+            loginCreator.disconnect();
+            courseCreator.connect();
+            courseCreator.createTable();
+            courseCreator.disconnect();
+            reviewCreator.connect();
+            reviewCreator.createTable();
+            reviewCreator.disconnect();
+        }catch (SQLException e){
+
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                loginCreator.disconnect();
+                courseCreator.disconnect();
+                reviewCreator.disconnect();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+        }
+
     }
 
     private static void recalculateRatingAverageForAllCourses() throws SQLException {
