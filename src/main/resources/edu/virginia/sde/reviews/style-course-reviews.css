@@ -1,7 +1,7 @@
 /* style-course-reviews.css */
 
 .root {
-    -fx-background-color: #1b317c; /* Dark background color */
+    -fx-background-color: #172156; /* Dark background color */
     -fx-text-fill: #ffffff; /* Text color */
 }
 
@@ -10,7 +10,7 @@
 }
 
 #reviewsTable {
-    -fx-control-inner-background: #3964be; /* Table background color */
+    -fx-control-inner-background: #865527; /* Table background color */
     -fx-table-cell-border-color: #1f1f1f; /* Table cell border color */
     -fx-table-header-border-color: #1f1f1f; /* Table header border color */
     -fx-table-header-background: #2d2d2d; /* Table header background color */
