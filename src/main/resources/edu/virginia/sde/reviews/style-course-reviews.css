@@ -1,0 +1,44 @@
+/* style-course-reviews.css */
+
+.root {
+    -fx-background-color: #3d1414; /* Dark background color */
+    -fx-text-fill: #ffffff; /* Text color */
+}
+
+.label {
+    -fx-text-fill: #ffffff; /* Text color for labels */
+}
+
+#reviewsTable {
+    -fx-control-inner-background: #333333; /* Table background color */
+    -fx-table-cell-border-color: #1f1f1f; /* Table cell border color */
+    -fx-table-header-border-color: #1f1f1f; /* Table header border color */
+    -fx-table-header-background: #2d2d2d; /* Table header background color */
+}
+
+.button {
+    -fx-background-color: #2d2d2d; /* Button background color */
+    -fx-text-fill: #ffffff; /* Button text color */
+}
+
+.button:hover {
+    -fx-background-color: #4d4d4d; /* Button hover background color */
+}
+
+#rating1, #rating2, #rating3, #rating4, #rating5 {
+    -fx-text-fill: #ffffff; /* Radio button text color */
+}
+
+#commentField {
+    -fx-control-inner-background: #333333; /* Textfield background color */
+    -fx-text-fill: #ffffff; /* Textfield text color */
+}
+
+#submitReviewButton, #deleteReviewButton {
+    -fx-background-color: #2d2d2d; /* Button background color */
+    -fx-text-fill: #ffffff; /* Button text color */
+}
+
+#submitReviewButton:hover, #deleteReviewButton:hover {
+    -fx-background-color: #4d4d4d; /* Button hover background color */
+}
