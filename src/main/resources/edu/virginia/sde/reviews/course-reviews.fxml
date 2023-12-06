@@ -28,6 +28,7 @@
         <!-- Reviews Section -->
         <Label text="Reviews" style="-fx-font-size:16px"/>
 
+        <ScrollPane>
         <!-- TableView to display reviews -->
         <TableView fx:id="reviewsTable" prefHeight="300" prefWidth="500">
             <columns>
@@ -42,7 +43,7 @@
 
             </columns>
         </TableView>
-
+        </ScrollPane>
         <!-- Add/Edit Review Section -->
         <Label text="Add/Edit Review"/>
 

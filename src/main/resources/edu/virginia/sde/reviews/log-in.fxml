@@ -32,7 +32,7 @@
             <Button onAction="#handleCreateAccount" text="Create Account" />
 
             <!-- Error Label -->
-            <Label fx:id="errorLabel" textFill="red" />
+            <Label fx:id="errorLabel" textFill="red" styleClass="solid-background"/>
             <!-- Additional Label -->
             <Label fx:id="createSuccessLabel" styleClass="successfulCreation" />
 

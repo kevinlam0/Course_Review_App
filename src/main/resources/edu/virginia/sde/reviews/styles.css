@@ -23,6 +23,7 @@
     -fx-background-color: rgb(31, 68, 33);
     -fx-text-fill: #ffffff;
     -fx-font-size: 14px;
+    -fx-margin-top: 20px;
 }
 
 .button {
@@ -31,4 +32,9 @@
 }
 .text-field {
     -fx-background-color: #dcdfe5; /* Green color, you can change this value */
+}
+
+.solid-background{
+    -fx-background-color: #b60a0a;
+    -fx-text-fill: white;
 }
