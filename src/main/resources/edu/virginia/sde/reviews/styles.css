@@ -20,8 +20,8 @@
     -fx-stroke-width: 6
 }
 .successfulCreation {
-    -fx-background-color: rgba(250, 250, 250, 0.2);
-    -fx-text-fill: green;
+    -fx-background-color: rgb(31, 68, 33);
+    -fx-text-fill: #ffffff;
     -fx-font-size: 14px;
 }
 
