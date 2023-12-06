@@ -18,6 +18,10 @@
     -fx-text-fill: #ffffff;
 }
 
+.table-column .label {
+    -fx-text-fill: #000000; /* Text color for column header labels */
+}
+
 .button {
     -fx-background-color: #2d2d2d; /* Button background color */
     -fx-text-fill: #ffffff; /* Button text color */
