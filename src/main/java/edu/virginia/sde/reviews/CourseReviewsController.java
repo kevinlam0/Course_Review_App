@@ -110,10 +110,10 @@ public class CourseReviewsController {
             }
             // Course Details
             Course course = CourseLogic.getCurrentCourse();
-            mnemonicLabel.setText(course.getMnemonic());
-            numberLabel.setText(course.getNumber());
-            titleLabel.setText(course.getTitle());
-            averageRatingLabel.setText(course.getAverage());
+            mnemonicLabel.setText("Course Mnemonic: " + course.getMnemonic());
+            numberLabel.setText("Course Number: " + course.getNumber());
+            titleLabel.setText("Course Title: " + course.getTitle());
+            averageRatingLabel.setText("Average score: " + course.getAverage());
         } catch (SQLException e) {e.printStackTrace();}
         reviewsTable.setItems(reviewsData);
     }
@@ -139,7 +139,7 @@ public class CourseReviewsController {
             errorLabel.setText("");
             reviewsData.clear();
             reviewsData.addAll(CourseLogic.getAllReviews());
-            averageRatingLabel.setText(course.getAverage());
+            averageRatingLabel.setText("Average score: " + course.getAverage());
         }
         catch (SQLException e) {e.printStackTrace();}
         catch (NullPointerException e) {errorLabel.setText("You cannot submit a review with no rating. Please select a rating 1-5");}
@@ -166,7 +166,7 @@ public class CourseReviewsController {
             }
             // Display new average
             Course course = CourseLogic.getCurrentCourse();
-            averageRatingLabel.setText(course.getAverage());
+            averageRatingLabel.setText("Average score: " + course.getAverage());
         }
         catch (SQLException e) {e.printStackTrace();}
         catch (IllegalStateException e){errorLabel.setText(e.getMessage());}

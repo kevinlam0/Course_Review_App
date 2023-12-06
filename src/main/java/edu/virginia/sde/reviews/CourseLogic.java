@@ -25,6 +25,9 @@ public class CourseLogic {
 
     public static void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
         String[] words = mnemonic.split(" ");
+        if (!mnemonic.matches("[a-zA-Z]+")){
+            throw new InvalidCourseException("The mnemonic can only be alphabetical letters");
+        }
         if (words.length > 1) {
             throw new InvalidCourseException("The mnemonic cannot have a space.");
         }
