@@ -33,13 +33,13 @@
         <TableView fx:id="reviewsTable" prefHeight="300" prefWidth="500">
             <columns>
                 <!-- Rating Column -->
-                <TableColumn text="Rating" fx:id="ratingColumn" prefWidth="100"/>
+                <TableColumn text="Rating" fx:id="ratingColumn" prefWidth="60"/>
 
                 <!-- Timestamp Column  -->
-                <TableColumn text="Timestamp" fx:id="timestampColumn" prefWidth="100"/>
+                <TableColumn text="Timestamp" fx:id="timestampColumn" prefWidth="160"/>
 
                 <!-- Comment Column -->
-                <TableColumn text="Comment" fx:id="commentColumn" prefWidth="300"/>
+                <TableColumn text="Comment (click to expand)" fx:id="commentColumn" prefWidth="280"/>
 
             </columns>
         </TableView>
