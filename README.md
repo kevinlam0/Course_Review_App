@@ -1,1 +1,1 @@
-# Course Review Application
+# CRUD Course Review Application
