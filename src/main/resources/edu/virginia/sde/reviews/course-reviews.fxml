@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.virginia.sde.reviews.CourseReviewsController"
+            prefHeight="400.0" prefWidth="600.0">
+    <stylesheets>
+        <URL value="@./style-course-reviews.css" />
+    </stylesheets>
+    <VBox spacing="4" layoutX="20" layoutY="20">
+<!--test-->
+        <!-- Course Information Section -->
+        <Label fx:id="courseInfoLabel" text="Course Information" style="-fx-font-size:18px"/>
+
+        <!-- Labels for Course Mnemonic, Number, Title, and Average Rating -->
+        <Label fx:id="mnemonicLabel" />
+        <Label fx:id="numberLabel" />
+        <Label fx:id="titleLabel" />
+        <Label fx:id="averageRatingLabel" />
+
+        <!-- Reviews Section -->
+        <Label text="Reviews" style="-fx-font-size:16px"/>
+
+        <ScrollPane>
+        <!-- TableView to display reviews -->
+        <TableView fx:id="reviewsTable" prefHeight="300" prefWidth="500">
+            <columns>
+                <!-- Rating Column -->
+                <TableColumn text="Rating" fx:id="ratingColumn" prefWidth="60"/>
+
+                <!-- Timestamp Column  -->
+                <TableColumn text="Timestamp" fx:id="timestampColumn" prefWidth="160"/>
+
+                <!-- Comment Column -->
+                <TableColumn text="Comment (click to expand)" fx:id="commentColumn" prefWidth="280"/>
+
+            </columns>
+        </TableView>
+        </ScrollPane>
+        <TextArea fx:id="fullCommentTextArea" prefHeight="60" prefWidth="500" editable="false" visible="false"/>
+        <!-- Add/Edit Review Section -->
+        <Label text="Add/Edit Review"/>
+
+        <!-- Rating Input (TextField or other control) -->
+        <HBox spacing="10">
+            <Label text="Rating:" />
+            <Label text="1" />
+            <RadioButton fx:id="rating1" text="1" />
+            <Label text="2" />
+            <RadioButton fx:id="rating2" text="2" />
+            <Label text="3" />
+            <RadioButton fx:id="rating3" text="3" />
+            <Label text="4" />
+            <RadioButton fx:id="rating4" text="4" />
+            <Label text="5" />
+            <RadioButton fx:id="rating5" text="5" />
+        </HBox>
+
+        <!-- Comment Input (TextField or other control) -->
+        <TextField fx:id="commentField" promptText="Comment (optional)" />
+        <HBox spacing = "1">
+            <!-- Submit Review Button -->
+            <Button fx:id="submitReviewButton" text="Submit Review" onAction="#handleReviewSubmission"/>
+            <Button fx:id="deleteReviewButton" text = "Delete Review" onAction="#handleDeleteReview"/>
+
+        </HBox>
+        <!-- Error Label -->
+        <Label fx:id="errorLabel" textFill="red" />
+        <!-- Back Button -->
+        <Button text="Back" onAction="#handleBack"/>
+
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,40 @@
+.root {
+    -fx-background-image:url("/edu/virginia/sde/reviews/mcburney.jpg");
+}
+.christmas-header {
+    -fx-background-color: rgba(250, 250, 250, 0); /* Use rgba for transparency */
+    -fx-padding: 10;
+    -fx-font-size: 25px;
+    -fx-text-fill: white;
+    -fx-font-family: "Georgia";
+    -fx-stroke: orange; /* Set the border color */
+    -fx-stroke-width: 6
+}
+.login-header {
+    -fx-background-color: rgba(250, 250, 250, 0); /* Use rgba for transparency */
+    -fx-padding: 10;
+    -fx-font-size: 22px;
+    -fx-text-fill: white;
+    -fx-font-family: "Georgia";
+    -fx-stroke: orange; /* Set the border color */
+    -fx-stroke-width: 6
+}
+.successfulCreation {
+    -fx-background-color: rgb(31, 68, 33);
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 14px;
+    -fx-margin-top: 20px;
+}
+
+.button {
+    -fx-background-color: rgb(31, 68, 33); /* Light blue color, you can change this value */
+    -fx-text-fill: white; /* Text color for the buttons */
+}
+.text-field {
+    -fx-background-color: #dcdfe5; /* Green color, you can change this value */
+}
+
+.solid-background{
+    -fx-background-color: #b60a0a;
+    -fx-text-fill: white;
+}
