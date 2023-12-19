@@ -15,3 +15,13 @@ Full-stack JavaFX applicaiton for managing course reviews, featuring user authen
 - Manage all reviews written by the user along with details
 ### Navigation:
 - Seamless navigation between reviews, course search, and login pages. 
+
+## To run:
+1. Java Development Kit (JDK) 17.0.9 needs to be installed. The location of this directory needs to be known.
+2. Clone repository in within IntelliJ
+3. Run `./gradlew build` to install dependencies
+4. Set up the Run configuration:
+   a. Navigate to the "CourseReviewsApplication.java" file within in the src/main/java directory
+   b. From the 'Run' tab, -> 'Edit Configurations..' -> 'Add new run configuration...' -> 'Application'
+   c. Name your configuration
+   d. Click 'Modify options' -> 'Add VM Options'
