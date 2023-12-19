@@ -25,3 +25,11 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+ext {
+    javaMainClass = "edu.virginia.sde.reviews.CourseReviewsApplication"
+}
+
+application {
+    mainClassName = javaMainClass
+}
