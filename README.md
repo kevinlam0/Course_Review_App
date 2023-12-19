@@ -21,7 +21,8 @@ Full-stack JavaFX applicaiton for managing course reviews, featuring user authen
 2. Clone repository in within IntelliJ
 3. Run `./gradlew build` to install dependencies
 4. Set up the Run configuration:
-   a. Navigate to the "CourseReviewsApplication.java" file within in the src/main/java directory
-   b. From the 'Run' tab, -> 'Edit Configurations..' -> 'Add new run configuration...' -> 'Application'
-   c. Name your configuration
-   d. Click 'Modify options' -> 'Add VM Options'
+   1. Navigate to the "CourseReviewsApplication.java" file within in the src/main/java directory
+   2. From the 'Run' tab, -> 'Edit Configurations..' -> 'Add new run configuration...' -> 'Application'
+   3. Name your configuration
+   4. Click 'Modify options' -> 'Add VM Options'
+   
