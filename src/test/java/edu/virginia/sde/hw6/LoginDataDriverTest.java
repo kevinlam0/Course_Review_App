@@ -29,7 +29,7 @@ public class LoginDataDriverTest {
     @Test
     void addUser_emptyTable() throws SQLException {
         LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
-        ldd.connect();
+//        ldd.connect();
         // ONLY WORKS ONCE
 //        ldd.addUser("Kevinlam0", "password");
 //        ldd.commit();
