@@ -34,10 +34,10 @@ public class CourseReviewsApplication extends Application {
         // Shows up on top
         primaryStage.setAlwaysOnTop(true);
         // Turns off the show on top
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-            primaryStage.setAlwaysOnTop(false);
-        }));
-        timeline.play();
+//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+//            primaryStage.setAlwaysOnTop(false);
+//        }));
+//        timeline.play();
     }
 
     private static void createTables() {

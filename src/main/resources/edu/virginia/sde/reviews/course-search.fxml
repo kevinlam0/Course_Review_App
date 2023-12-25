@@ -10,50 +10,56 @@
 <AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/fxml/1"
             fx:controller="edu.virginia.sde.reviews.CourseSearchController"
-            prefHeight="400.0" prefWidth="600.0">
+            prefHeight="380.0" prefWidth="620.0">
     <stylesheets>
         <URL value="@./style-course-search.css" />
     </stylesheets>
-    <!-- Red Text Box-->
-    <Label fx:id= "errorLabel" textFill="red" layoutX="20"/>
 
     <!-- Search Section -->
-    <VBox spacing="10" layoutX="20" layoutY="20">
+    <VBox spacing="10" layoutX="10" layoutY="10" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="50.0">
         <Label text="Course Search" textFill="white" style="-fx-font-size:15px"/>
         <HBox spacing="10" >
             <Label text="Subject:" textFill="white"/>
-            <TextField fx:id="subjectField" alignment="BASELINE_LEFT"/>
+            <TextField maxWidth="80" fx:id="subjectField" alignment="BASELINE_LEFT"/>
             <Label text="Number:" textFill="white"/>
-            <TextField fx:id="numberField" alignment="BASELINE_LEFT"/>
+            <TextField maxWidth="80" fx:id="numberField" alignment="BASELINE_LEFT"/>
             <Label text="Title:" textFill="white"/>
             <TextField fx:id="titleField" />
+            <Region HBox.hgrow="ALWAYS" />
             <!--connect search button action method to controller-->
-            <Button fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
+            <Button alignment="TOP_RIGHT" fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
         </HBox>
 
-        <TableView fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="500" >
+        <HBox alignment="CENTER">
+        <TableView fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="590" >
             <columns>
-                <TableColumn fx:id="subjectColumn" text="Subject" prefWidth="175"/>
-                <TableColumn fx:id="numberColumn" text="Number" prefWidth="175"/>
-                <TableColumn fx:id="titleColumn" text="Title" prefWidth="175"/>
-                <TableColumn fx:id="ratingColumn" text="Rating" prefWidth="195"/>
+                <TableColumn fx:id="subjectColumn" text="Subject" prefWidth="125"/>
+                <TableColumn fx:id="numberColumn" text="Number" prefWidth="125"/>
+                <TableColumn fx:id="titleColumn" text="Title" prefWidth="220"/>
+                <TableColumn fx:id="ratingColumn" text="Rating" prefWidth="110"/>
             </columns>
         </TableView>
+        </HBox>
         <!-- Add Course Section -->
         <Label text="Add Course" textFill="white"/>
         <HBox spacing="10">
             <Label text="Subject:" textFill="white"/>
-            <TextField fx:id="addSubjectField" />
+            <TextField maxWidth="80" fx:id="addSubjectField" />
             <Label text="Number:" textFill="white"/>
-            <TextField fx:id="addNumberField" />
+            <TextField maxWidth="80" fx:id="addNumberField" />
             <Label text="Title:" textFill="white"/>
             <TextField fx:id="addTitleField" />
             <!-- Add action to controller: Button text="Add Course" onAction="#addCourseButtonClicked"/-->
             <Button text="Add Course" onAction="#handleAdd"/>
         </HBox>
-
-        <!-- Navigation Buttons that need to be implemented-->
-        <Button fx:id = "myReviewButton" text = "My Reviews" onAction="#handleSwitchToMyReviews"/>
-        <Button text="Log out" onAction="#handleLogout"/>
+        <HBox spacing="10">
+            <!-- Red Text Box-->
+            <Label fx:id= "errorLabel" textFill="red" layoutX="20"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox alignment="TOP_RIGHT" spacing="5">
+                <Button alignment="TOP_RIGHT" fx:id = "myReviewButton" text = "My Reviews" onAction="#handleSwitchToMyReviews"/>
+                <Button alignment="TOP_RIGHT" text="Log out" onAction="#handleLogout"/>
+            </HBox>
+        </HBox>
     </VBox>
 </AnchorPane>
