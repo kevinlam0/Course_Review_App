@@ -1,5 +1,5 @@
 # JavaFX CRUD Course Review App
-Full-stack JavaFX applicaiton for managing course reviews, featuring user authentication, course search functionality, and the ability to add and view reviews of each course. Uses Gradle as the build tool.
+Full-stack JavaFX application for managing course reviews, featuring user authentication, course search functionality, and the ability to add and view reviews of each course. Uses Gradle as the build tool.
 
 ## Features
 ### Log-in Actions:
