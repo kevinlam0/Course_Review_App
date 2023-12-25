@@ -18,7 +18,7 @@ Full-stack JavaFX application for managing course reviews, featuring user authen
 
 ## To run:
 1. Java Development Kit (JDK) 17.0.9 needs to be installed.
-2. Clone repository in within IntelliJ
+2. Clone repository in within your IDE
 3. Run `./gradlew build` in your IDE terminal to install dependencies
 4. Run application in your terminal with `./gradlew run`
    
