@@ -13,22 +13,22 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LoginDataDriverTest {
     @BeforeEach
     void setUp() throws SQLException {
-        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
     }
     @Test
     void constructor() throws SQLException {
-        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
     }
     @Test
     void createTables() throws SQLException {
-        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
         ldd.connect();
         ldd.createTable();
         ldd.disconnect();
     }
     @Test
     void addUser_emptyTable() throws SQLException {
-        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
         ldd.connect();
         // ONLY WORKS ONCE
 //        ldd.addUser("Kevinlam0", "password");
@@ -36,52 +36,52 @@ public class LoginDataDriverTest {
     }
 //    @Test
 //    void doesUserExist_true() throws SQLException {
-//        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+//        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
 //        ldd.connect();
 //        assertTrue(ldd.doesUserExist("kevinlam0"));
 //    }
     @Test
     void doesUserExist_false() throws SQLException {
-        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
         ldd.connect();
 //        assertFalse(ldd.doesUserExist("kevinlam"));
     }
 //    @Test
 //    void doesUserExist_falseCase() throws SQLException {
-//        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+//        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
 //        ldd.connect();
 //        assertFalse(ldd.doesUserExist("Kevinlam"));
 //    }
     @Test
     void noChangeToTableWhenRollback() throws SQLException {
-        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
         ldd.connect();
 //        ldd.addUser("kevinlam", "password");
         ldd.disconnect();
     }
     @Test
     void loginCredentialsIsValid_noUserFound() throws SQLException {
-        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
         ldd.connect();
 //        assertThrows(UserNotFoundException.class,
 //                () -> ldd.loginCredentialsIsValid("kevin", "password"));
     }
 //    @Test
 //    void loginCredentialsIsValid_passwordIncorrect() throws SQLException {
-//        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+//        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
 //        ldd.connect();
 //        assertThrows(PasswordIncorrectException.class,
 //                () -> ldd.loginCredentialsIsValid("kevinlam0", "passwords"));
 //    }
 //    @Test
 //    void loginCredentialsIsValid_valid() throws SQLException {
-//        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+//        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
 //        ldd.connect();
 //        ldd.loginCredentialsIsValid("kevinlam0", "password");
 //    }
     @Test
     void getAllUsers_onlyHasOnePerson() throws SQLException {
-        LoginDataDriver ldd = new LoginDataDriver("LoginDataDriverTester.sqlite");
+        LoginDataDriver ldd = new LoginDataDriver("LocalDatabase.sqlite");
         ldd.connect();
         // WORKS WITH ONLY 1 DATA IN IT
 //        Set<String> users = ldd.getAllUsers();

@@ -20,7 +20,7 @@ public class CourseReviewsApplication extends Application {
     }
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Credentials.setSqliteDataName("LoginDataDriverTester.sqlite");
+        Credentials.setSqliteDataName("LocalDatabase.sqlite");
         Credentials.setAppName("Course Review");
 
         createTables();
