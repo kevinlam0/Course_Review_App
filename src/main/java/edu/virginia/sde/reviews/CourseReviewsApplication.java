@@ -1,9 +1,12 @@
 package edu.virginia.sde.reviews;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -26,8 +29,15 @@ public class CourseReviewsApplication extends Application {
         LoginLogic.setLoginDataDriver(new LoginDataDriver(Credentials.getSqliteDataName()));
         FXMLLoader fxmlLoader = openScene(primaryStage, "log-in.fxml", "Course Reviews");
         LoginController controller = (LoginController) fxmlLoader.getController();
-
         controller.setPrimaryStage(primaryStage);
+
+        // Shows up on top
+        primaryStage.setAlwaysOnTop(true);
+        // Turns off the show on top
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            primaryStage.setAlwaysOnTop(false);
+        }));
+        timeline.play();
     }
 
     private static void createTables() {
@@ -35,7 +45,7 @@ public class CourseReviewsApplication extends Application {
         CourseDataDriver courseCreator = new CourseDataDriver(Credentials.getSqliteDataName());
         ReviewDataDriver reviewCreator = new ReviewDataDriver(Credentials.getSqliteDataName());
 
-        try{
+        try {
             loginCreator.connect();
             loginCreator.createTable();
             loginCreator.disconnect();
@@ -45,21 +55,8 @@ public class CourseReviewsApplication extends Application {
             reviewCreator.connect();
             reviewCreator.createTable();
             reviewCreator.disconnect();
-        }catch (SQLException e){
-
-            e.printStackTrace();
         }
-        finally {
-            try {
-                loginCreator.disconnect();
-                courseCreator.disconnect();
-                reviewCreator.disconnect();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-        }
-
+        catch (SQLException e){ e.printStackTrace(); }
     }
 
     private static void recalculateRatingAverageForAllCourses() throws SQLException {
