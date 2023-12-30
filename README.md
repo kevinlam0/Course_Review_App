@@ -1,5 +1,5 @@
 # JavaFX CRUD Course Review App
-Full-stack JavaFX applicaiton for managing course reviews, featuring user authentication, course search functionality, and the ability to add and view reviews of each course. Uses Gradle as the build tool.
+Full-stack JavaFX application for managing course reviews, featuring user authentication, course search functionality, and the ability to add and view reviews of each course. Uses Gradle as the build tool.
 
 ## Features
 ### Log-in Actions:
@@ -18,17 +18,7 @@ Full-stack JavaFX applicaiton for managing course reviews, featuring user authen
 
 ## To run:
 1. Java Development Kit (JDK) 17.0.9 needs to be installed.
-2. JavaFX: [Link to download](https://gluonhq.com/products/javafx/)
-3. Clone repository in within IntelliJ
-4. Run `./gradlew build` to install dependencies
-5. Set up the Run configuration:
-   1. Navigate to the "CourseReviewsApplication.java" file within in the src/main/java directory
-   2. From the 'Run' tab, -> 'Edit Configurations..' -> 'Add new run configuration...' -> 'Application'
-   3. Name your configuration
-   4. Click 'Modify options' -> 'Add VM Options'
-   5. In VM Options, paste this `--module-path [Path to JavaFX lib folder] --add-modules javafx.controls,javafx.fxml` and replace the place holder.
-      - For example: --module-path "/Users/kevinlam/javafx-sdk-17.0.9/lib" --add-modules javafx.controls,javafx.fxml
-   6. Make CourseReviewsApplication the Main Class
-   7. Click 'Apply'
-6. Run application
+2. Clone repository in within your IDE
+3. Run `./gradlew build` in your IDE terminal to install dependencies
+4. Run application in your terminal with `./gradlew run`
    
