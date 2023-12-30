@@ -49,24 +49,19 @@ public class LoginController {
         createSuccessLabel.setText("");
 
         try {
-            if (newPassword.length() < 8)
-                errorLabel.setText("Password must be at least 8 characters");
-            else {
-                LoginLogic.createUser(newUsername, newPassword);
-                // handle successful user creation
-                System.out.println("User created successfully");
-                errorLabel.setText("");
-                createSuccessLabel.setText("Successfully created new account: " + newUsername);
-            }
-
-        } catch (UserAlreadyExistsException e) {
-            // handle user already exists
-            errorLabel.setText("User already exists");
-        } catch (SQLException e) {
+            LoginLogic.createUser(newUsername, newPassword);
+            // handle successful user creation
+            System.out.println("User created successfully");
+            errorLabel.setText("");
+            createSuccessLabel.setText("Successfully created new account: " + newUsername);
+        }
+        catch (UserAlreadyExistsException e) { errorLabel.setText("User already exists"); }
+        catch (IllegalArgumentException e) { errorLabel.setText(e.getMessage()); }
+        catch (SQLException e) {
             e.printStackTrace();
-            // handle database-related errors
             errorLabel.setText("Database error");
         }
+
     }
     public void handleClose(){
         Platform.exit();
