@@ -1,64 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<?import java.net.URL?>
-<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/fxml/1"
-            fx:controller="edu.virginia.sde.reviews.CourseSearchController"
-            prefHeight="380.0" prefWidth="620.0">
+<AnchorPane prefHeight="380.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
     <stylesheets>
         <URL value="@./style-course-search.css" />
     </stylesheets>
 
     <!-- Search Section -->
-    <VBox spacing="10" layoutX="10" layoutY="10" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="50.0">
-        <Label text="Course Search" textFill="white" style="-fx-font-size:15px"/>
-        <HBox spacing="10" >
-            <Label text="Subject:" textFill="white"/>
-            <TextField maxWidth="80" fx:id="subjectField" alignment="BASELINE_LEFT"/>
-            <Label text="Number:" textFill="white"/>
-            <TextField maxWidth="80" fx:id="numberField" alignment="BASELINE_LEFT"/>
-            <Label text="Title:" textFill="white"/>
+    <VBox layoutX="10" layoutY="10" prefHeight="339.0" prefWidth="634.0" spacing="10" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15.0">
+        <Label style="-fx-font-size:15px" text="Course Search" textFill="white" />
+        <HBox spacing="10">
+            <Label text="Subject:" textFill="white" />
+            <TextField fx:id="subjectField" alignment="BASELINE_LEFT" maxWidth="80" />
+            <Label text="Number:" textFill="white" />
+            <TextField fx:id="numberField" alignment="BASELINE_LEFT" maxWidth="80" />
+            <Label text="Title:" textFill="white" />
             <TextField fx:id="titleField" />
             <Region HBox.hgrow="ALWAYS" />
             <!--connect search button action method to controller-->
-            <Button alignment="TOP_RIGHT" fx:id="searchButton" text = "Search" onAction="#handleSearch"/>
+            <Button fx:id="searchButton" alignment="TOP_RIGHT" onAction="#handleSearch" text="Search" />
         </HBox>
 
         <HBox alignment="CENTER">
-        <TableView fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="590" >
+        <TableView fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="590">
             <columns>
-                <TableColumn fx:id="subjectColumn" text="Subject" prefWidth="125"/>
-                <TableColumn fx:id="numberColumn" text="Number" prefWidth="125"/>
-                <TableColumn fx:id="titleColumn" text="Title" prefWidth="220"/>
-                <TableColumn fx:id="ratingColumn" text="Rating" prefWidth="110"/>
+                <TableColumn fx:id="subjectColumn" prefWidth="125" text="Subject" />
+                <TableColumn fx:id="numberColumn" prefWidth="125" text="Number" />
+                <TableColumn fx:id="titleColumn" prefWidth="220" text="Title" />
+                <TableColumn fx:id="ratingColumn" prefWidth="110" text="Rating" />
             </columns>
         </TableView>
         </HBox>
         <!-- Add Course Section -->
-        <Label text="Add Course" textFill="white"/>
+        <Label text="Add Course" textFill="white" />
         <HBox spacing="10">
-            <Label text="Subject:" textFill="white"/>
-            <TextField maxWidth="80" fx:id="addSubjectField" />
-            <Label text="Number:" textFill="white"/>
-            <TextField maxWidth="80" fx:id="addNumberField" />
-            <Label text="Title:" textFill="white"/>
+            <Label text="Subject:" textFill="white" />
+            <TextField fx:id="addSubjectField" maxWidth="80" />
+            <Label text="Number:" textFill="white" />
+            <TextField fx:id="addNumberField" maxWidth="80" />
+            <Label text="Title:" textFill="white" />
             <TextField fx:id="addTitleField" />
             <!-- Add action to controller: Button text="Add Course" onAction="#addCourseButtonClicked"/-->
-            <Button text="Add Course" onAction="#handleAdd"/>
+            <Button onAction="#handleAdd" text="Add Course" />
         </HBox>
         <HBox spacing="10">
             <!-- Red Text Box-->
-            <Label fx:id= "errorLabel" textFill="red" layoutX="20"/>
+            <Label fx:id="errorLabel" layoutX="20" textFill="red" />
             <Region HBox.hgrow="ALWAYS" />
             <HBox alignment="TOP_RIGHT" spacing="5">
-                <Button alignment="TOP_RIGHT" fx:id = "myReviewButton" text = "My Reviews" onAction="#handleSwitchToMyReviews"/>
-                <Button alignment="TOP_RIGHT" text="Log out" onAction="#handleLogout"/>
+                <Button fx:id="myReviewButton" alignment="TOP_RIGHT" onAction="#handleSwitchToMyReviews" text="My Reviews" />
+                <Button alignment="TOP_RIGHT" onAction="#handleLogout" text="Log out" />
             </HBox>
         </HBox>
     </VBox>
