@@ -1,17 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane prefHeight="380.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Line?>
+<AnchorPane prefHeight="417.0" prefWidth="838.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
     <stylesheets>
         <URL value="@./style-course-search.css" />
     </stylesheets>
 
     <!-- Search Section -->
     <VBox layoutX="10" layoutY="10" prefHeight="339.0" prefWidth="634.0" spacing="10" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15.0">
-        <Label style="-fx-font-size:15px" text="Course Search" textFill="white" />
+        <HBox prefHeight="17.0" prefWidth="649.0">
+            <ImageView fx:id="clickableImage" fitWidth="40" fitHeight="40">
+                <image>
+                    <Image url="/edu/virginia/sde/reviews/mcburney.jpg"/>
+                </image>
+            </ImageView>
+            <Label style="-fx-font-size:15px" text="Course Search" textFill="white" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button alignment="TOP_RIGHT"  onAction="#handleLogout" text="Log out" textAlignment="CENTER"/>
+        </HBox>
+        <Line startX="0" startY="0" endX="649" endY="0" stroke="white" />
         <HBox spacing="10">
             <Label text="Subject:" textFill="white" />
             <TextField fx:id="subjectField" alignment="BASELINE_LEFT" maxWidth="80" />
@@ -52,7 +65,6 @@
             <Region HBox.hgrow="ALWAYS" />
             <HBox alignment="TOP_RIGHT" spacing="5">
                 <Button fx:id="myReviewButton" alignment="TOP_RIGHT" onAction="#handleSwitchToMyReviews" text="My Reviews" />
-                <Button alignment="TOP_RIGHT" onAction="#handleLogout" text="Log out" />
             </HBox>
         </HBox>
     </VBox>
