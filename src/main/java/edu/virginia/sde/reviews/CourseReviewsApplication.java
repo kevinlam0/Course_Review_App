@@ -28,12 +28,16 @@ public class CourseReviewsApplication extends Application {
         /* MAIN START SCREEN */
         LoginLogic.setLoginDataDriver(new LoginDataDriver(Credentials.getSqliteDataName()));
 
-        FXMLLoader fxmlLoader = openScene(primaryStage, "log-in.fxml", "Course Reviews");
-        LoginController controller = (LoginController) fxmlLoader.getController();
-        controller.setPrimaryStage(primaryStage);
-//        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"course-search.fxml", Credentials.getAppName());
-//        CourseSearchController controller = (CourseSearchController) fxmlLoader.getController();
+//        FXMLLoader fxmlLoader = openScene(primaryStage, "log-in.fxml", "Course Reviews");
+//        LoginController controller = (LoginController) fxmlLoader.getController();
 //        controller.setPrimaryStage(primaryStage);
+        ReviewLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
+        CourseLogic.setCourseDataDriver(new CourseDataDriver(Credentials.getSqliteDataName()));
+        CourseLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
+        CourseLogic.setCurrentCourse(2);
+        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"course-reviews.fxml", "Review of Course");
+        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
 
         // Shows up on top
         primaryStage.setAlwaysOnTop(true);
