@@ -6,16 +6,17 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class CourseReviewsController {
-    /* GROUP FOR THE RATING IN REVIEW */
     @FXML
-    private TextArea fullCommentTextArea;
+    public Line dynamicLine;
+    /* GROUP FOR THE RATING IN REVIEW */
     @FXML
     private ToggleGroup ratingToggleGroup;
     @FXML
@@ -39,8 +40,6 @@ public class CourseReviewsController {
 
     /* COURSE INFORMATION DISPLAY */
     @FXML
-    public Label courseInfoLabel;
-    @FXML
     public Label mnemonicLabel;
     @FXML
     public Label numberLabel;
@@ -59,6 +58,8 @@ public class CourseReviewsController {
     @FXML
     private TableColumn<Review, String> commentColumn;
     private ObservableList<Review> reviewsData;
+    @FXML
+    private TextArea fullCommentTextArea;
 
     @FXML
     public Label errorLabel;
@@ -66,33 +67,28 @@ public class CourseReviewsController {
 
     public void initialize() {
         reviewsData = FXCollections.observableArrayList();
-        // Set up the columns in the TableView
-        ratingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getRating()));
-        timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
-        commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
+        setUpTableColumns();
+        setUpRadioButtons();
 
-        reviewsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) ->{
-            if(newValue != null){
+        ((VBox) dynamicLine.getParent()).widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            dynamicLine.setEndX(newWidth.doubleValue());
+        });
+
+        reviewsTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
                 // Update the text in the fullCommentTextArea with the selected comment
                 fullCommentTextArea.setText(newValue.getComment());
-
                 // Show the fullCommentTextArea when a row is selected
                 fullCommentTextArea.setVisible(true);
-            } else {
+            }
+            else {
                 // Hide the fullCommentTextArea when no row is selected
                 fullCommentTextArea.setVisible(false);
             }
-
         });
-        // Set up rating radio buttons
-        ratingToggleGroup = new ToggleGroup();
-        rating1.setToggleGroup(ratingToggleGroup);
-        rating2.setToggleGroup(ratingToggleGroup);
-        rating3.setToggleGroup(ratingToggleGroup);
-        rating4.setToggleGroup(ratingToggleGroup);
-        rating5.setToggleGroup(ratingToggleGroup);
 
         try {
+            findAndDisplayCourseInformation();
             reviewsData.clear();
             reviewsData.addAll(CourseLogic.getAllReviews());
             ArrayList<Review> review = CourseLogic.getCurrentReview();
@@ -106,19 +102,36 @@ public class CourseReviewsController {
                     case 5 -> ratingToggleGroup.selectToggle(rating5);
                 }
             }
-            // Course Details
-            Course course = CourseLogic.getCurrentCourse();
-            mnemonicLabel.setText(course.getMnemonic());
-            numberLabel.setText(" " + course.getNumber());
-            titleLabel.setText(" " + course.getTitle());
-            averageRatingLabel.setText("Average score: " + course.getAverage());
-        } catch (SQLException e) {e.printStackTrace();}
+        }
+        catch (SQLException e) { e.printStackTrace(); }
         reviewsTable.setItems(reviewsData);
     }
+
+    private void findAndDisplayCourseInformation() throws SQLException {
+        Course course = CourseLogic.getCurrentCourse();
+        mnemonicLabel.setText(course.getMnemonic());
+        numberLabel.setText(" " + course.getNumber());
+        titleLabel.setText(" " + course.getTitle());
+        averageRatingLabel.setText("Average rating: " + course.getAverage());
+    }
+    private void setUpRadioButtons() {
+        ratingToggleGroup = new ToggleGroup();
+        rating1.setToggleGroup(ratingToggleGroup);
+        rating2.setToggleGroup(ratingToggleGroup);
+        rating3.setToggleGroup(ratingToggleGroup);
+        rating4.setToggleGroup(ratingToggleGroup);
+        rating5.setToggleGroup(ratingToggleGroup);
+    }
+    private void setUpTableColumns() {
+        ratingColumn.setCellValueFactory(cellData -> new SimpleObjectProperty<>(cellData.getValue().getRating()));
+        timestampColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDatetime()));
+        commentColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getComment()));
+    }
+
     @FXML
     private void handleBack() throws IOException {
         FXMLLoader loader = CourseReviewsApplication.openScene(primaryStage, "course-search.fxml", Credentials.getAppName());
-        var controller = (CourseSearchController) loader.getController();
+        CourseSearchController controller = loader.getController();
         controller.setPrimaryStage(primaryStage);
     }
     @FXML
@@ -128,61 +141,56 @@ public class CourseReviewsController {
             RadioButton selectedRadioButton = (RadioButton) ratingToggleGroup.getSelectedToggle();
             int newRating = Integer.parseInt(selectedRadioButton.getText());
             String newComment = commentField.getText();
+
             ArrayList<Review> reviews = CourseLogic.getCurrentReview();
             // If there is no review existing for this course and user
-            if (reviews.isEmpty()){CourseLogic.addReviewToCourse(newRating, newComment);}
-            else {handleEditReview(newRating, newComment);}
-            Course course = CourseLogic.getCurrentCourse();
-            // Display
-            errorLabel.setText("");
-            reviewsData.clear();
-            reviewsData.addAll(CourseLogic.getAllReviews());
-            averageRatingLabel.setText("Average score: " + course.getAverage());
+            if (reviews.isEmpty()) { CourseLogic.addReviewToCourse(newRating, newComment); }
+            else { editReview(newRating, newComment); }
+
+            updateDisplayOfReviewDataAndAverageRating("");
         }
         catch (SQLException e) {e.printStackTrace();}
         catch (NullPointerException e) {errorLabel.setText("You cannot submit a review with no rating. Please select a rating 1-5");}
     }
-    @FXML
-    private void handleDeleteReview() {
-
-        try {
-            // See if the review exists
-            ArrayList<Review> reviews = CourseLogic.getCurrentReview();
-            if (reviews.isEmpty()){
-                throw new IllegalStateException("You cannot delete a review if you do not have one currently submitted");
-            }
-
-            else {
-                // Perform the delete
-                CourseLogic.deleteCurrentReview();
-                // Refresh reviews
-                reviewsData.clear();
-                reviewsData.addAll(CourseLogic.getAllReviews());
-                // Clears the review fields
-                ratingToggleGroup.selectToggle(null);
-                commentField.clear();
-            }
-            // Display new average
-            Course course = CourseLogic.getCurrentCourse();
-            averageRatingLabel.setText("Average score: " + course.getAverage());
-        }
-        catch (SQLException e) {e.printStackTrace();}
-        catch (IllegalStateException e){errorLabel.setText(e.getMessage());}
-    }
-    private void handleEditReview(int newRating, String newComment) {
+    private void editReview(int newRating, String newComment) {
         try {CourseLogic.editCurrentReview(newRating, newComment);}
         catch (SQLException e) {e.printStackTrace();}
     }
     @FXML
+    private void handleDeleteReview() {
+        try {
+            // See if review exists
+            ArrayList<Review> reviews = CourseLogic.getCurrentReview();
+            if (reviews.isEmpty()) {
+                throw new IllegalStateException("You cannot delete a review if you do not have one currently submitted");
+            }
+
+            CourseLogic.deleteCurrentReview();
+            updateDisplayOfReviewDataAndAverageRating("Review deletion successful!");
+            ratingToggleGroup.selectToggle(null);
+            commentField.clear();
+        }
+
+        catch (SQLException e) {e.printStackTrace();}
+        catch (IllegalStateException e){errorLabel.setText(e.getMessage());}
+    }
+    private void updateDisplayOfReviewDataAndAverageRating(String message) throws SQLException {
+        Course course = CourseLogic.getCurrentCourse();
+        errorLabel.setText(message);
+        reviewsData.clear();
+        reviewsData.addAll(CourseLogic.getAllReviews());
+        averageRatingLabel.setText("Average score: " + course.getAverage());
+    }
+    @FXML
     private void handleSwitchToMyReviews() throws IOException {
         FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"my-reviews.fxml", "My Reviews");
-        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
+        MyReviewsController controller = fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleLogout() throws IOException {
         FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage, "log-in.fxml", "Course Review Application");
-        LoginController controller = (LoginController) fxmlLoader.getController();
+        LoginController controller = fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
         Credentials.setUsername("");
     }
