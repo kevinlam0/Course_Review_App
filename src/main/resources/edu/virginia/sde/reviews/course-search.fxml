@@ -15,7 +15,7 @@
         <!-- Top portion, this will be on all screens -->
         <HBox prefHeight="17.0" prefWidth="649.0" spacing="15">
             <!-- Clickable icon to take back to home screen -->
-            <ImageView fx:id="clickableImage" fitWidth="30" fitHeight="30">
+            <ImageView fx:id="clickableImage" fitWidth="30" fitHeight="30" preserveRatio="true" pickOnBounds="true">
                 <image>
                     <Image url="/edu/virginia/sde/reviews/h.png"/>
                 </image>
