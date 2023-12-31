@@ -108,9 +108,9 @@ public class CourseReviewsController {
             }
             // Course Details
             Course course = CourseLogic.getCurrentCourse();
-            mnemonicLabel.setText("Course Mnemonic: " + course.getMnemonic());
-            numberLabel.setText("Course Number: " + course.getNumber());
-            titleLabel.setText("Course Title: " + course.getTitle());
+            mnemonicLabel.setText(course.getMnemonic());
+            numberLabel.setText(" " + course.getNumber());
+            titleLabel.setText(" " + course.getTitle());
             averageRatingLabel.setText("Average score: " + course.getAverage());
         } catch (SQLException e) {e.printStackTrace();}
         reviewsTable.setItems(reviewsData);
@@ -172,6 +172,19 @@ public class CourseReviewsController {
     private void handleEditReview(int newRating, String newComment) {
         try {CourseLogic.editCurrentReview(newRating, newComment);}
         catch (SQLException e) {e.printStackTrace();}
+    }
+    @FXML
+    private void handleSwitchToMyReviews() throws IOException {
+        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"my-reviews.fxml", "My Reviews");
+        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+    }
+    @FXML
+    private void handleLogout() throws IOException {
+        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage, "log-in.fxml", "Course Review Application");
+        LoginController controller = (LoginController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+        Credentials.setUsername("");
     }
     public void setPrimaryStage(Stage primaryStage) {this.primaryStage = primaryStage;}
 }
