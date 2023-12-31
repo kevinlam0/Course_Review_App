@@ -7,7 +7,7 @@
 <?import javafx.geometry.Insets?>
 <AnchorPane prefHeight="300.0" prefWidth="838.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.LoginController">
     <stylesheets>
-        <URL value="@./style-course-search.css" />
+        <URL value="@./styles.css" />
     </stylesheets>
 
     <VBox alignment="CENTER" prefHeight="250.0" prefWidth="300.0" spacing="20" style="-fx-padding: 20;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="50.0">

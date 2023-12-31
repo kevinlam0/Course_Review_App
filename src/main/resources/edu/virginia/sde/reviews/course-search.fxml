@@ -8,9 +8,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.shape.Line?>
 <AnchorPane prefHeight="417.0" prefWidth="838.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
-    <stylesheets>
-        <URL value="@./style-course-search.css" />
-    </stylesheets>
+    <stylesheets> <URL value="@./styles.css" /> </stylesheets>
 
     <!-- Search Section -->
     <VBox layoutX="10" layoutY="10" prefHeight="339.0" prefWidth="634.0" spacing="10" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15.0">
@@ -49,7 +47,7 @@
         </HBox>
 
         <HBox alignment="CENTER">
-        <TableView fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="500" prefWidth="738">
+        <TableView styleClass="courseTable" fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="500" prefWidth="738">
             <columns>
                 <TableColumn fx:id="subjectColumn" prefWidth="135" text="Subject" />
                 <TableColumn fx:id="numberColumn" prefWidth="135" text="Number" />
