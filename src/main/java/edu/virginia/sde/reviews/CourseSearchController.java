@@ -32,12 +32,6 @@ public class CourseSearchController {
     private TextField numberField;
     @FXML
     private TextField titleField;
-    @FXML
-    private TextField addSubjectField;
-    @FXML
-    private TextField addNumberField;
-    @FXML
-    private TextField addTitleField;
     private ObservableList<Course> courses;
     private Stage primaryStage;
     private String[] prevQuery = {"", "", ""};
@@ -82,22 +76,12 @@ public class CourseSearchController {
         catch (InvalidCourseException e) {errorLabel.setText(e.getMessage());}
     }
     @FXML
-    private void handleAdd(){
-        try {
-            // Getting the fields for adding
-            String subject = addSubjectField.getText().strip();
-            int number = parseCourseNumber(addNumberField.getText().strip());
-            String title = addTitleField.getText().strip();
-            // Add to the database
-            CourseLogic.addCourse(subject, number, title);
-            // Refresh the course list after adding
-            courses.clear();
-            courses.addAll(CourseLogic.getAllCourses());
-            prevSearch();
-        }
-        catch (InvalidCourseException | NumberFormatException e) {errorLabel.setText(e.getMessage());}
-        catch (SQLException e) {e.printStackTrace();}
+    private void handleSwitchToAddCourse() throws IOException {
+        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"add-course.fxml", "Add Course");
+        AddCourseController controller = fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
     }
+
     @FXML
     private void handleSwitchToMyReviews() throws IOException {
         FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"my-reviews.fxml", "My Reviews");
@@ -129,8 +113,6 @@ public class CourseSearchController {
         catch (NumberFormatException e){
             throw new NumberFormatException("The course number has to be numbers only");
         }
-
-
     }
     private int parseNumber(String input){
         try {
