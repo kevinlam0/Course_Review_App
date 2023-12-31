@@ -28,6 +28,23 @@ public class AddCourseController {
             dynamicLine.setEndX(newWidth.doubleValue());
         });
     }
+
+    @FXML
+    private void handleAdd(){
+        try {
+            String subject = addSubjectField.getText().strip();
+            int number = parseCourseNumber(addNumberField.getText().strip());
+            String title = addTitleField.getText().strip();
+
+            CourseLogic.addCourse(subject, number, title);
+            errorLabel.setText("Course added successfully!");
+        }
+        catch (InvalidCourseException | NumberFormatException e) { errorLabel.setText(e.getMessage()); }
+        catch (SQLException e) {e.printStackTrace();}
+    }
+
+
+    /** SCENE SWITCHING */
     @FXML
     private void handleSwitchToMyReviews() throws IOException {
         FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"my-reviews.fxml", "My Reviews");
@@ -42,27 +59,13 @@ public class AddCourseController {
         Credentials.setUsername("");
     }
     @FXML
-    private void handleAdd(){
-        try {
-            // Getting the fields for adding
-            String subject = addSubjectField.getText().strip();
-            int number = parseCourseNumber(addNumberField.getText().strip());
-            String title = addTitleField.getText().strip();
-            // Add to the database
-            CourseLogic.addCourse(subject, number, title);
-            errorLabel.setText("Course added successfully!");
-        }
-        catch (InvalidCourseException | NumberFormatException e) {
-            errorLabel.setText(e.getMessage());
-        }
-        catch (SQLException e) {e.printStackTrace();}
-    }
-    @FXML
     private void handleBack() throws IOException {
         FXMLLoader loader = CourseReviewsApplication.openScene(primaryStage, "course-search.fxml", Credentials.getAppName());
         CourseSearchController controller = loader.getController();
         controller.setPrimaryStage(primaryStage);
     }
+
+
     private int parseCourseNumber(String input) throws NumberFormatException{
         try {
             if (input.length() != 4)
