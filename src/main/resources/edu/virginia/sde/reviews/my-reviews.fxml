@@ -15,15 +15,35 @@
 <?import javafx.geometry.Insets?>
 <!--test-->
 
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Line?>
 <AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/fxml/1"
             fx:controller="edu.virginia.sde.reviews.MyReviewsController"
-            prefHeight="400.0" prefWidth="600.0">
-    <stylesheets>
-        <URL value="@./style-my-reviews.css" />
-    </stylesheets>
-    <VBox >
-        <Label styleClass="title" text="My Reviews" style="-fx-font-size:20px"/>
+            prefHeight="417.0" prefWidth="838.0">
+    <stylesheets> <URL value="@./styles.css" /> </stylesheets>
+
+    <VBox layoutX="10" layoutY="10" prefHeight="339.0" prefWidth="634.0" spacing="10" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15.0">
+        <HBox prefHeight="17.0" prefWidth="649.0" spacing="15">
+            <!-- Clickable icon to take back to home screen -->
+            <ImageView fx:id="clickableImage" fitWidth="30" fitHeight="30" onMouseClicked="#backToCourseSearch" preserveRatio="true" pickOnBounds="true">
+                <image>
+                    <Image url="/edu/virginia/sde/reviews/h.png"/>
+                </image>
+            </ImageView>
+
+            <Label styleClass="courseSearchTitle" text="Course Search" textFill="white" />
+            <Region HBox.hgrow="ALWAYS" />
+            <!-- Back Button -->
+            <Button text="Back" onAction="#backToCourseSearch"/>
+            <!--            <Button alignment="TOP_RIGHT" text="Add Course" onAction="#handleSwitchToAddCourse"/>-->
+            <Button alignment="TOP_RIGHT"  onAction="#handleLogout" text="Log out" textAlignment="CENTER"/>
+
+        </HBox>
+        <Line startX="0" startY="0" endX="800" endY="0" stroke="white" />
+
+        <Label alignment="CENTER" styleClass="searchByText" text="My Reviews" style="-fx-font-size:20px"/>
         <TableView fx:id="reviewTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="600">
             <columns>
                 <TableColumn fx:id="subjectColumn" text="Subject"/>
@@ -33,9 +53,7 @@
                 <TableColumn fx:id="commentsColumn" text="Comment"/>
             </columns>
         </TableView>
-        <HBox>
-            <Button text="Back" onAction="#backToCourseSearch"/>
-        </HBox>
+        <Label fx:id="userMessage"/>
     </VBox>
 </AnchorPane>
 

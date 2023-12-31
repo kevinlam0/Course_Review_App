@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class MyReviewsController {
+    public Label userMessage;
     @FXML
     private TableView<Review> reviewTable;
     @FXML
@@ -66,6 +68,13 @@ public class MyReviewsController {
             reviewsData.addAll(ReviewLogic.findReviewsByCurrentUser());
         } catch (SQLException e) {e.printStackTrace();}
         reviewTable.setItems(reviewsData);
+    }
+    @FXML
+    private void handleLogout() throws IOException {
+        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage, "log-in.fxml", "Course Review Application");
+        LoginController controller = (LoginController) fxmlLoader.getController();
+        controller.setPrimaryStage(primaryStage);
+        Credentials.setUsername("");
     }
 }
 
