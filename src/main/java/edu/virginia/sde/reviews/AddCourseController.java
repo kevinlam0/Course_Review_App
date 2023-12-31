@@ -1,17 +1,20 @@
 package edu.virginia.sde.reviews;
-
 import edu.virginia.sde.reviews.Exceptions.InvalidCourseException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.sql.SQLException;
 
 public class AddCourseController {
+    @FXML
     public Label errorLabel;
+    @FXML
+    public Line dynamicLine;
     @FXML
     private TextField addSubjectField;
     @FXML
@@ -19,19 +22,22 @@ public class AddCourseController {
     @FXML
     private TextField addTitleField;
     private Stage primaryStage;
-    public void initialize() {
 
+    public void initialize() {
+        ((VBox) dynamicLine.getParent()).widthProperty().addListener((obs, oldWidth, newWidth) -> {
+            dynamicLine.setEndX(newWidth.doubleValue());
+        });
     }
     @FXML
     private void handleSwitchToMyReviews() throws IOException {
         FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"my-reviews.fxml", "My Reviews");
-        MyReviewsController controller = (MyReviewsController) fxmlLoader.getController();
+        MyReviewsController controller = fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
     }
     @FXML
     private void handleLogout() throws IOException {
         FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage, "log-in.fxml", "Course Review Application");
-        LoginController controller = (LoginController) fxmlLoader.getController();
+        LoginController controller = fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
         Credentials.setUsername("");
     }
@@ -45,10 +51,6 @@ public class AddCourseController {
             // Add to the database
             CourseLogic.addCourse(subject, number, title);
             errorLabel.setText("Course added successfully!");
-            // Refresh the course list after adding
-//            courses.clear();
-//            courses.addAll(CourseLogic.getAllCourses());
-//            prevSearch();
         }
         catch (InvalidCourseException | NumberFormatException e) {
             errorLabel.setText(e.getMessage());
@@ -58,7 +60,7 @@ public class AddCourseController {
     @FXML
     private void handleBack() throws IOException {
         FXMLLoader loader = CourseReviewsApplication.openScene(primaryStage, "course-search.fxml", Credentials.getAppName());
-        CourseSearchController controller = (CourseSearchController) loader.getController();
+        CourseSearchController controller = loader.getController();
         controller.setPrimaryStage(primaryStage);
     }
     private int parseCourseNumber(String input) throws NumberFormatException{
