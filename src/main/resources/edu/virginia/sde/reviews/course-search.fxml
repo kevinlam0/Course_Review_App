@@ -1,49 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import java.net.*?>
-<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.shape.Line?>
-<AnchorPane prefHeight="417.0" prefWidth="838.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
+
+<AnchorPane prefHeight="417.0" prefWidth="838.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.virginia.sde.reviews.CourseSearchController">
+
     <stylesheets> <URL value="@./styles.css" /> </stylesheets>
 
-    <!-- Search Section -->
-    <VBox layoutX="10" layoutY="10" prefHeight="339.0" prefWidth="634.0" spacing="10" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15.0">
+    <VBox
+            layoutX="10" layoutY="10"
+            prefHeight="339.0" prefWidth="634.0" spacing="10"
+            AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0"
+            AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15.0">
+
         <!-- Top portion, this will be on all screens -->
         <HBox prefHeight="17.0" prefWidth="649.0" spacing="15">
             <!-- Clickable icon to take back to home screen -->
-            <ImageView fx:id="clickableImage" fitWidth="30" fitHeight="30" preserveRatio="true" pickOnBounds="true">
-                <image>
-                    <Image url="/edu/virginia/sde/reviews/h.png"/>
-                </image>
+            <ImageView fitWidth="30" fitHeight="30" preserveRatio="true" pickOnBounds="true">
+                <Image url="/edu/virginia/sde/reviews/h.png"/>
             </ImageView>
 
-            <Label styleClass="courseSearchTitle" text="Course Search" textFill="white" />
+            <Label styleClass="pageTitle" text="Course Search"/>
             <Region HBox.hgrow="ALWAYS" />
-            <Button alignment="TOP_RIGHT" text="Add Course" onAction="#handleSwitchToAddCourse"/>
-            <Button fx:id="myReviewButton" alignment="TOP_RIGHT" onAction="#handleSwitchToMyReviews" text="My Reviews" />
-            <Button alignment="TOP_RIGHT"  onAction="#handleLogout" text="Log out" textAlignment="CENTER"/>
-
+            <Button text="Add Course" onAction="#handleSwitchToAddCourse"/>
+            <Button text="My Reviews" onAction="#handleSwitchToMyReviews"/>
+            <Button text="Log out" onAction="#handleLogout"/>
         </HBox>
-        <Line startX="0" startY="0" endX="800" endY="0" stroke="white" />
+
+        <Line fx:id="dynamicLine" stroke="white" />
+
         <HBox alignment="CENTER" >
             <Label text="Search by..." styleClass="searchByText" alignment="CENTER"/>
         </HBox>
 
-
-
         <HBox spacing="10" alignment="CENTER">
-            <Label styleClass="searchIndicators" text="Subject:" textFill="white" />
+            <Label text="Subject:" styleClass="searchIndicators"/>
             <TextField fx:id="subjectField"  maxWidth="80" styleClass="text-field"/>
-            <Label styleClass="searchIndicators" text="Number:" textFill="white" />
+
+            <Label text="Number:" styleClass="searchIndicators"/>
             <TextField fx:id="numberField"  maxWidth="80" styleClass="text-field"/>
-            <Label styleClass="searchIndicators" text="Title:" textFill="white" />
+
+            <Label text="Title:" styleClass="searchIndicators"/>
             <TextField fx:id="titleField" styleClass="text-field"/>
-            <!--connect search button action method to controller-->
-            <Button fx:id="searchButton" alignment="TOP_RIGHT" onAction="#handleSearch" text="Search" />
+            <Button text="Search" onAction="#handleSearch"/>
+            <Button text="Clear" onAction="#handleClearing"/>
         </HBox>
 
         <HBox alignment="CENTER">
@@ -56,20 +62,9 @@
             </columns>
         </TableView>
         </HBox>
-        <!-- Add Course Section -->
-<!--        <HBox spacing="10">-->
-<!--            <Label text="Subject:" textFill="white" />-->
-<!--            <TextField fx:id="addSubjectField" maxWidth="80" />-->
-<!--            <Label text="Number:" textFill="white" />-->
-<!--            <TextField fx:id="addNumberField" maxWidth="80" />-->
-<!--            <Label text="Title:" textFill="white" />-->
-<!--            <TextField fx:id="addTitleField" />-->
-<!--            &lt;!&ndash; Add action to controller: Button text="Add Course" onAction="#addCourseButtonClicked"/&ndash;&gt;-->
-<!--            <Button onAction="#handleAdd" text="Add Course" />-->
-<!--        </HBox>-->
+
         <HBox spacing="10" alignment="CENTER">
-            <!-- Red Text Box-->
-            <Label fx:id="errorLabel" layoutX="20" textFill="red" />
+            <Label text="Click on a course to view its reviews." fx:id="errorLabel" layoutX="20" textFill="black" />
         </HBox>
     </VBox>
 </AnchorPane>
