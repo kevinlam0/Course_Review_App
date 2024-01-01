@@ -118,7 +118,8 @@ public class CourseDataDriver extends DatabaseDriver{
         // Needs to be case-insensitive
         if (mnemonic != null){
             mnemonic = mnemonic.toUpperCase();
-            sql.append(" AND mnemonic = '").append(mnemonic).append("'");
+//            sql.append(" AND mnemonic = '").append(mnemonic).append("'");
+            sql.append(" AND mnemonic LIKE '").append("%").append(mnemonic).append("%'");
         }
         if (number != null){
             sql.append(" AND Course_Number = ").append(String.valueOf(number));
