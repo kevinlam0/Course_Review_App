@@ -25,27 +25,18 @@ public class CourseReviewsApplication extends Application {
 
         createTables();
         recalculateRatingAverageForAllCourses();
+
         /* MAIN START SCREEN */
         LoginLogic.setLoginDataDriver(new LoginDataDriver(Credentials.getSqliteDataName()));
-
-//        FXMLLoader fxmlLoader = openScene(primaryStage, "log-in.fxml", "Course Reviews");
-//        LoginController controller = (LoginController) fxmlLoader.getController();
-//        controller.setPrimaryStage(primaryStage);
-        ReviewLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
-        CourseLogic.setCourseDataDriver(new CourseDataDriver(Credentials.getSqliteDataName()));
-        CourseLogic.setReviewDataDriver(new ReviewDataDriver(Credentials.getSqliteDataName()));
-        CourseLogic.setCurrentCourse(2);
-        FXMLLoader fxmlLoader = CourseReviewsApplication.openScene(primaryStage,"course-reviews.fxml", "Review of Course");
-        CourseReviewsController controller = (CourseReviewsController) fxmlLoader.getController();
+        FXMLLoader fxmlLoader = openScene(primaryStage, "log-in.fxml", "Course Reviews");
+        LoginController controller = fxmlLoader.getController();
         controller.setPrimaryStage(primaryStage);
 
-        // Shows up on top
+        /* Show window on top */
         primaryStage.setAlwaysOnTop(true);
-        // Turns off the show on top
-//        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
-//            primaryStage.setAlwaysOnTop(false);
-//        }));
-//        timeline.play();
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            primaryStage.setAlwaysOnTop(false); }));
+        timeline.play();
     }
 
     private static void createTables() {
