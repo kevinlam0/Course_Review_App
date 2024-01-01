@@ -21,4 +21,7 @@ Full-stack JavaFX application for managing course reviews, featuring user authen
 2. Clone repository in within your IDE
 3. Run `./gradlew build` in your IDE terminal to install dependencies
 4. Run application in your terminal with `./gradlew run`
+
+## Database
+Uses SQLite as the local database for this app. When cloned, there is already a default database with pre-entered reviews and courses. Users may continue using this local database or create a new database for personal use. 
    
