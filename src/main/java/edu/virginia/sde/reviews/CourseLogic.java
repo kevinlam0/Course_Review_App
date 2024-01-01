@@ -24,16 +24,7 @@ public class CourseLogic {
     }
 
     public static void addCourse(String mnemonic, int courseNumber, String courseTitle) throws SQLException {
-        String[] words = mnemonic.split(" ");
-        if (!mnemonic.matches("[a-zA-Z]+")){
-            throw new InvalidCourseException("The mnemonic can only be alphabetical letters");
-        }
-        if (words.length > 1) {
-            throw new InvalidCourseException("The mnemonic cannot have a space.");
-        }
-        if (mnemonic.length() < 2 || mnemonic.length() > 4) {
-            throw new InvalidCourseException("The mnemonic cannot be blank nor longer than four characters");
-        }
+        checkMnemonic(mnemonic, true);
 
         if (courseNumber > 9999 || courseNumber < 0) {
             throw new InvalidCourseException("The course number must be a positive 4-digit number");
@@ -68,16 +59,18 @@ public class CourseLogic {
 
     public static ArrayList<Course> filterCoursesBy (String mnemonic, Integer courseNumber, String courseTitle) throws SQLException {
         if (mnemonic.strip().equals("")) {mnemonic = null;}
-        if (mnemonic != null) {
-            if (mnemonic.strip().length() > 4) {
-                throw new InvalidCourseException("You cannot have a mnemonic longer than four characters.");
-            }
-        }
+        else { checkMnemonic(mnemonic, false); }
 
         if (courseNumber == 0) { courseNumber = null; }
-        else if (courseNumber < 0) {throw new InvalidCourseException("You cannot have a course number of negative value.");}
+        else if (courseNumber > 9999 || courseNumber < 0) {
+            throw new InvalidCourseException("You cannot have a course number of negative value or greater than four digits");
+        }
 
         if (courseTitle.strip().equals("")) { courseTitle = null; }
+        else if (courseTitle.length() > 50) {
+            throw new InvalidCourseException("The course title cannot have more than 50 characters (including spaces).");
+        }
+
         courseDataDriver.connect();
         ArrayList<Course> courses = courseDataDriver.searchCourses(mnemonic, courseNumber, courseTitle);
         courseDataDriver.disconnect();
@@ -172,6 +165,24 @@ public class CourseLogic {
         courseDataDriver.updateCourseAverage(currentCourse, avg);
         courseDataDriver.disconnect();
     }
-
+    private static void checkMnemonic(String mnemonic, boolean add) {
+        if (!mnemonic.matches("[a-zA-Z]+")){
+            throw new InvalidCourseException("The mnemonic can only be alphabetical letters");
+        }
+        if (add) {
+            if (mnemonic.length() < 2 || mnemonic.length() > 4) {
+                throw new InvalidCourseException("The mnemonic cannot be shorter than two letters nor longer than four letters");
+            }
+        }
+        else {
+            if (mnemonic.strip().length() > 4) {
+                throw new InvalidCourseException("You cannot have a mnemonic longer than four characters.");
+            }
+        }
+        String[] words = mnemonic.split(" ");
+        if (words.length > 1) {
+            throw new InvalidCourseException("The mnemonic cannot have a space.");
+        }
+    }
 
 }

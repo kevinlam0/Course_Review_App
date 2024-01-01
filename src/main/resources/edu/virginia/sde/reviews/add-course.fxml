@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/fxml/1"
+            fx:controller="edu.virginia.sde.reviews.AddCourseController"
+            prefHeight="300.0" prefWidth="700.0">
+
+    <stylesheets> <URL value="@./styles.css" /> </stylesheets>
+
+    <VBox layoutX="10" layoutY="10"
+          prefHeight="339.0" prefWidth="634.0" spacing="10"
+          AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0"
+          AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15.0">
+
+        <!-- Top portion, this will be on all screens -->
+        <HBox prefHeight="17.0" prefWidth="649.0" spacing="15">
+            <!-- Clickable icon to take back to home screen -->
+            <ImageView fitWidth="30" fitHeight="30" onMouseClicked="#handleBack" preserveRatio="true"
+                       pickOnBounds="true">
+                <Image url="/edu/virginia/sde/reviews/h.png"/>
+            </ImageView>
+
+            <Label styleClass="pageTitle" text="Course Search" textFill="white" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Back" onAction="#handleBack"/>
+            <Button text="My Reviews" onAction="#handleSwitchToMyReviews"/>
+            <Button text="Log out" onAction="#handleLogout"/>
+        </HBox>
+
+        <Line fx:id="dynamicLine" stroke="white" />
+
+        <HBox alignment="CENTER" >
+            <Label text="Add Course" styleClass="searchByText" alignment="CENTER"/>
+        </HBox>
+
+        <!-- Add Course Section -->
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Subject:" styleClass="searchIndicators"/>
+            <TextField fx:id="addSubjectField" maxWidth="60" />
+
+            <Label text="Number:" styleClass="searchIndicators"/>
+            <TextField fx:id="addNumberField" maxWidth="60" />
+
+            <Label text="Title:" styleClass="searchIndicators"/>
+            <TextField fx:id="addTitleField" maxWidth="210"/>
+
+            <Button onAction="#handleAdd" text="Add Course" />
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER">
+            <!-- Red Text Box-->
+            <Label fx:id="errorLabel" layoutX="20" textFill="red" />
+        </HBox>
+    </VBox>
+</AnchorPane>

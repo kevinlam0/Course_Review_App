@@ -1,80 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Line?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/17.0.2-ea"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="edu.virginia.sde.reviews.CourseReviewsController"
-            prefHeight="400.0" prefWidth="600.0">
-    <stylesheets>
-        <URL value="@./style-course-reviews.css" />
-    </stylesheets>
-    <VBox spacing="4" layoutX="20" layoutY="20">
-<!--test-->
-        <!-- Course Information Section -->
-        <Label fx:id="courseInfoLabel" text="Course Information" style="-fx-font-size:18px"/>
+            prefHeight="417.0" prefWidth="838.0">
 
-        <!-- Labels for Course Mnemonic, Number, Title, and Average Rating -->
-        <Label fx:id="mnemonicLabel" />
-        <Label fx:id="numberLabel" />
-        <Label fx:id="titleLabel" />
+    <stylesheets> <URL value="@./styles.css" /> </stylesheets>
+
+    <VBox spacing="4" layoutX="20" layoutY="20"
+          AnchorPane.bottomAnchor="15.0" AnchorPane.topAnchor="15.0"
+          AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20">
+
+        <!-- Top portion, this will be on all screens -->
+        <HBox prefHeight="17.0" prefWidth="649.0" spacing="15">
+            <!-- Clickable icon to take back to home screen -->
+            <ImageView fitWidth="30" fitHeight="30" onMouseClicked="#handleBack" preserveRatio="true"
+                       pickOnBounds="true">
+                <Image url="/edu/virginia/sde/reviews/h.png"/>
+            </ImageView>
+
+            <Label styleClass="pageTitle" text="Course Search"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Back" onAction="#handleBack"/>
+            <Button text="My Reviews" onAction="#handleSwitchToMyReviews"/>
+            <Button text="Log out" onAction="#handleLogout"/>
+        </HBox>
+
+        <Line fx:id="dynamicLine" stroke="white" />
+
+        <HBox styleClass="courseInformation">
+            <!-- Labels for Course Mnemonic, Number, Title, and Average Rating -->
+            <Label fx:id="mnemonicLabel" />
+            <Label fx:id="numberLabel" />
+            <Label fx:id="titleLabel" />
+        </HBox>
         <Label fx:id="averageRatingLabel" />
 
         <!-- Reviews Section -->
-        <Label text="Reviews" style="-fx-font-size:16px"/>
-
-        <ScrollPane>
-        <!-- TableView to display reviews -->
-        <TableView fx:id="reviewsTable" prefHeight="300" prefWidth="500">
-            <columns>
-                <!-- Rating Column -->
-                <TableColumn text="Rating" fx:id="ratingColumn" prefWidth="60"/>
-
-                <!-- Timestamp Column  -->
-                <TableColumn text="Timestamp" fx:id="timestampColumn" prefWidth="160"/>
-
-                <!-- Comment Column -->
-                <TableColumn text="Comment (click to expand)" fx:id="commentColumn" prefWidth="280"/>
-
-            </columns>
-        </TableView>
-        </ScrollPane>
-        <TextArea fx:id="fullCommentTextArea" prefHeight="60" prefWidth="500" editable="false" visible="false"/>
-        <!-- Add/Edit Review Section -->
-        <Label text="Add/Edit Review"/>
-
-        <!-- Rating Input (TextField or other control) -->
+        <Label text="Reviews:" style="-fx-font-size:20px"/>
         <HBox spacing="10">
-            <Label text="Rating:" />
-            <Label text="1" />
+
+                <!-- TableView to display reviews -->
+                <TableView styleClass="courseTable" fx:id="reviewsTable" prefHeight="175" prefWidth="490">
+                    <columns>
+                        <!-- Rating Column -->
+                        <TableColumn text="Rating" fx:id="ratingColumn" prefWidth="60"/>
+                        <!-- Timestamp Column  -->
+                        <TableColumn text="Timestamp" fx:id="timestampColumn" prefWidth="152"/>
+                        <!-- Comment Column -->
+                        <TableColumn text="Comment (click to expand)" fx:id="commentColumn" prefWidth="258"/>
+                    </columns>
+                </TableView>
+
+            <TextArea fx:id="fullCommentTextArea" prefHeight="60" prefWidth="300" editable="false" visible="false"/>
+        </HBox>
+
+        <!-- Add/Edit Review Section -->
+        <Label text="Add/Edit Review" style="-fx-padding: 10 0 0 0; -fx-font-size: 18px"/>
+
+        <!-- Rating Input -->
+        <HBox spacing="10">
+            <Label text="Rating:"/>
             <RadioButton fx:id="rating1" text="1" />
-            <Label text="2" />
             <RadioButton fx:id="rating2" text="2" />
-            <Label text="3" />
             <RadioButton fx:id="rating3" text="3" />
-            <Label text="4" />
             <RadioButton fx:id="rating4" text="4" />
-            <Label text="5" />
             <RadioButton fx:id="rating5" text="5" />
         </HBox>
 
-        <!-- Comment Input (TextField or other control) -->
-        <TextField fx:id="commentField" promptText="Comment (optional)" />
-        <HBox spacing = "1">
+        <!-- Comment Input -->
+        <TextField fx:id="commentField" promptText="Comment (optional)" maxWidth="490"/>
+        <HBox spacing = "5">
             <!-- Submit Review Button -->
             <Button fx:id="submitReviewButton" text="Submit Review" onAction="#handleReviewSubmission"/>
             <Button fx:id="deleteReviewButton" text = "Delete Review" onAction="#handleDeleteReview"/>
-
+            <!-- Error Label -->
+            <Label fx:id="errorLabel" textFill="red" style="-fx-font-size: 15" />
         </HBox>
-        <!-- Error Label -->
-        <Label fx:id="errorLabel" textFill="red" />
-        <!-- Back Button -->
-        <Button text="Back" onAction="#handleBack"/>
-
     </VBox>
 </AnchorPane>

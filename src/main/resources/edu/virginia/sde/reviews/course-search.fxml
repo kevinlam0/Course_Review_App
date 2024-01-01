@@ -1,59 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.shape.Line?>
 
-<AnchorPane prefHeight="380.0" prefWidth="689.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.virginia.sde.reviews.CourseSearchController">
-    <stylesheets>
-        <URL value="@./style-course-search.css" />
-    </stylesheets>
+<AnchorPane prefHeight="417.0" prefWidth="838.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.virginia.sde.reviews.CourseSearchController">
 
-    <!-- Search Section -->
-    <VBox layoutX="10" layoutY="10" prefHeight="339.0" prefWidth="634.0" spacing="10" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15.0">
-        <Label style="-fx-font-size:15px" text="Course Search" textFill="white" />
-        <HBox spacing="10">
-            <Label text="Subject:" textFill="white" />
-            <TextField fx:id="subjectField" alignment="BASELINE_LEFT" maxWidth="80" />
-            <Label text="Number:" textFill="white" />
-            <TextField fx:id="numberField" alignment="BASELINE_LEFT" maxWidth="80" />
-            <Label text="Title:" textFill="white" />
-            <TextField fx:id="titleField" />
+    <stylesheets> <URL value="@./styles.css" /> </stylesheets>
+
+    <VBox
+            layoutX="10" layoutY="10"
+            prefHeight="339.0" prefWidth="634.0" spacing="10"
+            AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="20.0"
+            AnchorPane.rightAnchor="20" AnchorPane.topAnchor="15.0">
+
+        <!-- Top portion, this will be on all screens -->
+        <HBox prefHeight="17.0" prefWidth="649.0" spacing="15">
+            <!-- Clickable icon to take back to home screen -->
+            <ImageView fitWidth="30" fitHeight="30" preserveRatio="true" pickOnBounds="true">
+                <Image url="/edu/virginia/sde/reviews/h.png"/>
+            </ImageView>
+
+            <Label styleClass="pageTitle" text="Course Search"/>
             <Region HBox.hgrow="ALWAYS" />
-            <!--connect search button action method to controller-->
-            <Button fx:id="searchButton" alignment="TOP_RIGHT" onAction="#handleSearch" text="Search" />
+            <Button text="Add Course" onAction="#handleSwitchToAddCourse"/>
+            <Button text="My Reviews" onAction="#handleSwitchToMyReviews"/>
+            <Button text="Log out" onAction="#handleLogout"/>
+        </HBox>
+
+        <Line fx:id="dynamicLine" stroke="white" />
+
+        <HBox alignment="CENTER" >
+            <Label text="Search by..." styleClass="searchByText" alignment="CENTER"/>
+        </HBox>
+
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Subject:" styleClass="searchIndicators"/>
+            <TextField fx:id="subjectField"  maxWidth="80" styleClass="text-field"/>
+
+            <Label text="Number:" styleClass="searchIndicators"/>
+            <TextField fx:id="numberField"  maxWidth="80" styleClass="text-field"/>
+
+            <Label text="Title:" styleClass="searchIndicators"/>
+            <TextField fx:id="titleField" styleClass="text-field"/>
+            <Button text="Search" onAction="#handleSearch"/>
+            <Button text="Clear" onAction="#handleClearing"/>
         </HBox>
 
         <HBox alignment="CENTER">
-        <TableView fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="200" prefWidth="590">
+        <TableView styleClass="courseTable" fx:id="courseTable" onMouseClicked="#handleClickTableView" prefHeight="500" prefWidth="738">
             <columns>
-                <TableColumn fx:id="subjectColumn" prefWidth="125" text="Subject" />
-                <TableColumn fx:id="numberColumn" prefWidth="125" text="Number" />
-                <TableColumn fx:id="titleColumn" prefWidth="220" text="Title" />
-                <TableColumn fx:id="ratingColumn" prefWidth="110" text="Rating" />
+                <TableColumn fx:id="subjectColumn" prefWidth="135" text="Subject" />
+                <TableColumn fx:id="numberColumn" prefWidth="135" text="Number" />
+                <TableColumn fx:id="titleColumn" prefWidth="320" text="Title" />
+                <TableColumn fx:id="ratingColumn" prefWidth="130" text="Rating" />
             </columns>
         </TableView>
         </HBox>
-        <!-- Add Course Section -->
-        <Label text="Add Course" textFill="white" />
-        <HBox spacing="10">
-            <Label text="Subject:" textFill="white" />
-            <TextField fx:id="addSubjectField" maxWidth="80" />
-            <Label text="Number:" textFill="white" />
-            <TextField fx:id="addNumberField" maxWidth="80" />
-            <Label text="Title:" textFill="white" />
-            <TextField fx:id="addTitleField" />
-            <!-- Add action to controller: Button text="Add Course" onAction="#addCourseButtonClicked"/-->
-            <Button onAction="#handleAdd" text="Add Course" />
-        </HBox>
-        <HBox spacing="10">
-            <!-- Red Text Box-->
-            <Label fx:id="errorLabel" layoutX="20" textFill="red" />
-            <Region HBox.hgrow="ALWAYS" />
-            <HBox alignment="TOP_RIGHT" spacing="5">
-                <Button fx:id="myReviewButton" alignment="TOP_RIGHT" onAction="#handleSwitchToMyReviews" text="My Reviews" />
-                <Button alignment="TOP_RIGHT" onAction="#handleLogout" text="Log out" />
-            </HBox>
+
+        <HBox spacing="10" alignment="CENTER">
+            <Label text="Click on a course to view its reviews." fx:id="errorLabel" layoutX="20" textFill="black" />
         </HBox>
     </VBox>
 </AnchorPane>

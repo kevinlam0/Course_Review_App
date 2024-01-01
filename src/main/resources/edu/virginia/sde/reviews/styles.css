@@ -1,48 +1,70 @@
-/*.root {*/
-/*    -fx-background-image:url("/edu/virginia/sde/reviews/mcburney.jpg");*/
-/*}*/
-
 .root {
-    -fx-background-color: #101a3f; /* Dark background color */
+    /*-fx-background-color: #101a3f; !* Dark background color *!*/
+    -fx-background-color: #adb5bd;
     -fx-text-fill: #ffffff; /* Text color */
     -fx-font-family: "Georgia";
 }
 
-.christmas-header {
-    -fx-background-color: rgba(250, 250, 250, 0); /* Use rgba for transparency */
-    -fx-padding: 10;
-    -fx-font-size: 25px;
-    -fx-text-fill: white;
-    -fx-font-family: "Georgia";
-    -fx-stroke: orange; /* Set the border color */
-    -fx-stroke-width: 6
+.title {
+    -fx-text-fill: #2d6a4f; /* Text color for titles */
+    -fx-font-size: 40;
+    -fx-font-weight: bold;
 }
-.login-header {
-    -fx-background-color: rgba(250, 250, 250, 0); /* Use rgba for transparency */
-    -fx-padding: 10;
-    -fx-font-size: 22px;
+
+.courseTable {
+    -fx-control-inner-background: #2d6a4f; /* Table background color */
     -fx-text-fill: white;
-    -fx-font-family: "Georgia";
-    -fx-stroke: orange; /* Set the border color */
-    -fx-stroke-width: 6
-}
-.successfulCreation {
-    -fx-background-color: rgb(31, 68, 33);
-    -fx-text-fill: #ffffff;
-    -fx-font-size: 14px;
-    -fx-margin-top: 20px;
+    -fx-table-cell-border-color: #1f1f1f; /* Table cell border color */
+    -fx-table-header-border-color: #1f1f1f; /* Table header border color */
+    -fx-table-header-background: #2d2d2d; /* Table header background color */
 }
 
 .button {
-    /*-fx-background-color: rgb(31, 68, 33); !* Light blue color, you can change this value *!*/
-    -fx-background-color: #2d2d2d;
-    -fx-text-fill: white; /* Text color for the buttons */
-}
-.text-field {
-    -fx-background-color: #dcdfe5; /* Green color, you can change this value */
+    -fx-background-color: #2d2d2d; /* Button background color */
+    -fx-text-fill: #ffffff; /* Button text color */
 }
 
-.solid-background{
-    -fx-background-color: #b60a0a;
+.button:hover {
+    -fx-background-color: #4d4d4d; /* Button hover background color */
+}
+
+.pageTitle {
+    -fx-text-fill: #2d6a4f;
+    -fx-font-size: 28px;
+    -fx-stroke-width: 6;
+    -fx-font-weight: bold;
+    /*-fx-margin-top: 10px;*/
+}
+
+.searchByText {
+    -fx-padding: 25 0 0 0;
+    -fx-font-size: 25px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2d6a4f;
+}
+
+.searchIndicators {
+    -fx-font-size: 15px;
+    -fx-text-fill: #2d6a4f;
+    -fx-font-weight: bold;
+}
+
+.text-field {
+    -fx-background-color: grey;
     -fx-text-fill: white;
+}
+.login-header {
+    -fx-background-color: rgba(250, 250, 250, 0); /* Use rgba for transparency */
+    -fx-padding: 8;
+    -fx-font-size: 22px;
+    -fx-text-fill: #2d6a4f;;
+    -fx-font-family: "Georgia";
+    -fx-stroke-width: 6;
+    -fx-font-weight: bold;
+}
+
+.courseInformation {
+    -fx-text-fill: white;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
 }
